@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/common/util/app_strings.dart';
+import 'package:rgs_hris/app/common/util/form_key_strings.dart';
 import 'package:rgs_hris/core/ui/widget/elevated_button_widget.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
@@ -56,7 +57,7 @@ class SignInScreen extends StatelessWidget {
                     height: 50,
                   ),
                   const TextFormFieldWidget(
-                    name: 'username',
+                    name: FormKeyStrings.username,
                     initialValue: '',
                     hint: AppStrings.username,
                     textCapitalization: TextCapitalization.characters,
@@ -66,7 +67,7 @@ class SignInScreen extends StatelessWidget {
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'password',
+                    name: FormKeyStrings.password,
                     initialValue: '',
                     hint: AppStrings.password,
                     isObscure: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rgs_hris/app/common/util/app_strings.dart';
+import 'package:rgs_hris/app/common/util/form_key_strings.dart';
 
 import '../../../../../core/ui/widget/elevated_button_widget.dart';
 import '../../../../../core/ui/widget/text_form_field_widget.dart';
@@ -45,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 50,
                   ),
                   const TextFormFieldWidget(
-                    name: 'email',
+                    name: FormKeyStrings.emailAddress,
                     hint: AppStrings.emailAddress,
                     textInputType: TextInputType.emailAddress,
                     fontWeight: FontWeight.bold,
@@ -54,7 +55,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'mobileNumber',
+                    name: FormKeyStrings.mobileNumber,
                     hint: AppStrings.mobileNumber,
                     textInputType: TextInputType.phone,
                     fontWeight: FontWeight.bold,
@@ -63,7 +64,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'username',
+                    name: FormKeyStrings.username,
                     initialValue: '',
                     hint: AppStrings.username,
                     textCapitalization: TextCapitalization.characters,
@@ -73,7 +74,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'password',
+                    name: FormKeyStrings.password,
                     initialValue: '',
                     hint: AppStrings.password,
                     isObscure: true,
@@ -83,7 +84,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'confirmPassword',
+                    name: FormKeyStrings.confirmPassword,
                     initialValue: '',
                     hint: AppStrings.confirmPassword,
                     isObscure: true,
