@@ -30,7 +30,7 @@ class AppRouterConfig {
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const SignUpScreen(),
+              child: SignUpScreen(),
             ),
           )
         ])
