@@ -27,7 +27,7 @@ class ElevatedButtonWidget extends StatelessWidget {
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
               side: BorderSide(
-                width: 2.0,
+                width: 1,
                 color: borderColor,
               ),
             ),
@@ -37,7 +37,11 @@ class ElevatedButtonWidget extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           label,
-          style: TextStyle(color: fontColor, fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(
+            color: fontColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
         ),
       ),
     );
