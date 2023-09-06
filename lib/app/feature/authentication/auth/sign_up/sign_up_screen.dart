@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:rgs_hris/app/common/util/app_strings.dart';
+import 'package:rgs_hris/app/common/util/form_key_strings.dart';
 
 import '../../../../../core/ui/widget/elevated_button_widget.dart';
 import '../../../../../core/ui/widget/text_form_field_widget.dart';
+import '../../../../../core/ui/widget/wrap_text_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -12,9 +15,6 @@ class SignUpScreen extends StatelessWidget {
     final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Sign Up'),
-      // ),
       backgroundColor: Colors.white,
       body: FormBuilder(
         key: formKey,
@@ -26,13 +26,9 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                      color: Colors.yellow,
+                  SizedBox(
                       height: 100,
                       child: Image.asset('assets/images/rgs_logo.png')),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Divider(
                     height: 1,
                     color: Colors.grey.withOpacity(0.5),
@@ -40,44 +36,48 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    'EMPLOYEE / AGENT REGISTRATION',
-                    style: TextStyle(
+                  Text(
+                    AppStrings.employeeAgentRegistration.toUpperCase(),
+                    style: const TextStyle(
                         color: Colors.teal,
                         fontWeight: FontWeight.bold,
                         fontSize: 10),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 50,
                   ),
                   const TextFormFieldWidget(
-                    name: 'email',
-                    hint: 'Email Address',
+                    name: FormKeyStrings.emailAddress,
+                    hint: AppStrings.emailAddress,
                     textInputType: TextInputType.emailAddress,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'mobileNumber',
-                    hint: 'Mobile Number',
+                    name: FormKeyStrings.mobileNumber,
+                    hint: AppStrings.mobileNumber,
                     textInputType: TextInputType.phone,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'username',
+                    name: FormKeyStrings.username,
                     initialValue: '',
-                    hint: 'Username',
+                    hint: AppStrings.username,
+                    textCapitalization: TextCapitalization.characters,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'password',
+                    name: FormKeyStrings.password,
                     initialValue: '',
-                    hint: 'Password',
+                    hint: AppStrings.password,
                     isObscure: true,
                     textInputType: TextInputType.visiblePassword,
                   ),
@@ -85,9 +85,9 @@ class SignUpScreen extends StatelessWidget {
                     height: 10,
                   ),
                   const TextFormFieldWidget(
-                    name: 'confirmPassword',
+                    name: FormKeyStrings.confirmPassword,
                     initialValue: '',
-                    hint: 'Confirm Password',
+                    hint: AppStrings.confirmPassword,
                     isObscure: true,
                     textInputType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
@@ -96,7 +96,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 30,
                   ),
                   ElevatedButtonWidget(
-                    label: 'CONTINUE',
+                    label: AppStrings.continueLabel.toUpperCase(),
                     onPressed: () {},
                     backgroundColor: Colors.red.shade400,
                     borderColor: Colors.red.shade400,
@@ -105,17 +105,10 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      const Text('Already have an account?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Sign In'),
-                      )
-                    ],
+                  WrapTextButton(
+                    leadingText: AppStrings.alreadyHaveAnAccount,
+                    buttonText: AppStrings.signIn,
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
               ),

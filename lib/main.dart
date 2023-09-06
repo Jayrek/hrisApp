@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rgs_hris/app_router.dart';
+import 'package:rgs_hris/router/app_router_config.dart';
 
 void main() {
   runApp(const RgsHrisApp());
@@ -15,9 +15,9 @@ class RgsHrisApp extends StatelessWidget {
           fontFamily: 'Lato'
       ),
       debugShowCheckedModeBanner: false,
-      routeInformationProvider: AppRouter.router.routeInformationProvider,
-      routeInformationParser: AppRouter.router.routeInformationParser,
-      routerDelegate: AppRouter.router.routerDelegate,
+      routeInformationProvider: AppRouterConfig.router.routeInformationProvider,
+      routeInformationParser: AppRouterConfig.router.routeInformationParser,
+      routerDelegate: AppRouterConfig.router.routerDelegate,
     );
   }
 }
