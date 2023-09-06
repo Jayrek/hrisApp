@@ -12,9 +12,6 @@ class SignUpScreen extends StatelessWidget {
     final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Sign Up'),
-      // ),
       backgroundColor: Colors.white,
       body: FormBuilder(
         key: formKey,
@@ -26,13 +23,9 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                      color: Colors.yellow,
+                  SizedBox(
                       height: 100,
                       child: Image.asset('assets/images/rgs_logo.png')),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Divider(
                     height: 1,
                     color: Colors.grey.withOpacity(0.5),
@@ -48,12 +41,13 @@ class SignUpScreen extends StatelessWidget {
                         fontSize: 10),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 50,
                   ),
                   const TextFormFieldWidget(
                     name: 'email',
                     hint: 'Email Address',
                     textInputType: TextInputType.emailAddress,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
@@ -62,6 +56,7 @@ class SignUpScreen extends StatelessWidget {
                     name: 'mobileNumber',
                     hint: 'Mobile Number',
                     textInputType: TextInputType.phone,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
@@ -70,6 +65,8 @@ class SignUpScreen extends StatelessWidget {
                     name: 'username',
                     initialValue: '',
                     hint: 'Username',
+                    textCapitalization: TextCapitalization.characters,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
