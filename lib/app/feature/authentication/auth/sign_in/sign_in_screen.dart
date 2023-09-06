@@ -23,13 +23,9 @@ class SignInScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  Container(
-                      color: Colors.yellow,
+                  SizedBox(
                       height: 100,
                       child: Image.asset('assets/images/rgs_logo.png')),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Divider(
                     height: 1,
                     color: Colors.grey.withOpacity(0.5),
@@ -38,11 +34,11 @@ class SignInScreen extends StatelessWidget {
                     height: 20,
                   ),
                   const Text(
-                    'WELCOME TO RGS HRIS',
+                    'WELCOME TO ONLINE HRIS',
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12),
+                        fontSize: 14),
                   ),
                   const SizedBox(
                     height: 10,
@@ -55,12 +51,14 @@ class SignInScreen extends StatelessWidget {
                         fontSize: 10),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 50,
                   ),
                   const TextFormFieldWidget(
                     name: 'username',
                     initialValue: '',
                     hint: 'Username',
+                    textCapitalization: TextCapitalization.characters,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(
                     height: 10,
@@ -77,13 +75,14 @@ class SignInScreen extends StatelessWidget {
                     height: 30,
                   ),
                   ElevatedButtonWidget(
-                      label: 'SIGN IN',
-                      onPressed: () {
-                        context.goNamed('dashboard');
-                      },
-                      backgroundColor: Colors.red.shade400,
-                      borderColor: Colors.red.shade400,
-                   fontColor: Colors.white,),
+                    label: 'SIGN IN',
+                    onPressed: () {
+                      context.goNamed('dashboard');
+                    },
+                    backgroundColor: Colors.red.shade400,
+                    borderColor: Colors.red.shade400,
+                    fontColor: Colors.white,
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

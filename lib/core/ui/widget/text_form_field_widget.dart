@@ -11,9 +11,11 @@ class TextFormFieldWidget extends StatelessWidget {
     this.isObscure = false,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
+    this.textCapitalization = TextCapitalization.none,
     this.onTap,
     this.errorFontSize = 0.01,
     this.isReadOnly = false,
+    this.fontWeight = FontWeight.normal,
   });
 
   final String name;
@@ -23,9 +25,11 @@ class TextFormFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool isObscure;
   final TextInputAction textInputAction;
+  final TextCapitalization textCapitalization;
   final Function()? onTap;
   final double errorFontSize;
   final bool isReadOnly;
+  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +41,18 @@ class TextFormFieldWidget extends StatelessWidget {
       obscureText: isObscure,
       initialValue: initialValue,
       textInputAction: textInputAction,
+      textCapitalization: textCapitalization,
       readOnly: isReadOnly,
-      style: const TextStyle(
+      cursorColor: Colors.black,
+      cursorWidth: 1,
+      style: TextStyle(
         color: Colors.black,
+        fontWeight: fontWeight,
         fontSize: 14,
       ),
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.grey.shade100,
         contentPadding: const EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 20,
@@ -56,7 +66,7 @@ class TextFormFieldWidget extends StatelessWidget {
             fontWeight: FontWeight.bold),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade100,
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
@@ -74,12 +84,12 @@ class TextFormFieldWidget extends StatelessWidget {
         ),
         focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(
-          color: Colors.grey.shade300,
+          color: Colors.grey.shade100,
           width: 1,
         )),
         errorBorder: OutlineInputBorder(
             borderSide: BorderSide(
-          color: Colors.grey.shade300,
+          color: Colors.grey.shade100,
           width: 1,
         )),
       ),
