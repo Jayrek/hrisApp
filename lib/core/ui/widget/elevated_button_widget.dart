@@ -33,6 +33,7 @@ class ElevatedButtonWidget extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
+          elevation: MaterialStateProperty.all(0),
         ),
         onPressed: onPressed,
         child: Text(
