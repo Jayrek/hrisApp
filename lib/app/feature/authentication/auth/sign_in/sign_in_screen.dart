@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rgs_hris/app/common/util/app_strings.dart';
 import 'package:rgs_hris/core/ui/widget/elevated_button_widget.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
@@ -34,9 +35,9 @@ class SignInScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    'WELCOME TO ONLINE HRIS',
-                    style: TextStyle(
+                  Text(
+                    AppStrings.welcomeHeader.toUpperCase(),
+                    style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 14),
@@ -44,9 +45,9 @@ class SignInScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    'EMPLOYEE PORTAL',
-                    style: TextStyle(
+                  Text(
+                    AppStrings.employeePortal.toUpperCase(),
+                    style: const TextStyle(
                         color: Colors.teal,
                         fontWeight: FontWeight.bold,
                         fontSize: 10),
@@ -57,7 +58,7 @@ class SignInScreen extends StatelessWidget {
                   const TextFormFieldWidget(
                     name: 'username',
                     initialValue: '',
-                    hint: 'Username',
+                    hint: AppStrings.username,
                     textCapitalization: TextCapitalization.characters,
                     fontWeight: FontWeight.bold,
                   ),
@@ -67,7 +68,7 @@ class SignInScreen extends StatelessWidget {
                   const TextFormFieldWidget(
                     name: 'password',
                     initialValue: '',
-                    hint: 'Password',
+                    hint: AppStrings.password,
                     isObscure: true,
                     textInputType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
@@ -76,7 +77,7 @@ class SignInScreen extends StatelessWidget {
                     height: 30,
                   ),
                   ElevatedButtonWidget(
-                    label: 'SIGN IN',
+                    label: AppStrings.signIn.toUpperCase(),
                     onPressed: () {
                       context.goNamed(AppRoute.dashboard.name);
                     },
@@ -90,13 +91,13 @@ class SignInScreen extends StatelessWidget {
                   Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      const Text('Don\'t have an account yet?'),
+                      const Text(AppStrings.noAccountYet),
                       TextButton(
                         onPressed: () {
                           context.goNamed(AppRoute.signUp.name);
                         },
-                        child: const Text('Sign Up'),
-                      )
+                        child: const Text(AppStrings.signUp),
+                      ),
                     ],
                   ),
                 ],
