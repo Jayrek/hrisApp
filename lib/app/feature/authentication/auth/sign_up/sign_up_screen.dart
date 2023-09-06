@@ -5,6 +5,7 @@ import 'package:rgs_hris/app/common/util/form_key_strings.dart';
 
 import '../../../../../core/ui/widget/elevated_button_widget.dart';
 import '../../../../../core/ui/widget/text_form_field_widget.dart';
+import '../../../../../core/ui/widget/wrap_text_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -104,17 +105,10 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      const Text(AppStrings.alreadyHaveAnAccount),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text(AppStrings.signIn),
-                      )
-                    ],
+                  WrapTextButton(
+                    leadingText: AppStrings.alreadyHaveAnAccount,
+                    buttonText: AppStrings.signIn,
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
               ),

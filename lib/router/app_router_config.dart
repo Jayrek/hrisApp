@@ -17,7 +17,7 @@ class AppRouterConfig {
     GoRoute(
         name: AppRoute.signIn.name,
         path: AppRoute.signIn.path,
-        builder: (_, __) => const SignInScreen(),
+        builder: (_, __) => SignInScreen(),
         routes: <RouteBase>[
           GoRoute(
             name: AppRoute.dashboard.name,
