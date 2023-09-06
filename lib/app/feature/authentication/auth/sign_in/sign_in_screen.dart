@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/core/ui/widget/elevated_button_widget.dart';
+import 'package:rgs_hris/router/app_route.dart';
 
 import '../../../../../core/ui/widget/text_form_field_widget.dart';
 
@@ -77,7 +78,7 @@ class SignInScreen extends StatelessWidget {
                   ElevatedButtonWidget(
                     label: 'SIGN IN',
                     onPressed: () {
-                      context.goNamed('dashboard');
+                      context.goNamed(AppRoute.dashboard.name);
                     },
                     backgroundColor: Colors.red.shade400,
                     borderColor: Colors.red.shade400,
@@ -92,7 +93,7 @@ class SignInScreen extends StatelessWidget {
                       const Text('Don\'t have an account yet?'),
                       TextButton(
                         onPressed: () {
-                          context.goNamed('signUp');
+                          context.goNamed(AppRoute.signUp.name);
                         },
                         child: const Text('Sign Up'),
                       )

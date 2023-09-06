@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/feature/authentication/auth/sign_in/sign_in_screen.dart';
 import 'package:rgs_hris/app/feature/authentication/auth/sign_up/sign_up_screen.dart';
 import 'package:rgs_hris/app/feature/dashboard/dashboard_screen.dart';
+import 'package:rgs_hris/router/app_route.dart';
 
-class AppRouter {
+class AppRouterConfig {
   static GoRouter get router => _router;
 
   static final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -14,18 +15,18 @@ class AppRouter {
     //   builder: (_, __) => const DashboardScreen(),
     // )
     GoRoute(
-        name: 'signIn',
-        path: '/',
+        name: AppRoute.signIn.name,
+        path: AppRoute.signIn.path,
         builder: (_, __) => const SignInScreen(),
         routes: <RouteBase>[
           GoRoute(
-            name: 'dashboard',
-            path: 'dashboard',
+            name: AppRoute.dashboard.name,
+            path: AppRoute.dashboard.path,
             builder: (_, __) => const DashboardScreen(),
           ),
           GoRoute(
-            name: 'signUp',
-            path: 'signUp',
+            name: AppRoute.signUp.name,
+            path: AppRoute.signUp.path,
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
@@ -50,6 +51,7 @@ class AppRouter {
                   CurveTween(curve: Curves.ease),
                 ),
               ),
-              child: child,);
+              child: child,
+            );
           });
 }
