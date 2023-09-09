@@ -1,7 +1,7 @@
 import 'package:rgs_hris/core/data/data_source/auth/auth_remote_data_source.dart';
 import 'package:rgs_hris/core/data/model/response/login_response.dart';
 
-import 'auth_repository.dart';
+import '../../../domain/repository/auth/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;
