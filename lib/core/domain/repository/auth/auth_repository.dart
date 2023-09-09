@@ -1,6 +1,6 @@
-import '../../model/response/login_response.dart';
+import '../../../data/model/response/login_response.dart';
 
-abstract class AuthRemoteDataSource {
+abstract class AuthRepository {
   Future<LoginResponse> signInUser({
     required String username,
     required String password,

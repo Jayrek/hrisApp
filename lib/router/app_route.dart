@@ -10,6 +10,50 @@ enum AppRoute {
   dashboard(
     name: 'dashboard',
     path: 'dashboard',
+  ),
+  personal(
+    name: 'personal',
+    path: 'personal',
+  ),
+  employment(
+    name: 'employment',
+    path: 'employment',
+  ),
+  work(
+    name: 'work',
+    path: 'work',
+  ),
+  leaves(
+    name: 'leaves',
+    path: 'leaves',
+  ),
+  attendance(
+    name: 'attendance',
+    path: 'attendance',
+  ),
+  performance(
+    name: 'performance',
+    path: 'performance',
+  ),
+  documents(
+    name: 'documents',
+    path: 'documents',
+  ),
+  handbook(
+    name: 'handbook',
+    path: 'handbook',
+  ),
+  requestUpdate(
+    name: 'requestUpdate',
+    path: 'requestUpdate',
+  ),
+  myAccess(
+    name: 'myAccess',
+    path: 'myAccess',
+  ),
+  changePassword(
+    name: 'changePassword',
+    path: 'changePassword',
   );
 
   const AppRoute({
