@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'dio_interceptor.dart';
 
-class DioService {
+class DioClient {
   static final baseOptions = BaseOptions(
-    baseUrl: '',
+    baseUrl: 'https://demo.calisg.com/hris/api',
     responseType: ResponseType.json,
     connectTimeout: const Duration(seconds: 60),
     receiveTimeout: const Duration(seconds: 60),

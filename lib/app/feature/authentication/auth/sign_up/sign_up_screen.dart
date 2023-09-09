@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:rgs_hris/app/common/util/app_strings.dart';
 import 'package:rgs_hris/app/common/util/form_key_strings.dart';
 
@@ -66,11 +67,16 @@ class SignUpScreen extends StatelessWidget {
         key: formKey,
         child: Column(
           children: [
-            const TextFormFieldWidget(
+            TextFormFieldWidget(
               name: FormKeyStrings.emailAddress,
               hint: AppStrings.emailAddress,
               textInputType: TextInputType.emailAddress,
               fontWeight: FontWeight.bold,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(errorText: 'email is required'),
+                FormBuilderValidators.email(errorText: 'not valid email'),
+              ]),
+              errorFontSize: 12,
             ),
             const SizedBox(
               height: 10,
@@ -117,7 +123,9 @@ class SignUpScreen extends StatelessWidget {
             ),
             ElevatedButtonWidget(
               label: AppStrings.continueLabel.toUpperCase(),
-              onPressed: () {},
+              onPressed: () {
+                _signUp();
+              },
               backgroundColor: Colors.red.shade400,
               borderColor: Colors.red.shade400,
               fontColor: Colors.white,
@@ -126,5 +134,26 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _signUp() {
+    if (formKey.currentState!.saveAndValidate()) {
+      final email =
+          formKey.currentState!.fields[FormKeyStrings.emailAddress]!.value;
+      final mobileNumber =
+          formKey.currentState?.fields[FormKeyStrings.mobileNumber]?.value;
+      final username =
+          formKey.currentState?.fields[FormKeyStrings.username]?.value;
+      final password =
+          formKey.currentState?.fields[FormKeyStrings.password]?.value;
+      final confirmPassword =
+          formKey.currentState?.fields[FormKeyStrings.confirmPassword]?.value;
+
+      debugPrint('email: $email');
+      debugPrint('mobileNumber: $mobileNumber');
+      debugPrint('username: $username');
+      debugPrint('password: $password');
+      debugPrint('confirmPassword: $confirmPassword');
+    }
   }
 }

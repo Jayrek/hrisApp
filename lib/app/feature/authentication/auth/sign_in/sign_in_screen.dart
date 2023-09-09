@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/common/util/app_strings.dart';
 import 'package:rgs_hris/app/common/util/form_key_strings.dart';
+import 'package:rgs_hris/core/data/data_source/auth/auth_remote_data_source_impl.dart';
+import 'package:rgs_hris/core/data/dio/dio_client.dart';
+import 'package:rgs_hris/core/domain/repository/auth/auth_repository_impl.dart';
 import 'package:rgs_hris/core/ui/widget/elevated_button_widget.dart';
 import 'package:rgs_hris/core/ui/widget/wrap_text_button.dart';
 import 'package:rgs_hris/router/app_route.dart';
@@ -87,23 +91,33 @@ class SignInScreen extends StatelessWidget {
         key: formKey,
         child: Column(
           children: [
-            const TextFormFieldWidget(
+            TextFormFieldWidget(
               name: FormKeyStrings.username,
               initialValue: '',
               hint: AppStrings.username,
               textCapitalization: TextCapitalization.characters,
               fontWeight: FontWeight.bold,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(
+                    errorText: 'user name is required'),
+              ]),
+              errorFontSize: 12,
             ),
             const SizedBox(
               height: 10,
             ),
-            const TextFormFieldWidget(
+            TextFormFieldWidget(
               name: FormKeyStrings.password,
               initialValue: '',
               hint: AppStrings.password,
               isObscure: true,
               textInputType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(
+                    errorText: 'password is required'),
+              ]),
+              errorFontSize: 12,
             ),
             const SizedBox(
               height: 30,
@@ -111,7 +125,11 @@ class SignInScreen extends StatelessWidget {
             ElevatedButtonWidget(
               label: AppStrings.signIn.toUpperCase(),
               onPressed: () {
-                context.goNamed(AppRoute.dashboard.name);
+                // if (formKey.currentState!.saveAndValidate()) {
+                  _signIn();
+                // }
+
+                // context.goNamed(AppRoute.dashboard.name);
               },
               backgroundColor: Colors.red.shade400,
               borderColor: Colors.red.shade400,
@@ -121,5 +139,22 @@ class SignInScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _signIn() async {
+    final username =
+        formKey.currentState?.fields[FormKeyStrings.username]?.value;
+    final password =
+        formKey.currentState?.fields[FormKeyStrings.password]?.value;
+
+    final _remote = AuthRemoteDataSourceImpl(dioClient: DioClient());
+    final _repository = AuthRepositoryImpl(authRemoteDataSource: _remote);
+
+    final response = await _repository.signInUser(
+      username: 'CRUZ06061988',
+      password: '06061988',
+    );
+
+    debugPrint('response: $response');
   }
 }
