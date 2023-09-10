@@ -1,7 +1,7 @@
-import '../../model/response/login_response.dart';
+import 'package:rgs_hris/core/data/model/response/login_wrapper_response.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<LoginResponse> signInUser({
+  Future<LoginWrapperResponse> signInUser({
     required String username,
     required String password,
   });

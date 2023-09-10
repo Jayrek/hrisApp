@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/core/data/model/response/login_response.dart';
+import 'package:rgs_hris/core/data/model/response/login_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/repository/auth/auth_repository.dart';
 
 part 'auth_event.dart';

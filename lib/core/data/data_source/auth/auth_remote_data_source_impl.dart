@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:rgs_hris/core/data/model/response/login_response.dart';
-
+import '../../model/response/login_wrapper_response.dart';
 import 'auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -12,7 +11,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   });
 
   @override
-  Future<LoginResponse> signInUser(
+  Future<LoginWrapperResponse> signInUser(
       {required String username, required String password}) async {
     // final response = await dioClient.postDio('/api/accounts/login.json',
     //     {'username': username, 'password': password});
@@ -25,7 +24,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         data: {'username': username, 'password': password},
       );
 
-      return LoginResponse.fromJson(response.data);
+      return LoginWrapperResponse.fromJson(response.data);
     } on DioException catch (e) {
       print('e: ${e.toString()}');
       throw Exception(e);

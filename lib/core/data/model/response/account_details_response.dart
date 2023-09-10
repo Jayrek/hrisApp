@@ -58,4 +58,9 @@ class AccountDetailsResponse {
     map['token_expiration'] = tokenExpiration;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'AccountDetailsResponse{id: $id, employeeId: $employeeId, employeeRefid: $employeeRefid, username: $username, password: $password, lastAccess: $lastAccess, status: $status, attempts: $attempts, groupAccess: $groupAccess, regstatus: $regstatus, token: $token, tokenExpiration: $tokenExpiration}';
+  }
 }
