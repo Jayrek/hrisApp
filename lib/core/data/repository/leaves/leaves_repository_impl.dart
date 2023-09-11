@@ -13,7 +13,7 @@ class LeavesRepositoryImpl implements LeavesRepository {
       required String dateTo,
       required String leaveType,
       required String leaveStatus,
-      required String token,
+      required String? token,
       }) async {
     return await leavesRemoteDataSource.getLeavesInformation(
       dateFrom: dateFrom,

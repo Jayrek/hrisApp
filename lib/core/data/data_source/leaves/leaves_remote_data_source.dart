@@ -6,6 +6,6 @@ abstract class LeavesRemoteDataSource {
     required String dateTo,
     required String leaveType,
     required String leaveStatus,
-    required String token,
+    required String? token,
   });
 }

@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/common/util/app_strings.dart';
-import 'package:rgs_hris/app/common/util/form_key_strings.dart';
+import 'package:rgs_hris/app/common/util/key_strings.dart';
 import 'package:rgs_hris/core/ui/widget/elevated_button_widget.dart';
 import 'package:rgs_hris/core/ui/widget/wrap_text_button.dart';
 import 'package:rgs_hris/router/app_route.dart';
@@ -112,7 +112,7 @@ class SignInScreen extends StatelessWidget {
         child: Column(
           children: [
             TextFormFieldWidget(
-              name: FormKeyStrings.username,
+              name: KeyStrings.username,
               initialValue: '',
               hint: AppStrings.username,
               textCapitalization: TextCapitalization.characters,
@@ -127,7 +127,7 @@ class SignInScreen extends StatelessWidget {
               height: 10,
             ),
             TextFormFieldWidget(
-              name: FormKeyStrings.password,
+              name: KeyStrings.password,
               initialValue: '',
               hint: AppStrings.password,
               isObscure: true,
@@ -164,9 +164,9 @@ class SignInScreen extends StatelessWidget {
 
   Future<void> _signIn(BuildContext context) async {
     final username =
-        formKey.currentState?.fields[FormKeyStrings.username]?.value;
+        formKey.currentState?.fields[KeyStrings.username]?.value;
     final password =
-        formKey.currentState?.fields[FormKeyStrings.password]?.value;
+        formKey.currentState?.fields[KeyStrings.password]?.value;
 
     context.read<AuthBloc>().add(
         const AuthSignInSubmit(username: 'CRUZ06061988', password: '06061988'));

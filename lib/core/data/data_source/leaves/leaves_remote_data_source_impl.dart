@@ -18,7 +18,7 @@ class LeavesRemoteDataSourceImpl implements LeavesRemoteDataSource {
     required String dateTo,
     required String leaveType,
     required String leaveStatus,
-    required String token,
+    required String? token,
   }) async {
     try {
       // final loginResponse = await dioClient.post(
