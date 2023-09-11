@@ -21,7 +21,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       //   '/api/leaves/myprofile.json',
       final response = await dioClient.post(
         'https://demo.calisg.com/hris/api/api/accounts/login.json',
-        data: {'username': username, 'password': password},
+        data: FormData.fromMap(
+          {
+            'username': username,
+            'password': password,
+          },
+        ),
       );
 
       return LoginWrapperResponse.fromJson(response.data);
