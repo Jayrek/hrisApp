@@ -6,6 +6,8 @@ import 'package:rgs_hris/app/feature/change_password/change_password_screen.dart
 import 'package:rgs_hris/app/feature/dashboard/dashboard_screen.dart';
 import 'package:rgs_hris/app/feature/employment/employment_screen.dart';
 import 'package:rgs_hris/app/feature/handbook/handbook_screen.dart';
+import 'package:rgs_hris/app/feature/leaves/leaves_detail_screen.dart';
+import 'package:rgs_hris/app/feature/leaves/leaves_request_screen.dart';
 import 'package:rgs_hris/app/feature/my_access/my_access_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
@@ -64,14 +66,33 @@ class AppRouterConfig {
                 ),
               ),
               GoRoute(
-                name: AppRoute.leaves.name,
-                path: AppRoute.leaves.path,
-                pageBuilder: (context, state) => pageBuilderAnimate(
-                  context,
-                  state,
-                  child: const LeavesScreen(),
-                ),
-              ),
+                  name: AppRoute.leaves.name,
+                  path: AppRoute.leaves.path,
+                  pageBuilder: (context, state) => pageBuilderAnimate(
+                        context,
+                        state,
+                        child: const LeavesScreen(),
+                      ),
+                  routes: [
+                    GoRoute(
+                      name: AppRoute.leaveDetail.name,
+                      path: AppRoute.leaveDetail.path,
+                      pageBuilder: (context, state) => pageBuilderAnimate(
+                        context,
+                        state,
+                        child: const LeavesDetailScreen(),
+                      ),
+                    ),
+                    GoRoute(
+                      name: AppRoute.leavesRequest.name,
+                      path: AppRoute.leavesRequest.path,
+                      pageBuilder: (context, state) => pageBuilderAnimate(
+                        context,
+                        state,
+                        child: const LeavesRequestScreen(),
+                      ),
+                    ),
+                  ]),
               GoRoute(
                 name: AppRoute.attendance.name,
                 path: AppRoute.attendance.path,

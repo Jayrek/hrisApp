@@ -40,16 +40,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await TokenManager.setToken(token.toString());
     }
 
-    // final tokenValue = await TokenManager.getToken();
-    // final responseLeave = await leavesRepository.getLeavesInformation(
-    //   dateFrom: '2023-09-01',
-    //   dateTo: '2023-09-30',
-    //   leaveType: '1',
-    //   leaveStatus: 'Pending',
-    //   token: tokenValue,
-    // );
-    //
-    // debugPrint('responseLeave: $responseLeave');
 
     emit(AuthSignInSuccess(response));
   }
