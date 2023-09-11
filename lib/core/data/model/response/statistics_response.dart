@@ -34,4 +34,9 @@ class StatisticsResponse {
     map['bl'] = bl;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'StatisticsResponse{sl: $sl, vl: $vl, spl: $spl, pl: $pl, ml: $ml, bl: $bl}';
+  }
 }

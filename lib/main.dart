@@ -41,9 +41,10 @@ class RgsHrisApp extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => AuthBloc(
-              authRepository:
-                  RepositoryProvider.of<AuthRepositoryImpl>(context),
-            ),
+                authRepository:
+                    RepositoryProvider.of<AuthRepositoryImpl>(context),
+                leavesRepository:
+                    RepositoryProvider.of<LeavesRepositoryImpl>(context)),
           ),
           // BlocProvider(
           //   create: (context) => SubjectBloc(),

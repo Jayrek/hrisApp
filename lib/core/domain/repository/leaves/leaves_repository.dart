@@ -1,6 +1,6 @@
-import '../../model/response/leaves_wrapper_response.dart';
+import '../../../data/model/response/leaves_wrapper_response.dart';
 
-abstract class LeavesRemoteDataSource {
+abstract class LeavesRepository {
   Future<LeavesWrapperResponse> getLeavesInformation({
     required String dateFrom,
     required String dateTo,

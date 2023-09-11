@@ -58,4 +58,9 @@ class LeaveApplications {
     map['status_date'] = statusDate;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'LeaveApplications{id: $id, type: $type, employeeId: $employeeId, dateFiled: $dateFiled, dateFrom: $dateFrom, dateTo: $dateTo, noDays: $noDays, description: $description, status: $status, approvedBy: $approvedBy, rejectedBy: $rejectedBy, statusDate: $statusDate}';
+  }
 }

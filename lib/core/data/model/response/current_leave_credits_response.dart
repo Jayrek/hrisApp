@@ -34,4 +34,9 @@ class CurrentLeaveCreditsResponse {
     map['bl'] = bl;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'CurrentLeaveCreditsResponse{sl: $sl, vl: $vl, spl: $spl, pl: $pl, ml: $ml, bl: $bl}';
+  }
 }
