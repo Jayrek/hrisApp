@@ -44,7 +44,6 @@ class LeavesRemoteDataSourceImpl implements LeavesRemoteDataSource {
 
       return LeavesWrapperResponse.fromJson(response.data);
     } on DioException catch (e) {
-      print('e: ${e.toString()}');
       throw Exception(e);
     }
   }
