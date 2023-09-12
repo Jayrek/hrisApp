@@ -95,7 +95,7 @@ class AppRouterConfig {
                       pageBuilder: (context, state) => pageBuilderAnimate(
                         context,
                         state,
-                        child: const LeavesRequestScreen(),
+                        child: LeavesRequestScreen(),
                       ),
                     ),
                   ]),

@@ -147,6 +147,8 @@ class LeavesScreen extends StatelessWidget {
                                 Divider(
                                   height: 1,
                                   color: Colors.grey.shade400,
+                                  indent: 20,
+                                  endIndent: 20,
                                 ),
                               ],
                             ),
@@ -163,6 +165,7 @@ class LeavesScreen extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.teal, fontWeight: FontWeight.bold),
                         ),
+                        const SizedBox(height: 20),
                         Wrap(
                           children: [
                             _buildLeaveCreditsWidget(
@@ -421,11 +424,6 @@ class LeavesScreen extends StatelessWidget {
                             ?.fields[KeyStrings.leaveStatusKey]?.value;
 
                         final leaveType = getLeaveTypeId(type);
-
-                        print('dateFrom: $dateFrom');
-                        print('dateTo: $dateTo');
-                        print('type: $leaveType');
-                        print('status: $status');
 
                         Navigator.pop(context);
 
