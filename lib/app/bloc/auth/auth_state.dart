@@ -20,4 +20,11 @@ class AuthSignInSuccess extends AuthState {
   List<Object> get props => [loginWrapperResponse];
 }
 
-class AuthSignInException extends AuthState {}
+class AuthSignInException extends AuthState {
+  final String message;
+
+  const AuthSignInException({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

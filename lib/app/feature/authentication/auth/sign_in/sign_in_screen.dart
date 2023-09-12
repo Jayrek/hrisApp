@@ -48,6 +48,7 @@ class SignInScreen extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5),
                         ),
                         _buildSignInHeaderWidget(),
+                        _buildUnAuthorizeWidget(state),
                         _buildSignInFormWidget(context, state),
                         WrapTextButton(
                           leadingText: AppStrings.noAccountYet,
@@ -164,11 +165,31 @@ class SignInScreen extends StatelessWidget {
 
   Future<void> _signIn(BuildContext context) async {
     final username =
-        formKey.currentState?.fields[KeyStrings.usernameKey]?.value;
+        formKey.currentState?.fields[KeyStrings.usernameKey]?.value ?? '';
     final password =
-        formKey.currentState?.fields[KeyStrings.passwordKey]?.value;
+        formKey.currentState?.fields[KeyStrings.passwordKey]?.value ?? '';
 
-    context.read<AuthBloc>().add(
-        const AuthSignInSubmit(username: 'CRUZ06061988', password: '06061988'));
+    context
+        .read<AuthBloc>()
+        .add(AuthSignInSubmit(username: username, password: password));
+
+    // context.read<AuthBloc>().add(const AuthSignInSubmit(
+    //     username: 'CRUZ06061988', password: '06061988'));
+  }
+
+  Widget _buildUnAuthorizeWidget(AuthState authState) {
+    if (authState is AuthSignInException) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Text(
+          authState.message,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.red,
+          ),
+        ),
+      );
+    }
+    return const SizedBox();
   }
 }
