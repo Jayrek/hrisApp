@@ -5,25 +5,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/core/data/model/response/leaves_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/repository/leaves/leaves_repository.dart';
 
-import '../../../../core/domain/manager/token_manager.dart';
+import '../../../core/domain/manager/token_manager.dart';
 
-part 'leaves_profile_event.dart';
+part 'leaves_event.dart';
 
-part 'leaves_profile_state.dart';
+part 'leaves_state.dart';
 
-class LeavesProfileBloc extends Bloc<LeavesProfileEvent, LeavesProfileState> {
+class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
   final LeavesRepository leavesRepository;
 
-  LeavesProfileBloc({required this.leavesRepository})
-      : super(LeavesProfileInitial()) {
-    on<LeavesProfileFetched>(_leavesProfileFetched);
+  LeavesBloc({required this.leavesRepository})
+      : super(LeavesInitial()) {
+    on<LeavesFetched>(_leavesProfileFetched);
   }
 
   FutureOr<void> _leavesProfileFetched(
-    LeavesProfileFetched event,
-    Emitter<LeavesProfileState> emit,
+    LeavesFetched event,
+    Emitter<LeavesState> emit,
   ) async {
-    emit(LeavesProfileLoading());
+    emit(LeavesLoading());
     final tokenValue = await TokenManager.getToken();
     final responseLeave = await leavesRepository.getLeavesInformation(
       dateFrom: event.dateFrom,
@@ -33,7 +33,7 @@ class LeavesProfileBloc extends Bloc<LeavesProfileEvent, LeavesProfileState> {
       token: tokenValue,
     );
 
-    emit(LeavesProfileLoaded(leavesWrapperResponse: responseLeave));
+    emit(LeavesLoaded(leavesWrapperResponse: responseLeave));
 
   }
 }

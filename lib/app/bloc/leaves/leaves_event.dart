@@ -1,14 +1,14 @@
-part of 'leaves_profile_bloc.dart';
+part of 'leaves_bloc.dart';
 
-abstract class LeavesProfileEvent extends Equatable {
-  const LeavesProfileEvent();
+abstract class LeavesEvent extends Equatable {
+  const LeavesEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class LeavesProfileFetched extends LeavesProfileEvent {
-  const LeavesProfileFetched({
+class LeavesFetched extends LeavesEvent {
+  const LeavesFetched({
     required this.dateFrom,
     required this.dateTo,
     required this.type,

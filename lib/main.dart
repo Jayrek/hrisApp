@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
-import 'package:rgs_hris/app/bloc/leaves/leaves_profile/leaves_profile_bloc.dart';
+import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
 import 'package:rgs_hris/core/data/data_source/auth/auth_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/repository/auth/auth_repository_impl.dart';
@@ -48,7 +48,7 @@ class RgsHrisApp extends StatelessWidget {
                     RepositoryProvider.of<LeavesRepositoryImpl>(context)),
           ),
           BlocProvider(
-            create: (context) => LeavesProfileBloc(
+            create: (context) => LeavesBloc(
                 leavesRepository:
                     RepositoryProvider.of<LeavesRepositoryImpl>(context)),
           ),

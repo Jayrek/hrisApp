@@ -5,14 +5,14 @@ import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/core/data/model/response/types_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
-import '../../bloc/leaves/leaves_profile/leaves_profile_bloc.dart';
+import '../../bloc/leaves/leaves_bloc.dart';
 
 class LeavesScreen extends StatelessWidget {
   const LeavesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.read<LeavesProfileBloc>().add(const LeavesProfileFetched(
+    context.read<LeavesBloc>().add(const LeavesFetched(
         dateFrom: '', dateTo: '', type: '1', status: 'Pending'));
 
     return Scaffold(
@@ -79,9 +79,9 @@ class LeavesScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<LeavesProfileBloc, LeavesProfileState>(
+      body: BlocBuilder<LeavesBloc, LeavesState>(
         builder: (context, state) {
-          if (state is LeavesProfileLoaded) {
+          if (state is LeavesLoaded) {
             // final leaveStatus = state.leavesWrapperResponse.leavesResponse
             //     ?.leavesDataResponse?.dropdownOptions?.status;
 
@@ -194,7 +194,7 @@ class LeavesScreen extends StatelessWidget {
               ),
             );
           }
-          if (state is LeavesProfileLoading) {
+          if (state is LeavesLoading) {
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
