@@ -105,8 +105,10 @@ class LeavesScreen extends StatelessWidget {
                               ?.leavesDataResponse
                               ?.leaveApplications?[index];
                           return InkWell(
-                            onTap: () =>
-                                context.pushNamed(AppRoute.leaveDetail.name),
+                            onTap: () => context.pushNamed(
+                              AppRoute.leaveDetail.name,
+                              extra: leaveApplications,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -200,9 +202,7 @@ class LeavesScreen extends StatelessWidget {
               child: CircularProgressIndicator.adaptive(),
             );
           }
-          return const Center(
-            child: Text('leaves'),
-          );
+          return const SizedBox();
         },
       ),
     );

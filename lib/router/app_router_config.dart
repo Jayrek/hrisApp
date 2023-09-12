@@ -18,6 +18,7 @@ import 'package:rgs_hris/router/app_route.dart';
 import '../app/feature/attendance/attendance_screen.dart';
 import '../app/feature/documents/documents_screen.dart';
 import '../app/feature/leaves/leaves_screen.dart';
+import '../core/data/model/response/leave_applications_response.dart';
 
 class AppRouterConfig {
   static GoRouter get router => _router;
@@ -75,14 +76,19 @@ class AppRouterConfig {
                       ),
                   routes: [
                     GoRoute(
-                      name: AppRoute.leaveDetail.name,
-                      path: AppRoute.leaveDetail.path,
-                      pageBuilder: (context, state) => pageBuilderAnimate(
-                        context,
-                        state,
-                        child: const LeavesDetailScreen(),
-                      ),
-                    ),
+                        name: AppRoute.leaveDetail.name,
+                        path: AppRoute.leaveDetail.path,
+                        pageBuilder: (context, state) {
+                          LeaveApplications leaveApplication =
+                              state.extra as LeaveApplications;
+                          return pageBuilderAnimate(
+                            context,
+                            state,
+                            child: LeavesDetailScreen(
+                              leaveApplications: leaveApplication,
+                            ),
+                          );
+                        }),
                     GoRoute(
                       name: AppRoute.leavesRequest.name,
                       path: AppRoute.leavesRequest.path,

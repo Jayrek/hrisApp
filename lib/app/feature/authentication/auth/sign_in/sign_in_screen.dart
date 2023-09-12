@@ -170,33 +170,5 @@ class SignInScreen extends StatelessWidget {
 
     context.read<AuthBloc>().add(
         const AuthSignInSubmit(username: 'CRUZ06061988', password: '06061988'));
-
-    //
-    // final _remote = AuthRemoteDataSourceImpl(dioClient: Dio());
-    // final _repository = AuthRepositoryImpl(authRemoteDataSource: _remote);
-
-    // final response = await _repository.signInUser(
-    //   username: 'CRUZ06061988',
-    //   password: '06061988',
-    // );
-
-    // final _remote = LeavesRemoteDataSourceImpl(dioClient: DioClient());
-    // final token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Im9ubGluZWhyaXMiLCJpYXQiOjE2OTQyNTA5MjcsImV4cCI6MTY5NDMxMDkyN30.lww7lUK4lUP4O3ZvLM4CHKi8AQkx2_uc14zwBZSKrNoUVqm2bc-N3DjhdIaO5s-CJW4CIwkWc9xhCjmqFXEqJWCO_DxscxAMs7FS2bB6IDeRWMdKHd55zIDfnT5FdbhMYp9mZyAd0PZ8WT66o_MxWVJQ4znwNVnhqW5YuNgroPM';
-
-    // final _remoteLeave = LeavesRemoteDataSourceImpl(dioClient: Dio());
-    // final _repositoryLeave =
-    //     LeavesRepositoryImpl(leavesRemoteDataSource: _remoteLeave);
-    //
-    // // debugPrint('tokenn: $token');
-    //
-    // final responseLeave = await _repositoryLeave.getLeavesInformation(
-    //   dateFrom: '2023-09-01',
-    //   dateTo: '2023-09-30',
-    //   leaveType: '1',
-    //   leaveStatus: 'Pending',
-    //   token: response.token.toString(),
-    // );
-
-    // debugPrint('response: $response');
   }
 }
