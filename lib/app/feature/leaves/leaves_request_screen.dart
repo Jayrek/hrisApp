@@ -29,12 +29,6 @@ class LeavesRequestScreen extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text('Clear'),
-          ),
-        ],
       ),
       body: Scaffold(
         backgroundColor: Colors.white,
@@ -59,10 +53,7 @@ class LeavesRequestScreen extends StatelessWidget {
                       'success') {
                     Navigator.of(context).pop();
                     context.read<LeavesBloc>().add(const LeavesFetched(
-                        dateFrom: '',
-                        dateTo: '',
-                        type: '',
-                        status: 'Pending'));
+                        dateFrom: '', dateTo: '', type: '', status: 'Pending'));
                   }
                 }
               });
@@ -184,11 +175,6 @@ class LeavesRequestScreen extends StatelessWidget {
 
                                       final leaveType = getLeaveTypeId(type);
 
-                                      print('type: $leaveType');
-                                      print('dateFrom: $dateFrom');
-                                      print('dateTo: $dateTo');
-                                      print('description: $description');
-
                                       context
                                           .read<LeavesBloc>()
                                           .add(LeavesApplicationSet(
@@ -210,6 +196,7 @@ class LeavesRequestScreen extends StatelessWidget {
                           color: Colors.grey.shade400,
                         ),
                         _buildLeaveCreditsSection(),
+                        _buildLeavePolicyWidget(),
                       ],
                     ),
                   ),
@@ -300,6 +287,83 @@ class LeavesRequestScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildLeavePolicyWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'FILING LEAVE POLICY',
+          style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.grey.shade200)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'NUMBER OF DAYS',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'NOTICE PERIOD',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              _buildLeaveNamePolicyItemWidget('VACATION LEAVE'),
+              _buildLeaveNoticeItemWidget('1 - 2 DAYS', '3 DAYS NOTICE'),
+              _buildLeaveNoticeItemWidget('3 - 4 DAYS', '1 WEEK NOTICE'),
+              _buildLeaveNoticeItemWidget('5 DAYS AND UP', '1 MONTH NOTICE'),
+              _buildLeaveNamePolicyItemWidget('EMERGENCY / SICK LEAVE'),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                      child: Text(
+                          'NOTIFY IMMEDIATELY SUPERIOR 2 HOURS BEFORE THE START OF DUTY',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12)),
+                    ),
+                    Flexible(
+                      child: Text('FILLING WITHIN 24 HOURS UPON RETURN',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12)),
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                    'LATE FILING OF LEAVES AND NOT FOLLOWING LEAVE PROCEDURE WILL NOT BE APPROVED.',
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 40),
+      ],
+    );
+  }
+
   Future<void> _selectLeaveDate(BuildContext context, String dateKey) async {
     DateTime selectedDate = DateTime.now();
 
@@ -371,5 +435,37 @@ class LeavesRequestScreen extends StatelessWidget {
       default:
         return 1;
     }
+  }
+
+  Widget _buildLeaveNamePolicyItemWidget(String leaveName) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Text(
+        leaveName,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 12,
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLeaveNoticeItemWidget(String noOfDays, String noticePeriod) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(noOfDays,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+          Text(noticePeriod,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+        ],
+      ),
+    );
   }
 }
