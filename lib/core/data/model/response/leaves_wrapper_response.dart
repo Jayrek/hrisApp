@@ -13,6 +13,9 @@ class LeavesWrapperResponse {
 
   LeavesResponse? leavesResponse;
 
+  static LeavesWrapperResponse emptyValue =
+      LeavesWrapperResponse(leavesResponse: null);
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (leavesResponse != null) {

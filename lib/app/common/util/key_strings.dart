@@ -10,6 +10,7 @@ class KeyStrings {
   static const leaveStatusKey = 'leaveStatus';
   static const leaveDateFromKey = 'leaveDateFrom';
   static const leaveDateToKey = 'leaveDateTo';
+  static const leaveDescriptionKey = 'leaveDescription';
 
   static const tokenKey = 'tokenKey';
 }

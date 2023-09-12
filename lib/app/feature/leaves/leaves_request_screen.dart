@@ -1,13 +1,17 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:rgs_hris/core/data/model/response/leaves_data_response.dart';
 
 import '../../bloc/leaves/leaves_bloc.dart';
 import '../../common/util/key_strings.dart';
 
 class LeavesRequestScreen extends StatelessWidget {
-  LeavesRequestScreen({super.key});
+  LeavesRequestScreen({required this.leavesDataResponse, super.key});
+
+  final LeavesDataResponse leavesDataResponse;
 
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -34,149 +38,236 @@ class LeavesRequestScreen extends StatelessWidget {
       ),
       body: Scaffold(
         backgroundColor: Colors.white,
-        body: BlocBuilder<LeavesBloc, LeavesState>(
+        body: BlocConsumer<LeavesBloc, LeavesState>(
+          listener: (context, state) {
+            if (state is LeavesException) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
+            }
+            if (state is LeavesSetLoaded) {
+              showOkAlertDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      title:
+                          state.leavesRequestResponseWrapper.response?.status,
+                      message:
+                          state.leavesRequestResponseWrapper.response?.message)
+                  .then((value) {
+                if (value == OkCancelResult.ok) {
+                  if (state.leavesRequestResponseWrapper.response?.status
+                          ?.toLowerCase() ==
+                      'success') {
+                    Navigator.of(context).pop();
+                    context.read<LeavesBloc>().add(const LeavesFetched(
+                        dateFrom: '',
+                        dateTo: '',
+                        type: '',
+                        status: 'Pending'));
+                  }
+                }
+              });
+            }
+          },
           builder: (context, state) {
-            if (state is LeavesLoaded) {
-              final leaveCredits = state.leavesWrapperResponse.leavesResponse
-                  ?.leavesDataResponse?.currentLeaveCredits;
-              return SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: FormBuilder(
-                          key: formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const Text(
-                                'LEAVE INFORMATION',
-                                style: TextStyle(
-                                    color: Colors.teal,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 20),
-                              _buildLeaveTypeWidget(),
-                              const SizedBox(height: 10),
-                              Text('Dates From & To',
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: FormBuilder(
+                            key: formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Text(
+                                  'LEAVE INFORMATION',
                                   style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue.shade900)),
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: FormBuilderTextField(
-                                      name: KeyStrings.leaveDateFromKey,
-                                      readOnly: true,
-                                      decoration: const InputDecoration(
-                                        suffixIcon: Icon(
-                                          Icons.calendar_month,
-                                          size: 20,
-                                        ),
-                                        hintText: 'yyyy-MM-dd',
-                                      ),
-                                      onTap: () =>
-                                          _selectLeaveDate(context, 'dateFrom'),
-                                      // onChanged: (value) {
-                                      //   print('dateFrom: $value');
-                                      // },
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Flexible(
-                                    child: FormBuilderTextField(
-                                      name: KeyStrings.leaveDateToKey,
-                                      readOnly: true,
-                                      decoration: const InputDecoration(
+                                      color: Colors.teal,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 20),
+                                _buildLeaveTypeWidget(),
+                                const SizedBox(height: 10),
+                                Text('Dates From & To',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue.shade900)),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: FormBuilderTextField(
+                                        name: KeyStrings.leaveDateFromKey,
+                                        readOnly: true,
+                                        decoration: const InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.calendar_month,
                                             size: 20,
                                           ),
-                                          hintText: 'yyyy-MM-dd'),
-                                      onTap: () {
-                                        _selectLeaveDate(context, 'dateTo');
-                                      },
+                                          hintText: 'yyyy-MM-dd',
+                                        ),
+                                        onTap: () => _selectLeaveDate(
+                                            context, 'dateFrom'),
+                                        // onChanged: (value) {
+                                        //   print('dateFrom: $value');
+                                        // },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 30),
-                              SizedBox(
-                                height: 50,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.teal),
-                                    elevation: MaterialStateProperty.all(0),
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Submit Application'),
+                                    const SizedBox(width: 20),
+                                    Flexible(
+                                      child: FormBuilderTextField(
+                                        name: KeyStrings.leaveDateToKey,
+                                        readOnly: true,
+                                        decoration: const InputDecoration(
+                                            suffixIcon: Icon(
+                                              Icons.calendar_month,
+                                              size: 20,
+                                            ),
+                                            hintText: 'yyyy-MM-dd'),
+                                        onTap: () {
+                                          _selectLeaveDate(context, 'dateTo');
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Colors.grey.shade400,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const Text(
-                              'CURRENT LEAVE CREDITS >> Y 2023',
-                              style: TextStyle(
-                                  color: Colors.teal,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 20),
-                            Wrap(
-                              children: [
-                                _buildLeaveCreditsWidget(
-                                    'SICK LEAVE', leaveCredits!.sl.toString()),
-                                _buildLeaveCreditsWidget('VACATION LEAVE',
-                                    leaveCredits.vl.toString()),
-                                _buildLeaveCreditsWidget('SOLO PARENT LEAVE',
-                                    leaveCredits.spl.toString()),
-                                _buildLeaveCreditsWidget('PATERNITY LEAVE',
-                                    leaveCredits.pl.toString()),
-                                _buildLeaveCreditsWidget('MATERNITY LEAVE',
-                                    leaveCredits.ml.toString()),
-                                _buildLeaveCreditsWidget('BEREAVEMENT LEAVE',
-                                    leaveCredits.bl.toString()),
+                                const SizedBox(height: 10),
+                                Text('Leave Reason/Description',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue.shade900)),
+                                FormBuilderTextField(
+                                  name: KeyStrings.leaveDescriptionKey,
+                                  maxLines: 3,
+                                  decoration: const InputDecoration(
+                                      hintText: 'State your reason',
+                                      hintStyle: TextStyle(fontSize: 12)),
+                                ),
+                                const SizedBox(height: 30),
+                                SizedBox(
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.teal),
+                                      elevation: MaterialStateProperty.all(0),
+                                    ),
+                                    onPressed: () {
+                                      String type = formKey
+                                          .currentState
+                                          ?.fields[KeyStrings.leaveTypeKey]
+                                          ?.value;
+                                      String dateFrom = formKey
+                                              .currentState
+                                              ?.fields[
+                                                  KeyStrings.leaveDateFromKey]
+                                              ?.value ??
+                                          '';
+                                      String dateTo = formKey
+                                              .currentState
+                                              ?.fields[
+                                                  KeyStrings.leaveDateToKey]
+                                              ?.value ??
+                                          '';
+                                      String description = formKey
+                                              .currentState
+                                              ?.fields[KeyStrings
+                                                  .leaveDescriptionKey]
+                                              ?.value ??
+                                          '';
+
+                                      final leaveType = getLeaveTypeId(type);
+
+                                      print('type: $leaveType');
+                                      print('dateFrom: $dateFrom');
+                                      print('dateTo: $dateTo');
+                                      print('description: $description');
+
+                                      context
+                                          .read<LeavesBloc>()
+                                          .add(LeavesApplicationSet(
+                                            type: leaveType.toString(),
+                                            dateFrom: dateFrom,
+                                            dateTo: dateTo,
+                                            description: description,
+                                          ));
+                                    },
+                                    child: const Text('Submit Application'),
+                                  ),
+                                ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Divider(
-                              height: 1,
-                              color: Colors.grey.shade400,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                        Divider(
+                          height: 1,
+                          color: Colors.grey.shade400,
+                        ),
+                        _buildLeaveCreditsSection(),
+                      ],
+                    ),
                   ),
                 ),
-              );
-            }
-            return const SizedBox();
+                if (state is LeavesLoading)
+                  const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  )
+              ],
+            );
+            // }
           },
         ),
       ),
     );
   }
 
-  Widget _buildLeaveCreditsWidget(String leaveType, String credits) {
+  Widget _buildLeaveCreditsSection() {
+    final leaveCredits = leavesDataResponse.currentLeaveCredits;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'CURRENT LEAVE CREDITS >> Y 2023',
+            style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          Wrap(
+            children: [
+              _buildLeaveCreditsItemWidget(
+                  'SICK LEAVE', leaveCredits!.sl.toString()),
+              _buildLeaveCreditsItemWidget(
+                  'VACATION LEAVE', leaveCredits.vl.toString()),
+              _buildLeaveCreditsItemWidget(
+                  'SOLO PARENT LEAVE', leaveCredits.spl.toString()),
+              _buildLeaveCreditsItemWidget(
+                  'PATERNITY LEAVE', leaveCredits.pl.toString()),
+              _buildLeaveCreditsItemWidget(
+                  'MATERNITY LEAVE', leaveCredits.ml.toString()),
+              _buildLeaveCreditsItemWidget(
+                  'BEREAVEMENT LEAVE', leaveCredits.bl.toString()),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.shade400,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLeaveCreditsItemWidget(String leaveType, String credits) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
@@ -233,39 +324,52 @@ class LeavesRequestScreen extends StatelessWidget {
 
   Widget _buildLeaveTypeWidget() {
     var types = [];
-    return BlocBuilder<LeavesBloc, LeavesState>(builder: (context, state) {
-      if (state is LeavesLoaded) {
-        final leaveTypes = state.leavesWrapperResponse.leavesResponse
-            ?.leavesDataResponse?.dropdownOptions?.types;
-        types.add(leaveTypes?.one.toString());
-        types.add(leaveTypes?.two.toString());
-        types.add(leaveTypes?.three.toString());
-        types.add(leaveTypes?.four.toString());
-        types.add(leaveTypes?.five.toString());
-        types.add(leaveTypes?.six.toString());
+    final leaveTypes = leavesDataResponse.dropdownOptions?.types;
+    types.add(leaveTypes?.one.toString());
+    types.add(leaveTypes?.two.toString());
+    types.add(leaveTypes?.three.toString());
+    types.add(leaveTypes?.four.toString());
+    types.add(leaveTypes?.five.toString());
+    types.add(leaveTypes?.six.toString());
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Leave Type',
-                style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
-            FormBuilderDropdown(
-              name: KeyStrings.leaveTypeKey,
-              initialValue: types.first.toString(),
-              items: types
-                  .map(
-                    (leaves) => DropdownMenuItem(
-                      alignment: AlignmentDirectional.centerStart,
-                      value: leaves,
-                      child: Text(leaves, style: const TextStyle(fontSize: 14)),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ],
-        );
-      }
-      return const SizedBox();
-    });
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('Leave Type',
+            style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+        FormBuilderDropdown(
+          name: KeyStrings.leaveTypeKey,
+          initialValue: types.first.toString(),
+          items: types
+              .map(
+                (leaves) => DropdownMenuItem(
+                  alignment: AlignmentDirectional.centerStart,
+                  value: leaves,
+                  child: Text(leaves, style: const TextStyle(fontSize: 14)),
+                ),
+              )
+              .toList(),
+        ),
+      ],
+    );
+  }
+
+  int? getLeaveTypeId(String type) {
+    switch (type) {
+      case 'Sick':
+        return 1;
+      case 'Vacation':
+        return 2;
+      case 'Solo Parent':
+        return 3;
+      case 'Paternity':
+        return 4;
+      case 'Maternity':
+        return 5;
+      case 'Bereavement':
+        return 6;
+      default:
+        return 1;
+    }
   }
 }

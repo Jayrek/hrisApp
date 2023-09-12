@@ -10,16 +10,26 @@ import 'package:rgs_hris/router/app_route.dart';
 
 import '../../bloc/leaves/leaves_bloc.dart';
 
-class LeavesScreen extends StatelessWidget {
-  LeavesScreen({super.key});
+class LeavesScreen extends StatefulWidget {
+  const LeavesScreen({super.key});
 
+  @override
+  State<LeavesScreen> createState() => _LeavesScreenState();
+}
+
+class _LeavesScreenState extends State<LeavesScreen> {
   final formKey = GlobalKey<FormBuilderState>();
 
   @override
-  Widget build(BuildContext context) {
-    context.read<LeavesBloc>().add(const LeavesFetched(
-        dateFrom: '', dateTo: '', type: '1', status: 'Pending'));
+  void initState() {
+    super.initState();
 
+    context.read<LeavesBloc>().add(
+        const LeavesFetched(dateFrom: '', dateTo: '', type: '', status: ''));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -50,32 +60,7 @@ class LeavesScreen extends StatelessWidget {
         ],
       ),
       drawer: const DrawerWidet(),
-      bottomNavigationBar: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                bottom: 40,
-                top: 20,
-              ),
-              child: SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.teal),
-                    elevation: MaterialStateProperty.all(0),
-                  ),
-                  onPressed: () =>
-                      context.pushNamed(AppRoute.leavesRequest.name),
-                  child: const Text('+ Apply for Leave'),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      bottomNavigationBar: _buildApplyForLeaveWidget(),
       body: BlocBuilder<LeavesBloc, LeavesState>(
         builder: (context, state) {
           if (state is LeavesLoaded) {
@@ -119,8 +104,16 @@ class LeavesScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                          'Leave Type: ${getLeaveTypeName(leaveTypes, leaveApplications?.type)} '),
+                                      Row(
+                                        children: [
+                                          const Text('Leave Type: '),
+                                          Text(
+                                            '${getLeaveTypeName(leaveTypes, leaveApplications?.type)}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                       const SizedBox(
                                         height: 10,
                                       ),
@@ -139,8 +132,27 @@ class LeavesScreen extends StatelessWidget {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
-                                          'Status: ${leaveApplications?.status.toString().toUpperCase()}'),
+                                      Row(
+                                        children: [
+                                          const Text('Status: '),
+                                          Text(
+                                            '${leaveApplications?.status.toString().toUpperCase()}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: leaveApplications?.status
+                                                            .toString()
+                                                            .toUpperCase() ==
+                                                        'PENDING'
+                                                    ? Colors.blue.shade900
+                                                    : leaveApplications?.status
+                                                                .toString()
+                                                                .toUpperCase() ==
+                                                            'APPROVED'
+                                                        ? Colors.teal
+                                                        : Colors.red),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -469,5 +481,42 @@ class LeavesScreen extends StatelessWidget {
             ?.didChange(dateFormatter.format(picked).toString());
       }
     }
+  }
+
+  Widget _buildApplyForLeaveWidget() {
+    return BlocBuilder<LeavesBloc, LeavesState>(
+      builder: (context, state) {
+        return Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            SizedBox(
+              child: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 40,
+                    top: 20,
+                  ),
+                  child: state is LeavesLoaded
+                      ? SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.teal),
+                              elevation: MaterialStateProperty.all(0),
+                            ),
+                            onPressed: () => context.pushNamed(
+                              AppRoute.leavesRequest.name,
+                              extra: state.leavesWrapperResponse.leavesResponse
+                                  ?.leavesDataResponse,
+                            ),
+                            child: const Text('+ Apply for Leave'),
+                          ),
+                        )
+                      : const SizedBox()),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

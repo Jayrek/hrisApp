@@ -28,3 +28,25 @@ class LeavesFetched extends LeavesEvent {
         status,
       ];
 }
+
+class LeavesApplicationSet extends LeavesEvent {
+  const LeavesApplicationSet({
+    required this.dateFrom,
+    required this.dateTo,
+    required this.type,
+    required this.description,
+  });
+
+  final String dateFrom;
+  final String dateTo;
+  final String type;
+  final String description;
+
+  @override
+  List<Object?> get props => [
+        dateFrom,
+        dateTo,
+        type,
+        description,
+      ];
+}

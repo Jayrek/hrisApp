@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/core/data/model/response/leave_applications_response.dart';
+
+import '../../bloc/leaves/leaves_bloc.dart';
 
 class LeavesDetailScreen extends StatelessWidget {
   const LeavesDetailScreen({
@@ -11,7 +14,6 @@ class LeavesDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('leaveApplications: $leaveApplications');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -88,7 +90,7 @@ class LeavesDetailScreen extends StatelessWidget {
               const Text('Leave Type',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              Text('${leaveApplications.type} Leave'),
+              _buildLeaveTypeNameWidget(leaveApplications.type),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
@@ -141,6 +143,34 @@ class LeavesDetailScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLeaveTypeNameWidget(int? type) {
+    return BlocBuilder<LeavesBloc, LeavesState>(
+      builder: (context, state) {
+        if (state is LeavesLoaded) {
+          String? leaveType;
+          final typesResponse = state.leavesWrapperResponse.leavesResponse
+              ?.leavesDataResponse?.dropdownOptions?.types;
+          switch (type) {
+            case 1:
+              leaveType = typesResponse?.one;
+            case 2:
+              leaveType = typesResponse?.two;
+            case 3:
+              leaveType = typesResponse?.three;
+            case 4:
+              leaveType = typesResponse?.four;
+            case 5:
+              leaveType = typesResponse?.five;
+            case 6:
+              leaveType = typesResponse?.five;
+          }
+          return Text('$leaveType Leave');
+        }
+        return const SizedBox();
+      },
     );
   }
 }

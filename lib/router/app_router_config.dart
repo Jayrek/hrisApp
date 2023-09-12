@@ -13,6 +13,7 @@ import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
 import 'package:rgs_hris/app/feature/request_update/request_update_screen.dart';
 import 'package:rgs_hris/app/feature/work/work_screen.dart';
+import 'package:rgs_hris/core/data/model/response/leaves_data_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
 import '../app/feature/attendance/attendance_screen.dart';
@@ -72,7 +73,7 @@ class AppRouterConfig {
                   pageBuilder: (context, state) => pageBuilderAnimate(
                         context,
                         state,
-                        child: LeavesScreen(),
+                        child: const LeavesScreen(),
                       ),
                   routes: [
                     GoRoute(
@@ -90,14 +91,19 @@ class AppRouterConfig {
                           );
                         }),
                     GoRoute(
-                      name: AppRoute.leavesRequest.name,
-                      path: AppRoute.leavesRequest.path,
-                      pageBuilder: (context, state) => pageBuilderAnimate(
-                        context,
-                        state,
-                        child: LeavesRequestScreen(),
-                      ),
-                    ),
+                        name: AppRoute.leavesRequest.name,
+                        path: AppRoute.leavesRequest.path,
+                        pageBuilder: (context, state) {
+                          LeavesDataResponse leaveDataResponse =
+                              state.extra as LeavesDataResponse;
+                          return pageBuilderAnimate(
+                            context,
+                            state,
+                            child: LeavesRequestScreen(
+                              leavesDataResponse: leaveDataResponse,
+                            ),
+                          );
+                        }),
                   ]),
               GoRoute(
                 name: AppRoute.attendance.name,
