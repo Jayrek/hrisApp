@@ -14,8 +14,7 @@ part 'leaves_state.dart';
 class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
   final LeavesRepository leavesRepository;
 
-  LeavesBloc({required this.leavesRepository})
-      : super(LeavesInitial()) {
+  LeavesBloc({required this.leavesRepository}) : super(LeavesInitial()) {
     on<LeavesFetched>(_leavesProfileFetched);
   }
 
@@ -33,7 +32,8 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
       token: tokenValue,
     );
 
-    emit(LeavesLoaded(leavesWrapperResponse: responseLeave));
+    print('responseLeave: $responseLeave');
 
+    emit(LeavesLoaded(leavesWrapperResponse: responseLeave));
   }
 }

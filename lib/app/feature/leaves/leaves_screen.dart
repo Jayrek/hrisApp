@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:rgs_hris/app/common/util/key_strings.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/core/data/model/response/types_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
@@ -8,7 +11,9 @@ import 'package:rgs_hris/router/app_route.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
 
 class LeavesScreen extends StatelessWidget {
-  const LeavesScreen({super.key});
+  LeavesScreen({super.key});
+
+  final formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +38,7 @@ class LeavesScreen extends StatelessWidget {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const Text('Modal BottomSheet'),
-                        ElevatedButton(
-                          child: const Text('Close BottomSheet'),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
-                  );
+                  return _buildFilterLeavesBottomSheet(context);
                 },
               );
             },
@@ -66,14 +59,18 @@ class LeavesScreen extends StatelessWidget {
                 bottom: 40,
                 top: 20,
               ),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.teal),
-                  elevation: MaterialStateProperty.all(0),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.teal),
+                    elevation: MaterialStateProperty.all(0),
+                  ),
+                  onPressed: () =>
+                      context.pushNamed(AppRoute.leavesRequest.name),
+                  child: const Text('+ Apply for Leave'),
                 ),
-                onPressed: () => context.pushNamed(AppRoute.leavesRequest.name),
-                child: const Text('+ Apply for Leave'),
               ),
             ),
           ),
@@ -82,74 +79,78 @@ class LeavesScreen extends StatelessWidget {
       body: BlocBuilder<LeavesBloc, LeavesState>(
         builder: (context, state) {
           if (state is LeavesLoaded) {
-            // final leaveStatus = state.leavesWrapperResponse.leavesResponse
-            //     ?.leavesDataResponse?.dropdownOptions?.status;
-
             final leaveTypes = state.leavesWrapperResponse.leavesResponse
                 ?.leavesDataResponse?.dropdownOptions?.types;
 
             final leaveCredits = state.leavesWrapperResponse.leavesResponse
                 ?.leavesDataResponse?.currentLeaveCredits;
+
+            final availableLeaves = state.leavesWrapperResponse.leavesResponse
+                ?.leavesDataResponse?.leaveApplications;
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.leavesWrapperResponse.leavesResponse
-                          ?.leavesDataResponse?.leaveApplications?.length,
-                      itemBuilder: (context, index) {
-                        final leaveApplications = state
-                            .leavesWrapperResponse
-                            .leavesResponse
-                            ?.leavesDataResponse
-                            ?.leaveApplications?[index];
-                        return InkWell(
-                          onTap: () =>
-                              context.pushNamed(AppRoute.leaveDetail.name),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        'Leave Type: ${getLeaveTypeName(leaveTypes, leaveApplications?.type)} '),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                        'Start Date: ${leaveApplications?.dateFrom.toString()}'),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                        'End Date: ${leaveApplications?.dateTo.toString()}'),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                        'No. of Days: ${leaveApplications?.noDays.toString()}'),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                        'Status: ${leaveApplications?.status.toString().toUpperCase()}'),
-                                  ],
+                  Visibility(
+                    visible: availableLeaves!.isNotEmpty,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: availableLeaves.length,
+                        itemBuilder: (context, index) {
+                          final leaveApplications = state
+                              .leavesWrapperResponse
+                              .leavesResponse
+                              ?.leavesDataResponse
+                              ?.leaveApplications?[index];
+                          return InkWell(
+                            onTap: () =>
+                                context.pushNamed(AppRoute.leaveDetail.name),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          'Leave Type: ${getLeaveTypeName(leaveTypes, leaveApplications?.type)} '),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                          'Start Date: ${leaveApplications?.dateFrom.toString()}'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                          'End Date: ${leaveApplications?.dateTo.toString()}'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                          'No. of Days: ${leaveApplications?.noDays.toString()}'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                          'Status: ${leaveApplications?.status.toString().toUpperCase()}'),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Divider(
-                                height: 1,
-                                color: Colors.grey.shade400,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                                Divider(
+                                  height: 1,
+                                  color: Colors.grey.shade400,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -256,6 +257,219 @@ class LeavesScreen extends StatelessWidget {
         return typesResponse?.five?.toUpperCase();
       default:
         return '';
+    }
+  }
+
+  int? getLeaveTypeId(String type) {
+    switch (type) {
+      case 'Sick':
+        return 1;
+      case 'Vacation':
+        return 2;
+      case 'Solo Parent':
+        return 3;
+      case 'Paternity':
+        return 4;
+      case 'Maternity':
+        return 5;
+      case 'Bereavement':
+        return 6;
+      default:
+        return 1;
+    }
+  }
+
+  Widget _buildFilterLeavesBottomSheet(BuildContext context) {
+    var types = [];
+    var statuses = [];
+
+    return BlocBuilder<LeavesBloc, LeavesState>(
+      builder: (context, state) {
+        if (state is LeavesLoaded) {
+          final leaveTypes = state.leavesWrapperResponse.leavesResponse
+              ?.leavesDataResponse?.dropdownOptions?.types;
+          types.add(leaveTypes?.one.toString());
+          types.add(leaveTypes?.two.toString());
+          types.add(leaveTypes?.three.toString());
+          types.add(leaveTypes?.four.toString());
+          types.add(leaveTypes?.five.toString());
+          types.add(leaveTypes?.six.toString());
+
+          final leaveStatus = state.leavesWrapperResponse.leavesResponse
+              ?.leavesDataResponse?.dropdownOptions?.status;
+
+          statuses.add(leaveStatus?.approved.toString());
+          statuses.add(leaveStatus?.pending.toString());
+          statuses.add(leaveStatus?.rejeced.toString());
+
+          return FormBuilder(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text(
+                    'Filter Leaves',
+                    style: TextStyle(
+                        color: Colors.teal, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
+                  ),
+                  const SizedBox(height: 20),
+                  Text('Date Range',
+                      style:
+                          TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: FormBuilderTextField(
+                          name: KeyStrings.leaveDateFromKey,
+                          readOnly: true,
+                          decoration: const InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.calendar_month,
+                              size: 20,
+                            ),
+                            hintText: 'yyyy-MM-dd',
+                          ),
+                          onTap: () => _selectLeaveDate(context, 'dateFrom'),
+                          // onChanged: (value) {
+                          //   print('dateFrom: $value');
+                          // },
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Flexible(
+                        child: FormBuilderTextField(
+                          name: KeyStrings.leaveDateToKey,
+                          readOnly: true,
+                          decoration: const InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.calendar_month,
+                                size: 20,
+                              ),
+                              hintText: 'yyyy-MM-dd'),
+                          onTap: () {
+                            _selectLeaveDate(context, 'dateTo');
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text('Leave Type',
+                      style:
+                          TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  FormBuilderDropdown(
+                    name: KeyStrings.leaveTypeKey,
+                    initialValue: types.first.toString(),
+                    items: types
+                        .map(
+                          (leaves) => DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: leaves,
+                            child: Text(leaves,
+                                style: const TextStyle(fontSize: 14)),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text('Leave Status',
+                      style:
+                          TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  FormBuilderDropdown(
+                    name: KeyStrings.leaveStatusKey,
+                    initialValue: statuses.first.toString(),
+                    items: statuses
+                        .map(
+                          (status) => DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: status,
+                            child: Text(status,
+                                style: const TextStyle(fontSize: 14)),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.teal),
+                        elevation: MaterialStateProperty.all(0),
+                      ),
+                      child: const Text('Apply'),
+                      onPressed: () {
+                        final dateFrom = formKey.currentState
+                                ?.fields[KeyStrings.leaveDateFromKey]?.value ??
+                            '';
+                        final dateTo = formKey.currentState
+                                ?.fields[KeyStrings.leaveDateToKey]?.value ??
+                            '';
+                        final type = formKey.currentState
+                            ?.fields[KeyStrings.leaveTypeKey]?.value;
+                        final status = formKey.currentState
+                            ?.fields[KeyStrings.leaveStatusKey]?.value;
+
+                        final leaveType = getLeaveTypeId(type);
+
+                        print('dateFrom: $dateFrom');
+                        print('dateTo: $dateTo');
+                        print('type: $leaveType');
+                        print('status: $status');
+
+                        Navigator.pop(context);
+
+                        context.read<LeavesBloc>().add(LeavesFetched(
+                            dateFrom: dateFrom,
+                            dateTo: dateTo,
+                            type: leaveType.toString(),
+                            status: status));
+
+                        // setState(() {
+                        //   leaveTypeSelected = type;
+                        // });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        return const SizedBox();
+      },
+    );
+  }
+
+  Future<void> _selectLeaveDate(BuildContext context, String dateKey) async {
+    DateTime selectedDate = DateTime.now();
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      final dateFormatter = DateFormat('yyyy-MM-dd');
+      if (dateKey == 'dateFrom') {
+        formKey.currentState?.fields[KeyStrings.leaveDateFromKey]!
+            .didChange(dateFormatter.format(picked).toString());
+      } else {
+        formKey.currentState?.fields[KeyStrings.leaveDateToKey]
+            ?.didChange(dateFormatter.format(picked).toString());
+      }
     }
   }
 }

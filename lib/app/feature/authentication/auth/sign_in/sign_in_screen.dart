@@ -112,7 +112,7 @@ class SignInScreen extends StatelessWidget {
         child: Column(
           children: [
             TextFormFieldWidget(
-              name: KeyStrings.username,
+              name: KeyStrings.usernameKey,
               initialValue: '',
               hint: AppStrings.username,
               textCapitalization: TextCapitalization.characters,
@@ -127,7 +127,7 @@ class SignInScreen extends StatelessWidget {
               height: 10,
             ),
             TextFormFieldWidget(
-              name: KeyStrings.password,
+              name: KeyStrings.passwordKey,
               initialValue: '',
               hint: AppStrings.password,
               isObscure: true,
@@ -164,9 +164,9 @@ class SignInScreen extends StatelessWidget {
 
   Future<void> _signIn(BuildContext context) async {
     final username =
-        formKey.currentState?.fields[KeyStrings.username]?.value;
+        formKey.currentState?.fields[KeyStrings.usernameKey]?.value;
     final password =
-        formKey.currentState?.fields[KeyStrings.password]?.value;
+        formKey.currentState?.fields[KeyStrings.passwordKey]?.value;
 
     context.read<AuthBloc>().add(
         const AuthSignInSubmit(username: 'CRUZ06061988', password: '06061988'));

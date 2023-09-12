@@ -68,7 +68,7 @@ class SignUpScreen extends StatelessWidget {
         child: Column(
           children: [
             TextFormFieldWidget(
-              name: KeyStrings.emailAddress,
+              name: KeyStrings.emailAddressKey,
               hint: AppStrings.emailAddress,
               textInputType: TextInputType.emailAddress,
               fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             const TextFormFieldWidget(
-              name: KeyStrings.mobileNumber,
+              name: KeyStrings.mobileNumberKey,
               hint: AppStrings.mobileNumber,
               textInputType: TextInputType.phone,
               fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             const TextFormFieldWidget(
-              name: KeyStrings.username,
+              name: KeyStrings.usernameKey,
               initialValue: '',
               hint: AppStrings.username,
               textCapitalization: TextCapitalization.characters,
@@ -101,7 +101,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             const TextFormFieldWidget(
-              name: KeyStrings.password,
+              name: KeyStrings.passwordKey,
               initialValue: '',
               hint: AppStrings.password,
               isObscure: true,
@@ -111,7 +111,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             const TextFormFieldWidget(
-              name: KeyStrings.confirmPassword,
+              name: KeyStrings.confirmPasswordKey,
               initialValue: '',
               hint: AppStrings.confirmPassword,
               isObscure: true,
@@ -139,15 +139,15 @@ class SignUpScreen extends StatelessWidget {
   void _signUp() {
     if (formKey.currentState!.saveAndValidate()) {
       final email =
-          formKey.currentState!.fields[KeyStrings.emailAddress]!.value;
+          formKey.currentState!.fields[KeyStrings.emailAddressKey]!.value;
       final mobileNumber =
-          formKey.currentState?.fields[KeyStrings.mobileNumber]?.value;
+          formKey.currentState?.fields[KeyStrings.mobileNumberKey]?.value;
       final username =
-          formKey.currentState?.fields[KeyStrings.username]?.value;
+          formKey.currentState?.fields[KeyStrings.usernameKey]?.value;
       final password =
-          formKey.currentState?.fields[KeyStrings.password]?.value;
+          formKey.currentState?.fields[KeyStrings.passwordKey]?.value;
       final confirmPassword =
-          formKey.currentState?.fields[KeyStrings.confirmPassword]?.value;
+          formKey.currentState?.fields[KeyStrings.confirmPasswordKey]?.value;
 
       debugPrint('email: $email');
       debugPrint('mobileNumber: $mobileNumber');

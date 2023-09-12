@@ -71,7 +71,7 @@ class AppRouterConfig {
                   pageBuilder: (context, state) => pageBuilderAnimate(
                         context,
                         state,
-                        child: const LeavesScreen(),
+                        child: LeavesScreen(),
                       ),
                   routes: [
                     GoRoute(

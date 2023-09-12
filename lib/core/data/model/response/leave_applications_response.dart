@@ -38,8 +38,8 @@ class LeaveApplications {
   int? noDays;
   String? description;
   String? status;
-  String? approvedBy;
-  String? rejectedBy;
+  int? approvedBy;
+  int? rejectedBy;
   String? statusDate;
 
   Map<String, dynamic> toJson() {
