@@ -23,7 +23,7 @@ class LeavesDetailScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         title: const Text(
-          'LEAVE DETAIL',
+          'LEAVE DETAILS',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -123,29 +123,17 @@ class LeavesDetailScreen extends StatelessWidget {
               const Text('APPROVED BY',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              // Text('${leaveApplications.status}'),
+              Text("${leaveApplications.approvedBy ?? '-'}"),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
                 color: Colors.grey.shade400,
               ),
-
               const SizedBox(height: 20),
               const Text('REJECTED BY',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              // Text('-', style: Text,),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-
-              const Text('MODIFIED BY',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              // Text('${leaveApplications.status}'),
+              Text("${leaveApplications.rejectedBy ?? '-'}"),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
@@ -180,7 +168,7 @@ class LeavesDetailScreen extends StatelessWidget {
             case 6:
               leaveType = typesResponse?.five?.toUpperCase();
           }
-          return Text('$leaveType Leave');
+          return Text('$leaveType LEAVE');
         }
         return const SizedBox();
       },

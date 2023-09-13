@@ -89,95 +89,111 @@ class _LeavesScreenState extends State<LeavesScreen> {
                               .leavesResponse
                               ?.leavesDataResponse
                               ?.leaveApplications?[index];
-                          return InkWell(
-                            onTap: () => context.pushNamed(
-                              AppRoute.leaveDetail.name,
-                              extra: leaveApplications,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      // Container(
-                                      // height: 30,
-                                      // width: double.infinity,
-                                      // color: Colors.grey.shade100,
-                                      // child: Align(
-                                      //     alignment: Alignment.centerRight,
-                                      //     child: Text(_parseDateFiled(
-                                      //       leaveApplications!.dateFiled
-                                      //           .toString()),
-                                      //       style: const TextStyle(
-                                      //         color: Colors.grey
-                                      //       ),
-                                      //     ),
-                                      //     )),
-                                      Row(
-                                        children: [
-                                          const Text('Leave Type: '),
-                                          Text(
-                                            '${getLeaveTypeName(leaveTypes, leaveApplications?.type)}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        height: 30,
+                                        width: double.infinity,
+                                        color: Colors.grey.shade100,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              '${getLeaveTypeName(leaveTypes, leaveApplications?.type)} LEAVE',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ],
+                                        )),
+                                    // Row(
+                                    //   children: [
+                                    //     const Text('Leave Type: '),
+                                    //     Text(
+                                    //       '${getLeaveTypeName(leaveTypes, leaveApplications?.type)}',
+                                    //       style: const TextStyle(
+                                    //           fontWeight: FontWeight.bold),
+                                    //     ),
+                                    //   ],
+                                    // ),
+
+                                    InkWell(
+                                      onTap: () => context.pushNamed(
+                                        AppRoute.leaveDetail.name,
+                                        extra: leaveApplications,
                                       ),
-                                      const SizedBox(
-                                        height: 10,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                                'Start Date: ${parseDate(leaveApplications!.dateFrom.toString())}'),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                                'End Date: ${parseDate(leaveApplications.dateTo.toString())}'),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                                'No. of Days: ${leaveApplications.noDays.toString()}'),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text('Status: '),
+                                                Text(
+                                                  leaveApplications.status
+                                                      .toString()
+                                                      .toUpperCase(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: leaveApplications
+                                                                  .status
+                                                                  .toString()
+                                                                  .toUpperCase() ==
+                                                              'PENDING'
+                                                          ? Colors.blue.shade900
+                                                          : leaveApplications
+                                                                      .status
+                                                                      .toString()
+                                                                      .toUpperCase() ==
+                                                                  'APPROVED'
+                                                              ? Colors.teal
+                                                              : Colors.red),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.grey.shade400,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Text(
-                                          'Start Date: ${parseDate(leaveApplications!.dateFrom.toString())}'),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                          'End Date: ${parseDate(leaveApplications.dateTo.toString())}'),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                          'No. of Days: ${leaveApplications.noDays.toString()}'),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text('Status: '),
-                                          Text(
-                                            leaveApplications.status.toString().toUpperCase(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: leaveApplications.status
-                                                            .toString()
-                                                            .toUpperCase() ==
-                                                        'PENDING'
-                                                    ? Colors.blue.shade900
-                                                    : leaveApplications.status
-                                                                .toString()
-                                                                .toUpperCase() ==
-                                                            'APPROVED'
-                                                        ? Colors.teal
-                                                        : Colors.red),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                Divider(
-                                  height: 1,
-                                  color: Colors.grey.shade400,
-                                  indent: 20,
-                                  endIndent: 20,
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           );
                         }),
                   ),
