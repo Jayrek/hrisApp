@@ -15,6 +15,12 @@ class DrawerWidget extends StatelessWidget {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              height: 70,
+              child: Image.asset('assets/images/rgs_logo.png'),
+            ),
             _buildDrawerHeader(),
             Divider(
               height: 1,
@@ -37,10 +43,10 @@ class DrawerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.blue.shade200,
+                  backgroundColor: Colors.blue.shade100,
                   radius: 40,
                   child: CircleAvatar(
-                    radius: 38,
+                    radius: 37,
                     backgroundColor: Colors.grey.shade300,
                   ),
                 ),
@@ -110,6 +116,10 @@ class DrawerWidget extends StatelessWidget {
         _buildDrawerItem(Icons.key, 'CHANGE PASSWORD', onTap: () {
           Navigator.of(context).pop();
           context.pushNamed(AppRoute.changePassword.name);
+        }),
+        _buildDrawerItem(Icons.logout, 'LOGOUT', onTap: () {
+          Navigator.of(context).pop();
+          context.goNamed(AppRoute.signIn.name);
         }),
       ],
     );
