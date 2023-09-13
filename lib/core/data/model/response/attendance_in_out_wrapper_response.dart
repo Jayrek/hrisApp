@@ -18,6 +18,11 @@ class AttendanceInOutWrapperResponse {
     }
     return map;
   }
+
+  @override
+  String toString() {
+    return 'AttendanceInOutWrapperResponse{response: $response}';
+  }
 }
 
 class AttendanceInOutResponse {
@@ -44,6 +49,11 @@ class AttendanceInOutResponse {
     }
     return map;
   }
+
+  @override
+  String toString() {
+    return 'AttendanceInOutResponse{status: $status, message: $message}';
+  }
 }
 
 class AttendanceInOutMessageResponse {
@@ -61,5 +71,10 @@ class AttendanceInOutMessageResponse {
     final map = <String, dynamic>{};
     map['msg'] = msg;
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'AttendanceInOutMessageResponse{msg: $msg}';
   }
 }

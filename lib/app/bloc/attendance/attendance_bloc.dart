@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rgs_hris/core/data/model/response/attendance_in_out_wrapper_response.dart';
 import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
 
 import '../../../core/domain/manager/token_manager.dart';
@@ -17,6 +18,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   AttendanceBloc({required this.attendanceRepository})
       : super(AttendanceInitial()) {
     on<AttendanceFetched>(_onAttendanceFetched);
+    on<AttendanceTimeInOutSet>(_onAttendanceTimeInOutSet);
   }
 
   FutureOr<void> _onAttendanceFetched(
@@ -33,5 +35,20 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
     print('response: $response');
 
     emit(AttendanceLoaded(attendanceWrapperResponse: response));
+  }
+
+  FutureOr<void> _onAttendanceTimeInOutSet(
+    AttendanceTimeInOutSet event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    emit(AttendanceSetLoading());
+    final tokenValue = await TokenManager.getToken();
+    final response = await attendanceRepository.setTimeInOut(
+      type: event.type,
+      token: tokenValue,
+    );
+    print('_onAttendanceTimeInOutSet: $response');
+
+    emit(AttendanceTimeInOutLoaded(attendanceInOutWrapperResponse: response));
   }
 }
