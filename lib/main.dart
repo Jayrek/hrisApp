@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
+import 'package:rgs_hris/app/bloc/employee/employee_bloc.dart';
 import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
 import 'package:rgs_hris/app/bloc/user/user_bloc.dart';
 import 'package:rgs_hris/app/bloc/work/work_bloc.dart';
@@ -18,7 +19,9 @@ import 'package:rgs_hris/core/data/repository/work/work_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
+import 'core/data/data_source/employee/employee_remote_data_source_impl.dart';
 import 'core/data/repository/attendance/attendance_repository_impl.dart';
+import 'core/data/repository/employee/employee_repository_impl.dart';
 
 void main() {
   runApp(const RgsHrisApp());
@@ -75,6 +78,15 @@ class RgsHrisApp extends StatelessWidget {
                 workRemoteDataSource: workRemoteDataSource);
           },
         ),
+        RepositoryProvider(
+          create: (context) {
+            final employeeRemoteDataSource =
+                EmployeeRemoteDataSourceImpl(dioClient: Dio());
+
+            return EmployeeRepositoryImpl(
+                employeeRemoteDataSource: employeeRemoteDataSource);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -109,6 +121,11 @@ class RgsHrisApp extends StatelessWidget {
             create: (context) => WorkBloc(
                 workRepository:
                     RepositoryProvider.of<WorkRepositoryImpl>(context)),
+          ),
+          BlocProvider(
+            create: (context) => EmployeeBloc(
+                employeeRepository:
+                    RepositoryProvider.of<EmployeeRepositoryImpl>(context)),
           ),
         ],
         child: MaterialApp.router(
