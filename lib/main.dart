@@ -5,13 +5,16 @@ import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
 import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
 import 'package:rgs_hris/app/bloc/user/user_bloc.dart';
+import 'package:rgs_hris/app/bloc/work/work_bloc.dart';
 import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/auth/auth_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/user/user_remote_data_source_impl.dart';
+import 'package:rgs_hris/core/data/data_source/work/work_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/repository/auth/auth_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/leaves/leaves_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/user/user_repository_impl.dart';
+import 'package:rgs_hris/core/data/repository/work/work_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
@@ -63,6 +66,15 @@ class RgsHrisApp extends StatelessWidget {
                 userRemoteDataSource: userRemoteDataSource);
           },
         ),
+        RepositoryProvider(
+          create: (context) {
+            final workRemoteDataSource =
+                WorkRemoteDataSourceImpl(dioClient: Dio());
+
+            return WorkRepositoryImpl(
+                workRemoteDataSource: workRemoteDataSource);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -93,9 +105,11 @@ class RgsHrisApp extends StatelessWidget {
                 attendanceRepository:
                     RepositoryProvider.of<AttendanceRepositoryImpl>(context)),
           ),
-          // BlocProvider(
-          //   create: (context) => SubjectBloc(),
-          // ),
+          BlocProvider(
+            create: (context) => WorkBloc(
+                workRepository:
+                    RepositoryProvider.of<WorkRepositoryImpl>(context)),
+          ),
         ],
         child: MaterialApp.router(
           theme: ThemeData(fontFamily: 'Lato'),
