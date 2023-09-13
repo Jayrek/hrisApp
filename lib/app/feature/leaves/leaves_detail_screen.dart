@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:rgs_hris/core/data/model/response/leave_applications_response.dart';
 
+import '../../bloc/auth/auth_bloc.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
 
 class LeavesDetailScreen extends StatelessWidget {
@@ -34,31 +36,42 @@ class LeavesDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('Employee Name',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('Date Filed',
+              const Text('EMPLOYEE NAME',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              Text('${leaveApplications.dateFiled}'),
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+                if (state is AuthSignInSuccess) {
+                  final employeeData = state.loginWrapperResponse.loginResponse
+                      ?.loginDataResponse?.employeeDetails;
+                  return Text(
+                    '${employeeData?.name.toString().toUpperCase()}',
+                  );
+                }
+                return const SizedBox();
+              }),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
-              const Text('Effective Date',
+              const Text('DATE FILED',
+                  style: TextStyle(fontSize: 12, color: Colors.teal)),
+              const SizedBox(height: 10),
+              Text(parseDate(leaveApplications.dateFiled.toString())),
+              const SizedBox(height: 20),
+              Divider(
+                height: 1,
+                color: Colors.grey.shade400,
+              ),
+              const SizedBox(height: 20),
+              const Text('EFFECTIVE DATE',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
               Row(
                 children: [
                   Text(
-                      '${leaveApplications.dateFrom} - ${leaveApplications.dateTo}'),
+                      '${parseDate(leaveApplications.dateFrom.toString())} - ${parseDate(leaveApplications.dateTo.toString())}'),
                 ],
               ),
               const SizedBox(height: 20),
@@ -67,7 +80,7 @@ class LeavesDetailScreen extends StatelessWidget {
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
-              const Text('No. of Days',
+              const Text('NO OF DAYS',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
               Text('${leaveApplications.noDays}'),
@@ -77,17 +90,17 @@ class LeavesDetailScreen extends StatelessWidget {
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
-              const Text('Reason/Description',
+              const Text('REASON / DESCRIPTION',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              Text('${leaveApplications.description}'),
+              Text(leaveApplications.description.toString().toUpperCase()),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
-              const Text('Leave Type',
+              const Text('LEAVE TYPE',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
               _buildLeaveTypeNameWidget(leaveApplications.type),
@@ -97,17 +110,17 @@ class LeavesDetailScreen extends StatelessWidget {
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
-              const Text('Status',
+              const Text('STATUS',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              Text('${leaveApplications.status}'),
+              Text('${leaveApplications.status?.toUpperCase()}'),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
-              const Text('Approved By',
+              const Text('APPROVED BY',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
               // Text('${leaveApplications.status}'),
@@ -118,10 +131,10 @@ class LeavesDetailScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
-              const Text('Rejected By',
+              const Text('REJECTED BY',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
-              // Text('${leaveApplications.status}'),
+              // Text('-', style: Text,),
               const SizedBox(height: 20),
               Divider(
                 height: 1,
@@ -129,7 +142,7 @@ class LeavesDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              const Text('Modified By',
+              const Text('MODIFIED BY',
                   style: TextStyle(fontSize: 12, color: Colors.teal)),
               const SizedBox(height: 10),
               // Text('${leaveApplications.status}'),
@@ -155,22 +168,26 @@ class LeavesDetailScreen extends StatelessWidget {
               ?.leavesDataResponse?.dropdownOptions?.types;
           switch (type) {
             case 1:
-              leaveType = typesResponse?.one;
+              leaveType = typesResponse?.one?.toUpperCase();
             case 2:
-              leaveType = typesResponse?.two;
+              leaveType = typesResponse?.two?.toUpperCase();
             case 3:
-              leaveType = typesResponse?.three;
+              leaveType = typesResponse?.three?.toUpperCase();
             case 4:
-              leaveType = typesResponse?.four;
+              leaveType = typesResponse?.four?.toUpperCase();
             case 5:
-              leaveType = typesResponse?.five;
+              leaveType = typesResponse?.five?.toUpperCase();
             case 6:
-              leaveType = typesResponse?.five;
+              leaveType = typesResponse?.five?.toUpperCase();
           }
           return Text('$leaveType Leave');
         }
         return const SizedBox();
       },
     );
+  }
+
+  String parseDate(String date) {
+    return DateFormat.yMd().format(DateTime.parse(date));
   }
 }

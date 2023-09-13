@@ -104,6 +104,20 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      // Container(
+                                      // height: 30,
+                                      // width: double.infinity,
+                                      // color: Colors.grey.shade100,
+                                      // child: Align(
+                                      //     alignment: Alignment.centerRight,
+                                      //     child: Text(_parseDateFiled(
+                                      //       leaveApplications!.dateFiled
+                                      //           .toString()),
+                                      //       style: const TextStyle(
+                                      //         color: Colors.grey
+                                      //       ),
+                                      //     ),
+                                      //     )),
                                       Row(
                                         children: [
                                           const Text('Leave Type: '),
@@ -118,17 +132,17 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                         height: 10,
                                       ),
                                       Text(
-                                          'Start Date: ${leaveApplications?.dateFrom.toString()}'),
+                                          'Start Date: ${parseDate(leaveApplications!.dateFrom.toString())}'),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
-                                          'End Date: ${leaveApplications?.dateTo.toString()}'),
+                                          'End Date: ${parseDate(leaveApplications.dateTo.toString())}'),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
-                                          'No. of Days: ${leaveApplications?.noDays.toString()}'),
+                                          'No. of Days: ${leaveApplications.noDays.toString()}'),
                                       const SizedBox(
                                         height: 10,
                                       ),
@@ -136,15 +150,15 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                         children: [
                                           const Text('Status: '),
                                           Text(
-                                            '${leaveApplications?.status.toString().toUpperCase()}',
+                                            leaveApplications.status.toString().toUpperCase(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: leaveApplications?.status
+                                                color: leaveApplications.status
                                                             .toString()
                                                             .toUpperCase() ==
                                                         'PENDING'
                                                     ? Colors.blue.shade900
-                                                    : leaveApplications?.status
+                                                    : leaveApplications.status
                                                                 .toString()
                                                                 .toUpperCase() ==
                                                             'APPROVED'
@@ -518,5 +532,9 @@ class _LeavesScreenState extends State<LeavesScreen> {
         );
       },
     );
+  }
+
+  String parseDate(String date) {
+    return DateFormat.yMd().format(DateTime.parse(date));
   }
 }
