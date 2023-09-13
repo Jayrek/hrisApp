@@ -81,7 +81,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         DateFormat('hh:mm:ss').format(_currentTime);
                     return Container(
                       color: Colors.black,
-                      height: 50,
+                      height: 60,
                       child: Center(
                         child: Text(
                           formattedTime,
@@ -94,37 +94,48 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     );
                   }),
               const SizedBox(height: 10),
-              SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.teal),
-                    elevation: MaterialStateProperty.all(0),
+              Row(
+                children: [
+                  Flexible(
+                    child: SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.teal),
+                          elevation: MaterialStateProperty.all(0),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'AM IN',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   ),
-                  onPressed: () {},
-                  child: const Text(
-                    'AM IN',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  const SizedBox(width: 20),
+                  Flexible(
+                    child: SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red),
+                          elevation: MaterialStateProperty.all(0),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'PM OUT',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
               const SizedBox(height: 10),
-              SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.red),
-                    elevation: MaterialStateProperty.all(0),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'PM OUT',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -132,7 +143,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     );
   }
 
-  // Widget _buildShiftScheduleTable(){
-  //   return TableRow(children: );
-  // }
+// Widget _buildShiftScheduleTable(){
+//   return TableRow(children: );
+// }
 }
