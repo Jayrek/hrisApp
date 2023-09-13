@@ -1,13 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
 import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
+import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/auth/auth_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/repository/auth/auth_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/leaves/leaves_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
+
+import 'core/data/repository/attendance/attendance_repository_impl.dart';
 
 void main() {
   runApp(const RgsHrisApp());
@@ -37,6 +41,15 @@ class RgsHrisApp extends StatelessWidget {
                 leavesRemoteDataSource: leavesRemoteDataSource);
           },
         ),
+        RepositoryProvider(
+          create: (context) {
+            final attendanceRemoteDataSource =
+                AttendanceRemoteDataSourceImpl(dioClient: Dio());
+
+            return AttendanceRepositoryImpl(
+                attendanceRemoteDataSource: attendanceRemoteDataSource);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -51,6 +64,11 @@ class RgsHrisApp extends StatelessWidget {
             create: (context) => LeavesBloc(
                 leavesRepository:
                     RepositoryProvider.of<LeavesRepositoryImpl>(context)),
+          ),
+          BlocProvider(
+            create: (context) => AttendanceBloc(
+                attendanceRepository:
+                    RepositoryProvider.of<AttendanceRepositoryImpl>(context)),
           ),
           // BlocProvider(
           //   create: (context) => SubjectBloc(),
