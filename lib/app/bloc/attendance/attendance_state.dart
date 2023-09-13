@@ -11,7 +11,7 @@ class AttendanceInitial extends AttendanceState {}
 
 class AttendanceLoading extends AttendanceState {}
 
-class AttendanceSetLoading extends AttendanceState {}
+// class AttendanceSetLoading extends AttendanceState {}
 
 class AttendanceLoaded extends AttendanceState {
   final AttendanceWrapperResponse attendanceWrapperResponse;
@@ -21,16 +21,16 @@ class AttendanceLoaded extends AttendanceState {
   @override
   List<Object> get props => [attendanceWrapperResponse];
 }
-
-class AttendanceTimeInOutLoaded extends AttendanceState {
-  final AttendanceInOutWrapperResponse attendanceInOutWrapperResponse;
-
-  const AttendanceTimeInOutLoaded(
-      {required this.attendanceInOutWrapperResponse});
-
-  @override
-  List<Object> get props => [attendanceInOutWrapperResponse];
-}
+//
+// class AttendanceTimeInOutLoaded extends AttendanceState {
+//   final AttendanceInOutWrapperResponse attendanceInOutWrapperResponse;
+//
+//   const AttendanceTimeInOutLoaded(
+//       {required this.attendanceInOutWrapperResponse});
+//
+//   @override
+//   List<Object> get props => [attendanceInOutWrapperResponse];
+// }
 
 class AttendanceException extends AttendanceState {
   final String message;

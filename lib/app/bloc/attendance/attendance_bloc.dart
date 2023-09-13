@@ -18,7 +18,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   AttendanceBloc({required this.attendanceRepository})
       : super(AttendanceInitial()) {
     on<AttendanceFetched>(_onAttendanceFetched);
-    on<AttendanceTimeInOutSet>(_onAttendanceTimeInOutSet);
+    // on<AttendanceTimeInOutSet>(_onAttendanceTimeInOutSet);
   }
 
   FutureOr<void> _onAttendanceFetched(
@@ -37,18 +37,18 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
     emit(AttendanceLoaded(attendanceWrapperResponse: response));
   }
 
-  FutureOr<void> _onAttendanceTimeInOutSet(
-    AttendanceTimeInOutSet event,
-    Emitter<AttendanceState> emit,
-  ) async {
-    emit(AttendanceSetLoading());
-    final tokenValue = await TokenManager.getToken();
-    final response = await attendanceRepository.setTimeInOut(
-      type: event.type,
-      token: tokenValue,
-    );
-    print('_onAttendanceTimeInOutSet: $response');
-
-    emit(AttendanceTimeInOutLoaded(attendanceInOutWrapperResponse: response));
-  }
+  // FutureOr<void> _onAttendanceTimeInOutSet(
+  //   AttendanceTimeInOutSet event,
+  //   Emitter<AttendanceState> emit,
+  // ) async {
+  //   emit(AttendanceSetLoading());
+  //   final tokenValue = await TokenManager.getToken();
+  //   final response = await attendanceRepository.setTimeInOut(
+  //     type: event.type,
+  //     token: tokenValue,
+  //   );
+  //   print('_onAttendanceTimeInOutSet: $response');
+  //
+  //   emit(AttendanceTimeInOutLoaded(attendanceInOutWrapperResponse: response));
+  // }
 }

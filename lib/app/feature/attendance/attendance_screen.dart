@@ -3,41 +3,44 @@ import 'dart:async';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
+import 'package:rgs_hris/app/feature/attendance/attendance_time_in_out_widget.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 
-import '../../bloc/user/user_bloc.dart';
+import '../../common/util/key_strings.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
+class AttendanceScreen extends StatelessWidget {
+  AttendanceScreen({super.key});
 
-  @override
-  State<AttendanceScreen> createState() => _AttendanceScreenState();
-}
+//
+//   @override
+//   State<AttendanceScreen> createState() => _AttendanceScreenState();
+// }
+//
+// class _AttendanceScreenState extends State<AttendanceScreen> {
+//   late Stream<DateTime> _timeStream;
+//   DateTime _currentTimeTime = DateTime.now();
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     final formatter = DateFormat('yyyy-MM-dd');
+//     final initialDate = formatter.format(DateTime.now());
+//
+//     context.read<AttendanceBloc>().add(
+//           AttendanceFetched(
+//             dateFrom: initialDate.toString(),
+//             dateTo: initialDate.toString(),
+//           ),
+//         );
+//
+//     // _timeStream =
+//     //     Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+//   }
 
-class _AttendanceScreenState extends State<AttendanceScreen> {
-  late Stream<DateTime> _timeStream;
-  DateTime _currentTime = DateTime.now();
-
-  @override
-  void initState() {
-    super.initState();
-    final formatter = DateFormat('yyyy-MM-dd');
-    final initialDate = formatter.format(DateTime.now());
-
-    context.read<AttendanceBloc>().add(
-          AttendanceFetched(
-            dateFrom: initialDate.toString(),
-            dateTo: initialDate.toString(),
-          ),
-        );
-
-    context.read<UserBloc>().add(UserFetched());
-
-    _timeStream =
-        Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
-  }
+  final formKey = GlobalKey<FormBuilderState>();
 
   String getCurrentDate() {
     final formatter = DateFormat.yMMMMEEEEd();
@@ -46,6 +49,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = DateFormat('yyyy-MM-dd');
+    final initialDate = formatter.format(DateTime.now());
+    context.read<AttendanceBloc>().add(
+          AttendanceFetched(
+            dateFrom: initialDate.toString(),
+            dateTo: initialDate.toString(),
+          ),
+        );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -58,6 +70,22 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             color: Colors.black,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return _buildFilterAttendance(context);
+                },
+              );
+            },
+            icon: const Icon(
+              Icons.filter_alt_outlined,
+              color: Colors.grey,
+            ),
+          ),
+        ],
       ),
       drawer: const DrawerWidget(),
       body: SingleChildScrollView(
@@ -76,133 +104,47 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Widget _buildAttendanceTimeInOutWidget() {
-    return BlocConsumer<AttendanceBloc, AttendanceState>(
-      listener: (context, state) {
-        if (state is AttendanceTimeInOutLoaded) {
-          showOkAlertDialog(
-            barrierDismissible: false,
-            context: context,
-            title: state.attendanceInOutWrapperResponse.response?.status,
-            message:
-                state.attendanceInOutWrapperResponse.response?.message?.msg,
-          );
-        }
-        if (state is AttendanceException) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(state.message)));
-        }
-      },
-      builder: (context, state) {
-        return Stack(
+    return Stack(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'SHIFT & SCHEDULE',
-                  style: TextStyle(
-                      color: Colors.teal, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                Divider(
-                  height: 1,
-                  color: Colors.grey.shade400,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    getCurrentDate().toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                _buildShiftTable(),
-                const SizedBox(height: 20),
-                StreamBuilder<DateTime>(
-                    stream: _timeStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        _currentTime = snapshot.data!;
-                      }
-                      final formattedTime =
-                          DateFormat('hh:mm:ss').format(_currentTime);
-                      return Container(
-                        color: Colors.black,
-                        height: 60,
-                        child: Center(
-                          child: Text(
-                            formattedTime,
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.yellow.shade200,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      );
-                    }),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Flexible(
-                      child: SizedBox(
-                        height: 50,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.teal),
-                            elevation: MaterialStateProperty.all(0),
-                          ),
-                          onPressed: () => context
-                              .read<AttendanceBloc>()
-                              .add(const AttendanceTimeInOutSet(type: 'am_in')),
-                          child: const Text(
-                            'AM IN',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Flexible(
-                      child: SizedBox(
-                        height: 50,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.red),
-                            elevation: MaterialStateProperty.all(0),
-                          ),
-                          onPressed: () => context.read<AttendanceBloc>().add(
-                              const AttendanceTimeInOutSet(type: 'pm_out')),
-                          child: const Text(
-                            'PM OUT',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Divider(
-                  height: 1,
-                  color: Colors.grey.shade400,
-                ),
-                _buildEntryLogs(),
-              ],
+            const Text(
+              'SHIFT & SCHEDULE',
+              style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
             ),
-            // if (state is AttendanceSetLoading)
-            //   const Center(
-            //     child: Padding(
-            //       padding: EdgeInsets.symmetric(vertical: 20),
-            //       child: CircularProgressIndicator.adaptive(),
-            //     ),
-            //   ),
+            const SizedBox(height: 20),
+            Divider(
+              height: 1,
+              color: Colors.grey.shade400,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                getCurrentDate().toUpperCase(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            _buildShiftTable(),
+            const SizedBox(height: 20),
+            const AttendanceTimeInOutWidget(),
+            const SizedBox(height: 20),
+            Divider(
+              height: 1,
+              color: Colors.grey.shade400,
+            ),
+            _buildEntryLogs(),
           ],
-        );
-      },
+        ),
+        // if (state is AttendanceSetLoading)
+        //   const Center(
+        //     child: Padding(
+        //       padding: EdgeInsets.symmetric(vertical: 20),
+        //       child: CircularProgressIndicator.adaptive(),
+        //     ),
+        //   ),
+      ],
     );
   }
 
@@ -231,11 +173,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               ]),
             ],
           );
+        } else {
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
-        return const SizedBox();
-        // else {
-        //   return const Center(child: CircularProgressIndicator.adaptive());
-        // }
       },
     );
   }
@@ -251,7 +191,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             child: Text(
           cell,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 10),
+          style: const TextStyle(fontSize: 10),
         )),
       );
     }).toList());
@@ -323,7 +263,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   children: [
                                     Column(
                                       children: [
-                                        const Text('TIME IN'),
+                                        const Text('AM IN'),
                                         Text(
                                           timeIn,
                                           textAlign: TextAlign.center,
@@ -337,7 +277,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                     ),
                                     Column(
                                       children: [
-                                        const Text('TIME OUT'),
+                                        const Text('PM OUT'),
                                         Text(
                                           timeOut,
                                           textAlign: TextAlign.center,
@@ -361,13 +301,112 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 },
               );
             }
-            return const SizedBox();
-            // return const Center(
-            //   child: CircularProgressIndicator.adaptive(),
-            // );
+            // return const SizedBox();
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
           },
         ),
       ],
     );
+  }
+
+  Widget _buildFilterAttendance(BuildContext context) {
+    return FormBuilder(
+      key: formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Text(
+              'Filter Attendance',
+              style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Divider(
+              height: 1,
+              color: Colors.grey.shade400,
+            ),
+            const SizedBox(height: 20),
+            Text('Date Range',
+                style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+            Row(
+              children: [
+                Flexible(
+                  child: FormBuilderTextField(
+                    name: KeyStrings.leaveDateFromKey,
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                      suffixIcon: Icon(
+                        Icons.calendar_month,
+                        size: 20,
+                      ),
+                      hintText: 'yyyy-MM-dd',
+                    ),
+                    onTap: () => _selectLeaveDate(context, 'dateFrom'),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Flexible(
+                  child: FormBuilderTextField(
+                    name: KeyStrings.leaveDateToKey,
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                        suffixIcon: Icon(
+                          Icons.calendar_month,
+                          size: 20,
+                        ),
+                        hintText: 'yyyy-MM-dd'),
+                    onTap: () {
+                      _selectLeaveDate(context, 'dateTo');
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.teal),
+                  elevation: MaterialStateProperty.all(0),
+                ),
+                child: const Text('Apply'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _selectLeaveDate(BuildContext context, String dateKey) async {
+    DateTime selectedDate = DateTime.now();
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      final dateFormatter = DateFormat('yyyy-MM-dd');
+      if (dateKey == 'dateFrom') {
+        formKey.currentState?.fields[KeyStrings.leaveDateFromKey]!
+            .didChange(dateFormatter.format(picked).toString());
+      } else {
+        formKey.currentState?.fields[KeyStrings.leaveDateToKey]
+            ?.didChange(dateFormatter.format(picked).toString());
+      }
+    }
   }
 }

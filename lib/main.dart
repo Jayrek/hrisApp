@@ -14,6 +14,7 @@ import 'package:rgs_hris/core/data/repository/leaves/leaves_repository_impl.dart
 import 'package:rgs_hris/core/data/repository/user/user_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
+import 'app/bloc/time_in_out/time_in_out_bloc.dart';
 import 'core/data/repository/attendance/attendance_repository_impl.dart';
 
 void main() {
@@ -86,6 +87,11 @@ class RgsHrisApp extends StatelessWidget {
             create: (context) => UserBloc(
                 userRepository:
                     RepositoryProvider.of<UserRepositoryImpl>(context)),
+          ),
+          BlocProvider(
+            create: (context) => TimeInOutBloc(
+                attendanceRepository:
+                    RepositoryProvider.of<AttendanceRepositoryImpl>(context)),
           ),
           // BlocProvider(
           //   create: (context) => SubjectBloc(),
