@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../bloc/attendance/attendance_bloc.dart';
 import '../../bloc/time_in_out/time_in_out_bloc.dart';
 
 class AttendanceTimeInOutWidget extends StatelessWidget {
@@ -37,7 +36,14 @@ class AttendanceTimeInOutWidget extends StatelessWidget {
         return Stack(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const Text(
+                  'ATTENDANCE PANEL',
+                  style: TextStyle(
+                      color: Colors.teal, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
                 StreamBuilder<DateTime>(
                     stream: _timeStream,
                     builder: (context, snapshot) {
@@ -73,9 +79,12 @@ class AttendanceTimeInOutWidget extends StatelessWidget {
                                 MaterialStateProperty.all<Color>(Colors.teal),
                             elevation: MaterialStateProperty.all(0),
                           ),
-                          onPressed: () => context
-                              .read<TimeInOutBloc>()
-                              .add(const TimeInOutSet(type: 'am_in')),
+                          onPressed: () {
+                            print('triggered');
+                            context
+                                .read<TimeInOutBloc>()
+                                .add(const TimeInOutSet(type: 'am_in'));
+                          },
                           child: const Text(
                             'AM IN',
                             style: TextStyle(fontWeight: FontWeight.bold),

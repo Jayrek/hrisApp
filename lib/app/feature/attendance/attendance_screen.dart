@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/feature/attendance/attendance_time_in_out_widget.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
+import 'package:rgs_hris/router/app_route.dart';
 
 import '../../common/util/key_strings.dart';
 
@@ -109,14 +110,16 @@ class AttendanceScreen extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'SHIFT & SCHEDULE',
-              style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
-            ),
+            const AttendanceTimeInOutWidget(),
             const SizedBox(height: 20),
             Divider(
               height: 1,
               color: Colors.grey.shade400,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'SHIFT & SCHEDULE',
+              style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -127,8 +130,6 @@ class AttendanceScreen extends StatelessWidget {
               ),
             ),
             _buildShiftTable(),
-            const SizedBox(height: 20),
-            const AttendanceTimeInOutWidget(),
             const SizedBox(height: 20),
             Divider(
               height: 1,
@@ -149,6 +150,7 @@ class AttendanceScreen extends StatelessWidget {
   }
 
   Widget _buildShiftTable() {
+    print('build: _buildShiftTable');
     return BlocBuilder<AttendanceBloc, AttendanceState>(
       builder: (context, state) {
         if (state is AttendanceLoaded) {
@@ -198,13 +200,13 @@ class AttendanceScreen extends StatelessWidget {
   }
 
   Widget _buildEntryLogs() {
+    print('build: _buildEntryLogs');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Padding(
-          padding: EdgeInsets.only(
-            top: 20,
-            bottom: 10,
+          padding: EdgeInsets.symmetric(
+            vertical: 20,
           ),
           child: Text(
             'ENTRY LOGS',
@@ -240,61 +242,66 @@ class AttendanceScreen extends StatelessWidget {
                           border: Border.all(
                         color: Colors.grey.shade200,
                       )),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                              height: 30,
-                              color: Colors.grey.shade100,
-                              child: Center(
-                                  child: Text(
-                                date,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        const Text('AM IN'),
-                                        Text(
-                                          timeIn,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            color: Colors.teal,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
+                      child: InkWell(
+                        onTap: () => context.pushNamed(
+                            AppRoute.attendanceDetail.name,
+                            extra: entryLogs),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                                height: 30,
+                                color: Colors.grey.shade100,
+                                child: Center(
+                                    child: Text(
+                                  date,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ))),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          const Text('AM IN'),
+                                          Text(
+                                            timeIn,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.teal,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        const Text('PM OUT'),
-                                        Text(
-                                          timeOut,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          const Text('PM OUT'),
+                                          Text(
+                                            timeOut,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -378,7 +385,21 @@ class AttendanceScreen extends StatelessWidget {
                 ),
                 child: const Text('Apply'),
                 onPressed: () {
+                  final dateFrom = formKey.currentState
+                          ?.fields[KeyStrings.leaveDateFromKey]?.value ??
+                      '';
+                  final dateTo = formKey.currentState
+                          ?.fields[KeyStrings.leaveDateToKey]?.value ??
+                      '';
+
                   Navigator.pop(context);
+
+                  context.read<AttendanceBloc>().add(
+                        AttendanceFetched(
+                          dateFrom: dateFrom,
+                          dateTo: dateTo,
+                        ),
+                      );
                 },
               ),
             ),

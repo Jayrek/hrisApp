@@ -39,6 +39,10 @@ enum AppRoute {
     name: 'attendance',
     path: 'attendance',
   ),
+  attendanceDetail(
+    name: 'attendanceDetail',
+    path: 'attendanceDetail',
+  ),
   performance(
     name: 'performance',
     path: 'performance',
