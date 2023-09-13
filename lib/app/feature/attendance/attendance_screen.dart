@@ -57,6 +57,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       ),
       drawer: const DrawerWidet(),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -99,11 +100,20 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       color: Colors.teal, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  getCurrentDate().toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Divider(
+                  height: 1,
+                  color: Colors.grey.shade400,
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    getCurrentDate().toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                _buildShiftTable(),
+                const SizedBox(height: 20),
                 StreamBuilder<DateTime>(
                     stream: _timeStream,
                     builder: (context, snapshot) {
@@ -171,19 +181,189 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
+                Divider(
+                  height: 1,
+                  color: Colors.grey.shade400,
+                ),
+                _buildEntryLogs(),
               ],
             ),
-            if (state is AttendanceSetLoading)
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-              ),
+            // if (state is AttendanceSetLoading)
+            //   const Center(
+            //     child: Padding(
+            //       padding: EdgeInsets.symmetric(vertical: 20),
+            //       child: CircularProgressIndicator.adaptive(),
+            //     ),
+            //   ),
           ],
         );
       },
+    );
+  }
+
+  Widget _buildShiftTable() {
+    return BlocBuilder<AttendanceBloc, AttendanceState>(
+      builder: (context, state) {
+        if (state is AttendanceLoaded) {
+          final workShift = state
+              .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
+          return Table(
+            border: TableBorder.all(
+              color: Colors.grey.shade200,
+            ),
+            children: [
+              _buildShiftRow([
+                // '#',
+                'SHIFT',
+                'MORNING',
+                'AFTERNOON',
+              ]),
+              _buildShiftRow([
+                // '${workShift?.shiftId.toString()}',
+                '${workShift?.shift?.name}',
+                '${workShift?.shift?.amIn}',
+                '${workShift?.shift?.pmOut}'
+              ]),
+            ],
+          );
+        }
+        return const SizedBox();
+        // else {
+        //   return const Center(child: CircularProgressIndicator.adaptive());
+        // }
+      },
+    );
+  }
+
+  TableRow _buildShiftRow(List<String> cells) {
+    return TableRow(
+        children: cells.map((cell) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 20,
+        ),
+        child: Center(
+            child: Text(
+          cell,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 10),
+        )),
+      );
+    }).toList());
+  }
+
+  Widget _buildEntryLogs() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: 10,
+          ),
+          child: Text(
+            'ENTRY LOGS',
+            style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+          ),
+        ),
+        BlocBuilder<AttendanceBloc, AttendanceState>(
+          builder: (context, state) {
+            if (state is AttendanceLoaded) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: state.attendanceWrapperResponse.response?.data
+                    ?.attendances?.length,
+                itemBuilder: (context, index) {
+                  final entryLogs = state.attendanceWrapperResponse.response
+                      ?.data?.attendances?[index];
+
+                  final date = DateFormat.yMEd()
+                      .format(DateTime.parse(entryLogs!.amIn.toString()));
+                  final timeIn = entryLogs.amIn != null
+                      ? DateFormat('hh:mm a')
+                          .format(DateTime.parse(entryLogs.amIn.toString()))
+                      : '--:--';
+                  final timeOut = entryLogs.pmOut != null
+                      ? DateFormat('hh:mm a')
+                          .format(DateTime.parse(entryLogs.pmOut.toString()))
+                      : '--:--';
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                        color: Colors.grey.shade200,
+                      )),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                              height: 30,
+                              color: Colors.grey.shade200,
+                              child: Center(
+                                  child: Text(
+                                date,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ))),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        const Text('TIME IN'),
+                                        Text(
+                                          timeIn,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Colors.teal,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        const Text('TIME OUT'),
+                                        Text(
+                                          timeOut,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+            return const SizedBox();
+            // return const Center(
+            //   child: CircularProgressIndicator.adaptive(),
+            // );
+          },
+        ),
+      ],
     );
   }
 }
