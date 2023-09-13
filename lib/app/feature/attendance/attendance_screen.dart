@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 
+import '../../bloc/user/user_bloc.dart';
+
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
 
@@ -30,6 +32,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             dateTo: initialDate.toString(),
           ),
         );
+
+    context.read<UserBloc>().add(UserFetched());
 
     _timeStream =
         Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
@@ -55,7 +59,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           ),
         ),
       ),
-      drawer: const DrawerWidet(),
+      drawer: const DrawerWidget(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -301,7 +305,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         children: [
                           Container(
                               height: 30,
-                              color: Colors.grey.shade200,
+                              color: Colors.grey.shade100,
                               child: Center(
                                   child: Text(
                                 date,

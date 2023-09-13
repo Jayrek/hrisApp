@@ -13,8 +13,8 @@ class LoginDataResponse {
     accountDetails = json['account_details'] != null
         ? AccountDetailsResponse.fromJson(json['account_details'])
         : null;
-    employeeDetails = json['employee_details'] != null
-        ? EmployeeDetailsResponse.fromJson(json['employee_details'])
+    employeeDetails = json['employee'] != null
+        ? EmployeeDetailsResponse.fromJson(json['employee'])
         : null;
   }
 
@@ -29,13 +29,13 @@ class LoginDataResponse {
       map['account_details'] = accountDetails?.toJson();
     }
     if (employeeDetails != null) {
-      map['employee_details'] = employeeDetails?.toJson();
+      map['employee'] = employeeDetails?.toJson();
     }
     return map;
   }
 
   @override
   String toString() {
-    return 'LoginResponse{token: $token, accountDetails: $accountDetails, employeeDetails: $employeeDetails}';
+    return 'LoginResponse{token: $token, accountDetails: $accountDetails, employee: $employeeDetails}';
   }
 }

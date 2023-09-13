@@ -7,15 +7,19 @@ class PersonalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(foregroundColor: Colors.black,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         title: Text(
           'PERSONAL',
           style: const TextStyle(
             color: Colors.black,
           ),
-        ),),
-      drawer: const DrawerWidet(),
+        ),
+      ),
+      drawer: const DrawerWidget(),
       body: Center(
         child: Text('personal'),
       ),

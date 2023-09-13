@@ -59,7 +59,7 @@ class _LeavesScreenState extends State<LeavesScreen> {
           ),
         ],
       ),
-      drawer: const DrawerWidet(),
+      drawer: const DrawerWidget(),
       bottomNavigationBar: _buildApplyForLeaveWidget(),
       body: BlocBuilder<LeavesBloc, LeavesState>(
         builder: (context, state) {

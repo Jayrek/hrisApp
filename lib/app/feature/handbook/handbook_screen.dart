@@ -7,7 +7,9 @@ class HandBookScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         title: const Text(
@@ -17,7 +19,7 @@ class HandBookScreen extends StatelessWidget {
           ),
         ),
       ),
-      drawer: const DrawerWidet(),
+      drawer: const DrawerWidget(),
       body: const Center(
         child: Text(
           'COMING SOON!',
