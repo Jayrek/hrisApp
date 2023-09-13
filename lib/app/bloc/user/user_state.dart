@@ -9,6 +9,8 @@ abstract class UserState extends Equatable {
 
 class UserInitial extends UserState {}
 
+class UserLoading extends UserState {}
+
 class UserLoaded extends UserState {
   final PersonalWrapperResponse personalWrapperResponse;
 

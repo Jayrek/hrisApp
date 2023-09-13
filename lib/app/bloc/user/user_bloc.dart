@@ -22,6 +22,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UserFetched event,
     Emitter<UserState> emit,
   ) async {
+    emit(UserLoading());
     final tokenValue = await TokenManager.getToken();
     final response =
         await userRepository.getPersonalInformation(token: tokenValue);

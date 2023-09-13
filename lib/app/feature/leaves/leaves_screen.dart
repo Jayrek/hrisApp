@@ -77,6 +77,14 @@ class _LeavesScreenState extends State<LeavesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      'LEAVES APPLICATIONS',
+                      style: TextStyle(
+                          color: Colors.teal, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Visibility(
                     visible: availableLeaves!.isNotEmpty,
                     child: ListView.builder(
