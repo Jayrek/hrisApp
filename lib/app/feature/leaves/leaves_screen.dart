@@ -113,12 +113,23 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              '${getLeaveTypeName(leaveTypes, leaveApplications?.type)} LEAVE',
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '${getLeaveTypeName(leaveTypes, leaveApplications?.type)} LEAVE',
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(parseDate(
+                                                    leaveApplications!.dateFiled
+                                                        .toString())),
+                                              ],
                                             ),
                                           ),
                                         )),
@@ -149,7 +160,7 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                               height: 10,
                                             ),
                                             Text(
-                                                'Start Date: ${parseDate(leaveApplications!.dateFrom.toString())}'),
+                                                'Start Date: ${parseDate(leaveApplications.dateFrom.toString())}'),
                                             const SizedBox(
                                               height: 10,
                                             ),

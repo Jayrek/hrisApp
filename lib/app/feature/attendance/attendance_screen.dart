@@ -12,35 +12,15 @@ import 'package:rgs_hris/router/app_route.dart';
 
 import '../../common/util/key_strings.dart';
 
-class AttendanceScreen extends StatelessWidget {
-  AttendanceScreen({super.key});
+class AttendanceScreen extends StatefulWidget {
+ const AttendanceScreen({super.key});
 
-//
-//   @override
-//   State<AttendanceScreen> createState() => _AttendanceScreenState();
-// }
-//
-// class _AttendanceScreenState extends State<AttendanceScreen> {
-//   late Stream<DateTime> _timeStream;
-//   DateTime _currentTimeTime = DateTime.now();
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     final formatter = DateFormat('yyyy-MM-dd');
-//     final initialDate = formatter.format(DateTime.now());
-//
-//     context.read<AttendanceBloc>().add(
-//           AttendanceFetched(
-//             dateFrom: initialDate.toString(),
-//             dateTo: initialDate.toString(),
-//           ),
-//         );
-//
-//     // _timeStream =
-//     //     Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
-//   }
+  @override
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
+}
 
+class _AttendanceScreenState extends State<AttendanceScreen> {
+//
   final formKey = GlobalKey<FormBuilderState>();
 
   String getCurrentDate() {
@@ -49,7 +29,8 @@ class AttendanceScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     final formatter = DateFormat('yyyy-MM-dd');
     final initialDate = formatter.format(DateTime.now());
     context.read<AttendanceBloc>().add(
@@ -58,6 +39,18 @@ class AttendanceScreen extends StatelessWidget {
             dateTo: initialDate.toString(),
           ),
         );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final formatter = DateFormat('yyyy-MM-dd');
+    // final initialDate = formatter.format(DateTime.now());
+    // context.read<AttendanceBloc>().add(
+    //       AttendanceFetched(
+    //         dateFrom: initialDate.toString(),
+    //         dateTo: initialDate.toString(),
+    //       ),
+    //     );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -175,9 +168,11 @@ class AttendanceScreen extends StatelessWidget {
               ]),
             ],
           );
-        } else {
-          return const Center(child: CircularProgressIndicator.adaptive());
         }
+        return const SizedBox();
+        // else {
+        //   return const Center(child: CircularProgressIndicator.adaptive());
+        // }
       },
     );
   }
