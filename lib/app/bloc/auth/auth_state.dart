@@ -12,12 +12,19 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthSignInSuccess extends AuthState {
-  final LoginResponse loginResponse;
+  final LoginWrapperResponse loginWrapperResponse;
 
-  const AuthSignInSuccess(this.loginResponse);
+  const AuthSignInSuccess(this.loginWrapperResponse);
 
   @override
-  List<Object> get props => [loginResponse];
+  List<Object> get props => [loginWrapperResponse];
 }
 
-class AuthSignInException extends AuthState {}
+class AuthSignInException extends AuthState {
+  final String message;
+
+  const AuthSignInException({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

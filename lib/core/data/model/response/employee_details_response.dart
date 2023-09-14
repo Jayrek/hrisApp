@@ -98,4 +98,9 @@ class EmployeeDetailsResponse {
     map['area_grouping'] = areaGrouping;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'EmployeeDetailsResponse{id: $id, refid: $refid, name: $name, fname: $fname, mname: $mname, lname: $lname, empid: $empid, email: $email, mobile: $mobile, type: $type, status: $status, dateHired: $dateHired, pic: $pic, leaveCredits: $leaveCredits, biometricid: $biometricid, officeBranch: $officeBranch, sixthMonth: $sixthMonth, tenureship: $tenureship, positionSector: $positionSector, teamLeader: $teamLeader, omBmTm: $omBmTm, areaGrouping: $areaGrouping}';
+  }
 }

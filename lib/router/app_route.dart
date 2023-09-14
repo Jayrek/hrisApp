@@ -27,9 +27,21 @@ enum AppRoute {
     name: 'leaves',
     path: 'leaves',
   ),
+  leaveDetail(
+    name: 'leaveDetail',
+    path: 'leaveDetail',
+  ),
+  leavesRequest(
+    name: 'leavesRequest',
+    path: 'leavesRequest',
+  ),
   attendance(
     name: 'attendance',
     path: 'attendance',
+  ),
+  attendanceDetail(
+    name: 'attendanceDetail',
+    path: 'attendanceDetail',
   ),
   performance(
     name: 'performance',

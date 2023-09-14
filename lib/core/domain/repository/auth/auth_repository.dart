@@ -1,7 +1,7 @@
-import '../../../data/model/response/login_response.dart';
+import '../../../data/model/response/login_wrapper_response.dart';
 
 abstract class AuthRepository {
-  Future<LoginResponse> signInUser({
+  Future<LoginWrapperResponse> signInUser({
     required String username,
     required String password,
   });

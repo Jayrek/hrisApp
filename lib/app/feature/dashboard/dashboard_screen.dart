@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
-import 'package:rgs_hris/router/app_route.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -16,7 +14,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         title: Text(
@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
       ),
-      drawer: const DrawerWidet(),
+      drawer: const DrawerWidget(),
       body: Center(
         child: Text(
           '$toolbarTitle SCREEN',

@@ -38,8 +38,8 @@ class LeaveApplications {
   int? noDays;
   String? description;
   String? status;
-  String? approvedBy;
-  String? rejectedBy;
+  int? approvedBy;
+  int? rejectedBy;
   String? statusDate;
 
   Map<String, dynamic> toJson() {
@@ -57,5 +57,10 @@ class LeaveApplications {
     map['rejected_by'] = rejectedBy;
     map['status_date'] = statusDate;
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'LeaveApplications{id: $id, type: $type, employeeId: $employeeId, dateFiled: $dateFiled, dateFrom: $dateFrom, dateTo: $dateTo, noDays: $noDays, description: $description, status: $status, approvedBy: $approvedBy, rejectedBy: $rejectedBy, statusDate: $statusDate}';
   }
 }

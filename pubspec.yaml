@@ -18,6 +18,9 @@ dependencies:
   flutter_form_builder: ^9.0.0
   form_builder_validators: ^9.0.0
   dio: ^5.2.1+1
+  shared_preferences: ^2.2.1
+  intl: ^0.18.0
+  adaptive_dialog: ^1.9.0+2
 
 dev_dependencies:
   flutter_test:

@@ -10,7 +10,8 @@ class DropdownOptions {
   DropdownOptions.fromJson(dynamic json) {
     status =
         json['status'] != null ? StatusResponse.fromJson(json['status']) : null;
-    types = json['types'] != null ? TypesResponse.fromJson(json['types']) : null;
+    types =
+        json['types'] != null ? TypesResponse.fromJson(json['types']) : null;
   }
 
   StatusResponse? status;
@@ -25,5 +26,10 @@ class DropdownOptions {
       map['types'] = types?.toJson();
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'DropdownOptions{status: $status, types: $types}';
   }
 }

@@ -10,7 +10,7 @@ class DioInterceptor extends Interceptor {
     options.headers.addAll({
       HttpHeaders.acceptHeader: 'application/json',
       HttpHeaders.contentTypeHeader: 'application/json',
-      // HttpHeaders.authorizationHeader: 'Bearer ${loggedInUser.value.token}'
+      // HttpHeaders.authorizationHeader: 'Bearer $token'
     });
     debugPrint('REQUEST [${options.method}] => ${options.uri}');
     debugPrint('REQUEST DATA => ${jsonEncode(options.data)}');

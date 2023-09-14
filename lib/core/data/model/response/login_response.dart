@@ -1,41 +1,35 @@
-import 'account_details_response.dart';
-import 'employee_details_response.dart';
+import 'package:rgs_hris/core/data/model/response/login_data_response.dart';
 
 class LoginResponse {
   LoginResponse({
-    this.token,
-    this.accountDetails,
-    this.employeeDetails,
+    this.status,
+    this.message,
+    this.loginDataResponse,
   });
 
   LoginResponse.fromJson(dynamic json) {
-    token = json['token'];
-    accountDetails = json['account_details'] != null
-        ? AccountDetailsResponse.fromJson(json['account_details'])
-        : null;
-    employeeDetails = json['employee_details'] != null
-        ? EmployeeDetailsResponse.fromJson(json['employee_details'])
-        : null;
+    status = json['status'];
+    message = json['message'];
+    loginDataResponse =
+        json['data'] != null ? LoginDataResponse.fromJson(json['data']) : null;
   }
 
-  String? token;
-  AccountDetailsResponse? accountDetails;
-  EmployeeDetailsResponse? employeeDetails;
+  String? status;
+  String? message;
+  LoginDataResponse? loginDataResponse;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['token'] = token;
-    if (accountDetails != null) {
-      map['account_details'] = accountDetails?.toJson();
-    }
-    if (employeeDetails != null) {
-      map['employee_details'] = employeeDetails?.toJson();
+    map['status'] = status;
+    map['message'] = message;
+    if (loginDataResponse != null) {
+      map['data'] = loginDataResponse?.toJson();
     }
     return map;
   }
 
   @override
   String toString() {
-    return 'LoginResponse{token: $token, accountDetails: $accountDetails, employeeDetails: $employeeDetails}';
+    return 'LoginResponse{status: $status, message: $message, loginDataResponse: $loginDataResponse}';
   }
 }

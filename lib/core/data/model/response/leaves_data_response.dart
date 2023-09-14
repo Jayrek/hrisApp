@@ -51,4 +51,9 @@ class LeavesDataResponse {
     }
     return map;
   }
+
+  @override
+  String toString() {
+    return 'LeavesDataResponse{leaveApplications: $leaveApplications, dropdownOptions: $dropdownOptions, currentLeaveCredits: $currentLeaveCredits, statistics: $statistics}';
+  }
 }
