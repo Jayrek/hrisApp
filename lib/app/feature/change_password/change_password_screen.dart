@@ -24,7 +24,7 @@ class ChangePasswordScreen extends StatelessWidget {
         child: Text(
           'COMING SOON!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );
