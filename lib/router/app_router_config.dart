@@ -11,6 +11,7 @@ import 'package:rgs_hris/app/feature/my_access/my_access_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
 import 'package:rgs_hris/app/feature/request_update/request_update_screen.dart';
+import 'package:rgs_hris/app/feature/splash/splash_screen.dart';
 import 'package:rgs_hris/app/feature/work/work_screen.dart';
 import 'package:rgs_hris/core/data/model/response/leaves_data_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
@@ -32,15 +33,15 @@ class AppRouterConfig {
     //   builder: (_, __) => const DashboardScreen(),
     // )
     GoRoute(
-        name: AppRoute.signIn.name,
-        path: AppRoute.signIn.path,
-        builder: (_, __) => SignInScreen(),
-        routes: <RouteBase>[
-          // GoRoute(
-          //   name: AppRoute.dashboard.name,
-          //   path: AppRoute.dashboard.path,
-          //   builder: (_, __) => const DashboardScreen(),
-          //   routes: [
+        name: AppRoute.splash.name,
+        path: AppRoute.splash.path,
+        builder: (_, __) => const SplashScreen(),
+        routes: [
+          GoRoute(
+            name: AppRoute.signIn.name,
+            path: AppRoute.signIn.path,
+            builder: (_, __) => SignInScreen(),
+          ),
           GoRoute(
             name: AppRoute.personal.name,
             path: AppRoute.personal.path,
@@ -194,7 +195,7 @@ class AppRouterConfig {
               child: SignUpScreen(),
             ),
           )
-        ])
+        ]),
   ]);
 
   static CustomTransitionPage pageBuilderAnimate(
