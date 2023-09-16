@@ -17,13 +17,18 @@ class AttendanceTimeInOutWidget extends StatefulWidget {
 class _AttendanceTimeInOutWidgetState extends State<AttendanceTimeInOutWidget> {
   int typeTime = 0;
 
+  late Stream<DateTime> _timeStream;
+  DateTime _currentTime = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _timeStream =
+        Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+  }
+
   @override
   Widget build(BuildContext context) {
-    // late Stream<DateTime> _timeStream;
-    DateTime _currentTime = DateTime.now();
-
-    Stream<DateTime> _timeStream =
-        Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
 
     return BlocConsumer<TimeInOutBloc, TimeInOutState>(
       listener: (context, state) {

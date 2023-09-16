@@ -75,47 +75,47 @@ class DrawerWidget extends StatelessWidget {
       children: [
         _buildDrawerItem(Icons.person, 'PERSONAL', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.personal.name);
+          context.goNamed(AppRoute.personal.name);
         }),
         _buildDrawerItem(Icons.person_add_alt_sharp, 'EMPLOYMENT', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.employment.name);
+          context.goNamed(AppRoute.employment.name);
         }),
         _buildDrawerItem(Icons.work, 'WORK', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.work.name);
+          context.goNamed(AppRoute.work.name);
         }),
         _buildDrawerItem(Icons.note, 'LEAVE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.leaves.name);
+          context.goNamed(AppRoute.leaves.name);
         }),
         _buildDrawerItem(Icons.access_time, 'ATTENDANCE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.attendance.name);
+          context.goNamed(AppRoute.attendance.name);
         }),
         _buildDrawerItem(Icons.timeline_outlined, 'PERFORMANCE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.performance.name);
+          context.goNamed(AppRoute.performance.name);
         }),
         _buildDrawerItem(Icons.note_outlined, 'DOCUMENTS', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.documents.name);
+          context.goNamed(AppRoute.documents.name);
         }),
         _buildDrawerItem(Icons.notes_rounded, 'RGS HANDBOOK', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.handbook.name);
+          context.goNamed(AppRoute.handbook.name);
         }),
         _buildDrawerItem(Icons.note_alt_sharp, 'REQUEST UPDATE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.requestUpdate.name);
+          context.goNamed(AppRoute.requestUpdate.name);
         }),
         _buildDrawerItem(Icons.account_circle, 'MY ACCESS', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.myAccess.name);
+          context.goNamed(AppRoute.myAccess.name);
         }),
         _buildDrawerItem(Icons.key, 'CHANGE PASSWORD', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.changePassword.name);
+          context.goNamed(AppRoute.changePassword.name);
         }),
         _buildDrawerItem(Icons.logout, 'LOGOUT', onTap: () {
           Navigator.of(context).pop();

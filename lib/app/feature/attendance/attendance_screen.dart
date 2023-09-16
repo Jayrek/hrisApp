@@ -8,12 +8,14 @@ import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/feature/attendance/attendance_time_in_out_widget.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
+import 'package:rgs_hris/core/data/model/response/attendance_work_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../core/data/model/response/attendance_list_response.dart';
 import '../../common/util/key_strings.dart';
 
 class AttendanceScreen extends StatefulWidget {
- const AttendanceScreen({super.key});
+  const AttendanceScreen({super.key});
 
   @override
   State<AttendanceScreen> createState() => _AttendanceScreenState();
@@ -89,6 +91,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const AttendanceTimeInOutWidget(),
               _buildAttendanceTimeInOutWidget(),
             ],
           ),
@@ -98,83 +101,111 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Widget _buildAttendanceTimeInOutWidget() {
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const AttendanceTimeInOutWidget(),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'SHIFT & SCHEDULE',
-              style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                getCurrentDate().toUpperCase(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            _buildShiftTable(),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            _buildEntryLogs(),
-          ],
-        ),
-        // if (state is AttendanceSetLoading)
-        //   const Center(
-        //     child: Padding(
-        //       padding: EdgeInsets.symmetric(vertical: 20),
-        //       child: CircularProgressIndicator.adaptive(),
-        //     ),
-        //   ),
-      ],
-    );
-  }
-
-  Widget _buildShiftTable() {
-    print('build: _buildShiftTable');
     return BlocBuilder<AttendanceBloc, AttendanceState>(
       builder: (context, state) {
         if (state is AttendanceLoaded) {
           final workShift = state
               .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
-          return Table(
-            border: TableBorder.all(
-              color: Colors.grey.shade200,
-            ),
+          final attendanceList =
+              state.attendanceWrapperResponse.response?.data?.attendances;
+          return Stack(
             children: [
-              _buildShiftRow([
-                // '#',
-                'SHIFT',
-                'MORNING',
-                'AFTERNOON',
-              ]),
-              _buildShiftRow([
-                // '${workShift?.shiftId.toString()}',
-                '${workShift?.shift?.name}',
-                '${workShift?.shift?.amIn}',
-                '${workShift?.shift?.pmOut}'
-              ]),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'SHIFT & SCHEDULE',
+                    style: TextStyle(
+                        color: Colors.teal, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      getCurrentDate().toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _buildShiftTable(workShift!),
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
+                  ),
+                  _buildEntryLogs(attendanceList!),
+                ],
+              ),
             ],
           );
         }
+        if (state is AttendanceLoading) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        }
         return const SizedBox();
-        // else {
-        //   return const Center(child: CircularProgressIndicator.adaptive());
-        // }
       },
     );
+  }
+
+  Widget _buildShiftTable(AttendanceWorkResponse workShift) {
+    return Table(
+      border: TableBorder.all(
+        color: Colors.grey.shade200,
+      ),
+      children: [
+        _buildShiftRow([
+          // '#',
+          'SHIFT',
+          'MORNING',
+          'AFTERNOON',
+        ]),
+        _buildShiftRow([
+          // '${workShift?.shiftId.toString()}',
+          '${workShift.shift?.name}',
+          '${workShift.shift?.amIn}',
+          '${workShift.shift?.pmOut}'
+        ]),
+      ],
+    );
+    // return BlocBuilder<AttendanceBloc, AttendanceState>(
+    //   builder: (context, state) {
+    //     if (state is AttendanceLoaded) {
+    //       print('natawagTWO');
+    //       final workShift = state
+    //           .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
+    //       return Table(
+    //         border: TableBorder.all(
+    //           color: Colors.grey.shade200,
+    //         ),
+    //         children: [
+    //           _buildShiftRow([
+    //             // '#',
+    //             'SHIFT',
+    //             'MORNING',
+    //             'AFTERNOON',
+    //           ]),
+    //           _buildShiftRow([
+    //             // '${workShift?.shiftId.toString()}',
+    //             '${workShift?.shift?.name}',
+    //             '${workShift?.shift?.amIn}',
+    //             '${workShift?.shift?.pmOut}'
+    //           ]),
+    //         ],
+    //       );
+    //     }
+    //     return const SizedBox();
+    //     // else {
+    //     //   return const Center(child: CircularProgressIndicator.adaptive());
+    //     // }
+    //   },
+    // );
   }
 
   TableRow _buildShiftRow(List<String> cells) {
@@ -194,7 +225,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     }).toList());
   }
 
-  Widget _buildEntryLogs() {
+  Widget _buildEntryLogs(List<AttendanceListResponse> attendanceList) {
     print('build: _buildEntryLogs');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -208,104 +239,90 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
           ),
         ),
-        BlocBuilder<AttendanceBloc, AttendanceState>(
-          builder: (context, state) {
-            if (state is AttendanceLoaded) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: state.attendanceWrapperResponse.response?.data
-                    ?.attendances?.length,
-                itemBuilder: (context, index) {
-                  final entryLogs = state.attendanceWrapperResponse.response
-                      ?.data?.attendances?[index];
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemCount: attendanceList.length,
+          itemBuilder: (context, index) {
+            final entryLogs = attendanceList[index];
 
-                  final date = DateFormat.yMEd()
-                      .format(DateTime.parse(entryLogs!.amIn.toString()));
-                  final timeIn = entryLogs.amIn != null
-                      ? DateFormat('hh:mm a')
-                          .format(DateTime.parse(entryLogs.amIn.toString()))
-                      : '--:--';
-                  final timeOut = entryLogs.pmOut != null
-                      ? DateFormat('hh:mm a')
-                          .format(DateTime.parse(entryLogs.pmOut.toString()))
-                      : '--:--';
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Colors.grey.shade200,
-                      )),
-                      child: InkWell(
-                        onTap: () => context.pushNamed(
-                            AppRoute.attendanceDetail.name,
-                            extra: entryLogs),
+            final date = DateFormat.yMEd()
+                .format(DateTime.parse(entryLogs.amIn.toString()));
+            final timeIn = entryLogs.amIn != null
+                ? DateFormat('hh:mm a')
+                    .format(DateTime.parse(entryLogs.amIn.toString()))
+                : '--:--';
+            final timeOut = entryLogs.pmOut != null
+                ? DateFormat('hh:mm a')
+                    .format(DateTime.parse(entryLogs.pmOut.toString()))
+                : '--:--';
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.grey.shade200,
+                )),
+                child: InkWell(
+                  onTap: () => context.pushNamed(AppRoute.attendanceDetail.name,
+                      extra: entryLogs),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                          height: 30,
+                          color: Colors.grey.shade100,
+                          child: Center(
+                              child: Text(
+                            date,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ))),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Container(
-                                height: 30,
-                                color: Colors.grey.shade100,
-                                child: Center(
-                                    child: Text(
-                                  date,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ))),
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          const Text('AM IN'),
-                                          Text(
-                                            timeIn,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.teal,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    const Text('AM IN'),
+                                    Text(
+                                      timeIn,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
                                       ),
-                                      Column(
-                                        children: [
-                                          const Text('PM OUT'),
-                                          Text(
-                                            timeOut,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const Text('PM OUT'),
+                                    Text(
+                                      timeOut,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            }
-            // return const SizedBox();
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         ),

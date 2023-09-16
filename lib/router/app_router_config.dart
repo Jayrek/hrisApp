@@ -112,7 +112,7 @@ class AppRouterConfig {
               pageBuilder: (context, state) => pageBuilderAnimate(
                     context,
                     state,
-                    child: AttendanceScreen(),
+                    child: const AttendanceScreen(),
                   ),
               routes: [
                 GoRoute(
