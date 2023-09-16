@@ -5,6 +5,7 @@ import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
 import 'package:rgs_hris/app/bloc/employee/employee_bloc.dart';
 import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
+import 'package:rgs_hris/app/bloc/my_access_bloc.dart';
 import 'package:rgs_hris/app/bloc/user/user_bloc.dart';
 import 'package:rgs_hris/app/bloc/work/work_bloc.dart';
 import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source_impl.dart';
@@ -19,6 +20,8 @@ import 'package:rgs_hris/core/data/repository/work/work_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
+import 'core/data/data_source/my_access/my_access_remote_data_source_impl.dart';
+import 'core/data/repository/my_access/my_access_repository_impl.dart';
 import 'core/domain/manager/shared_prefs_manager.dart';
 import 'core/data/data_source/employee/employee_remote_data_source_impl.dart';
 import 'core/data/repository/attendance/attendance_repository_impl.dart';
@@ -91,6 +94,15 @@ class RgsHrisApp extends StatelessWidget {
                 employeeRemoteDataSource: employeeRemoteDataSource);
           },
         ),
+        RepositoryProvider(
+          create: (context) {
+            final myAccessRemoteDataSource =
+                MyAccessRemoteDataSourceImpl(dioClient: Dio());
+
+            return MyAccessRepositoryImpl(
+                myAccessRemoteDataSource: myAccessRemoteDataSource);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -130,6 +142,11 @@ class RgsHrisApp extends StatelessWidget {
             create: (context) => EmployeeBloc(
                 employeeRepository:
                     RepositoryProvider.of<EmployeeRepositoryImpl>(context)),
+          ),
+          BlocProvider(
+            create: (context) => MyAccessBloc(
+                myAccessRepository:
+                    RepositoryProvider.of<MyAccessRepositoryImpl>(context)),
           ),
         ],
         child: MaterialApp.router(

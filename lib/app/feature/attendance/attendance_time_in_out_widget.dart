@@ -112,7 +112,6 @@ class _AttendanceTimeInOutWidgetState extends State<AttendanceTimeInOutWidget> {
                             elevation: MaterialStateProperty.all(0),
                           ),
                           onPressed: () {
-                            print('triggered');
                             setState(() => typeTime = 1);
                             context
                                 .read<TimeInOutBloc>()
