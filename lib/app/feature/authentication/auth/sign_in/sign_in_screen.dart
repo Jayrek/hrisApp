@@ -21,7 +21,7 @@ class SignInScreen extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSignInSuccess) {
-          context.goNamed(AppRoute.attendance.name);
+          context.pushReplacementNamed(AppRoute.attendance.name);
         }
         if (state is AuthSignInException) {
           debugPrint('print exception message here...');

@@ -28,15 +28,20 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   ) async {
     emit(AttendanceLoading());
     // final tokenValue = await TokenManager.getToken();
-    final tokenValue = await SharedPrefsManager().getToken();
-    final response = await attendanceRepository.getAttendanceInfo(
-      dateFrom: event.dateFrom,
-      dateTo: event.dateTo,
-      token: tokenValue,
-    );
-    print('response: $response');
+    try {
+      final tokenValue = await SharedPrefsManager().getToken();
+      final response = await attendanceRepository.getAttendanceInfo(
+        dateFrom: event.dateFrom,
+        dateTo: event.dateTo,
+        token: tokenValue,
+      );
+      print('response: $response');
 
-    emit(AttendanceLoaded(attendanceWrapperResponse: response));
+      emit(AttendanceLoaded(attendanceWrapperResponse: response));
+    } catch (e) {
+      print('AttendanceException: ${e.toString()}');
+      emit(AttendanceException(message: e.toString()));
+    }
   }
 
 // FutureOr<void> _onAttendanceTimeInOutSet(

@@ -101,55 +101,66 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Widget _buildAttendanceTimeInOutWidget() {
-    return BlocBuilder<AttendanceBloc, AttendanceState>(
+    return BlocConsumer<AttendanceBloc, AttendanceState>(
+      listener: (context, state) {
+        if (state is AttendanceException) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
+          context.pushReplacementNamed(AppRoute.signIn.name);
+        }
+      },
       builder: (context, state) {
-        if (state is AttendanceLoaded) {
-          final workShift = state
-              .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
-          final attendanceList =
-              state.attendanceWrapperResponse.response?.data?.attendances;
-          return Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+        return BlocBuilder<AttendanceBloc, AttendanceState>(
+          builder: (context, state) {
+            if (state is AttendanceLoaded) {
+              final workShift = state.attendanceWrapperResponse.response?.data
+                  ?.attendanceWorkResponse;
+              final attendanceList =
+                  state.attendanceWrapperResponse.response?.data?.attendances;
+              return Stack(
                 children: [
-                  const SizedBox(height: 20),
-                  Divider(
-                    height: 1,
-                    color: Colors.grey.shade400,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 20),
+                      Divider(
+                        height: 1,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'SHIFT & SCHEDULE',
+                        style: TextStyle(
+                            color: Colors.teal, fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Text(
+                          getCurrentDate().toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      _buildShiftTable(workShift!),
+                      const SizedBox(height: 20),
+                      Divider(
+                        height: 1,
+                        color: Colors.grey.shade400,
+                      ),
+                      _buildEntryLogs(attendanceList!),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'SHIFT & SCHEDULE',
-                    style: TextStyle(
-                        color: Colors.teal, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Text(
-                      getCurrentDate().toUpperCase(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  _buildShiftTable(workShift!),
-                  const SizedBox(height: 20),
-                  Divider(
-                    height: 1,
-                    color: Colors.grey.shade400,
-                  ),
-                  _buildEntryLogs(attendanceList!),
                 ],
-              ),
-            ],
-          );
-        }
-        if (state is AttendanceLoading) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        }
-        return const SizedBox();
+              );
+            }
+            if (state is AttendanceLoading) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
+            return const SizedBox();
+          },
+        );
       },
     );
   }
