@@ -6,6 +6,7 @@ import 'package:rgs_hris/core/data/model/response/personal_wrapper_response.dart
 
 import '../../../core/domain/manager/token_manager.dart';
 import '../../../core/domain/repository/user/user_repository.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 
 part 'user_event.dart';
 
@@ -23,7 +24,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) async {
     emit(UserLoading());
-    final tokenValue = await TokenManager.getToken();
+    // final tokenValue = await TokenManager.getToken();
+    final tokenValue = await SharedPrefsManager().getToken();
     final response =
         await userRepository.getPersonalInformation(token: tokenValue);
 

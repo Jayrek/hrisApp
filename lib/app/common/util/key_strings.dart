@@ -13,4 +13,6 @@ class KeyStrings {
   static const leaveDescriptionKey = 'leaveDescription';
 
   static const tokenKey = 'tokenKey';
+
+  static const fullName = 'fullName';
 }

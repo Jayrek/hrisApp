@@ -19,11 +19,15 @@ import 'package:rgs_hris/core/data/repository/work/work_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
+import 'core/domain/manager/shared_prefs_manager.dart';
 import 'core/data/data_source/employee/employee_remote_data_source_impl.dart';
 import 'core/data/repository/attendance/attendance_repository_impl.dart';
 import 'core/data/repository/employee/employee_repository_impl.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SharedPrefsManager.init();
   runApp(const RgsHrisApp());
 }
 

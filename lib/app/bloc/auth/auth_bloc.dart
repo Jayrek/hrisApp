@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 import 'package:rgs_hris/core/data/model/response/login_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/manager/token_manager.dart';
 import 'package:rgs_hris/core/domain/repository/auth/auth_repository.dart';
@@ -38,7 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String? token = '';
       if (loginResponse != null) {
         token = loginResponse.loginDataResponse?.token.toString();
-        await TokenManager.setToken(token.toString());
+        SharedPrefsManager().setToken(token.toString());
+        // await TokenManager.setToken(token.toString());
       }
 
       print('response: $response');

@@ -7,6 +7,7 @@ import 'package:rgs_hris/core/data/model/response/leaves_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/repository/leaves/leaves_repository.dart';
 
 import '../../../core/domain/manager/token_manager.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 
 part 'leaves_event.dart';
 
@@ -25,7 +26,8 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
     Emitter<LeavesState> emit,
   ) async {
     emit(LeavesLoading());
-    final tokenValue = await TokenManager.getToken();
+    // final tokenValue = await TokenManager.getToken();
+    final tokenValue = await SharedPrefsManager().getToken();
     final responseLeave = await leavesRepository.getLeavesInformation(
       dateFrom: event.dateFrom,
       dateTo: event.dateTo,
@@ -43,7 +45,8 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
     Emitter<LeavesState> emit,
   ) async {
     emit(LeavesLoading());
-    final tokenValue = await TokenManager.getToken();
+    // final tokenValue = await TokenManager.getToken();
+    final tokenValue = await SharedPrefsManager().getToken();
     final response = await leavesRepository.setLeavesApplication(
       dateFrom: event.dateFrom,
       dateTo: event.dateTo,

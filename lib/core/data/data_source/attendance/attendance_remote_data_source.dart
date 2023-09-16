@@ -5,11 +5,11 @@ abstract class AttendanceRemoteDataSource {
   Future<AttendanceWrapperResponse> getAttendanceInfo({
     required String dateFrom,
     required String dateTo,
-    required String? token,
+    required String token,
   });
 
   Future<AttendanceInOutWrapperResponse> setTimeInOut({
     required String type,
-    required String? token,
+    required String token,
   });
 }

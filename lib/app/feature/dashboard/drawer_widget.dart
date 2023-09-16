@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
+import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
 import '../../../router/app_route.dart';
 
@@ -75,51 +76,52 @@ class DrawerWidget extends StatelessWidget {
       children: [
         _buildDrawerItem(Icons.person, 'PERSONAL', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.personal.name);
+          context.pushReplacementNamed(AppRoute.personal.name);
         }),
         _buildDrawerItem(Icons.person_add_alt_sharp, 'EMPLOYMENT', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.employment.name);
+          context.pushReplacementNamed(AppRoute.employment.name);
         }),
         _buildDrawerItem(Icons.work, 'WORK', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.work.name);
+          context.pushReplacementNamed(AppRoute.work.name);
         }),
         _buildDrawerItem(Icons.note, 'LEAVE', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.leaves.name);
+          context.pushReplacementNamed(AppRoute.leaves.name);
         }),
         _buildDrawerItem(Icons.access_time, 'ATTENDANCE', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.attendance.name);
+          context.pushReplacementNamed(AppRoute.attendance.name);
         }),
         _buildDrawerItem(Icons.timeline_outlined, 'PERFORMANCE', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.performance.name);
+          context.pushReplacementNamed(AppRoute.performance.name);
         }),
         _buildDrawerItem(Icons.note_outlined, 'DOCUMENTS', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.documents.name);
+          context.pushReplacementNamed(AppRoute.documents.name);
         }),
         _buildDrawerItem(Icons.notes_rounded, 'RGS HANDBOOK', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.handbook.name);
+          context.pushReplacementNamed(AppRoute.handbook.name);
         }),
         _buildDrawerItem(Icons.note_alt_sharp, 'REQUEST UPDATE', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.requestUpdate.name);
+          context.pushReplacementNamed(AppRoute.requestUpdate.name);
         }),
         _buildDrawerItem(Icons.account_circle, 'MY ACCESS', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.myAccess.name);
+          context.pushReplacementNamed(AppRoute.myAccess.name);
         }),
         _buildDrawerItem(Icons.key, 'CHANGE PASSWORD', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.changePassword.name);
+          context.pushReplacementNamed(AppRoute.changePassword.name);
         }),
         _buildDrawerItem(Icons.logout, 'LOGOUT', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.signIn.name);
+          SharedPrefsManager().clearPreference();
+          context.pushReplacementNamed(AppRoute.signIn.name);
         }),
       ],
     );
