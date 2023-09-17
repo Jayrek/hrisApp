@@ -12,6 +12,10 @@ class KeyStrings {
   static const leaveDateToKey = 'leaveDateTo';
   static const leaveDescriptionKey = 'leaveDescription';
 
+  static const updateCurrentPassword = 'currentPassword';
+  static const updateNewPassword = 'newPassword';
+  static const updateConfirmPassword = 'confirmPassword';
+
   static const tokenKey = 'tokenKey';
 
   static const fullName = 'fullName';

@@ -63,13 +63,17 @@ enum AppRoute {
     name: 'requestUpdate',
     path: 'requestUpdate',
   ),
-  myAccess(
-    name: 'myAccess',
-    path: 'myAccess',
+  myAccessProfile(
+    name: 'myAccessProfile',
+    path: 'myAccessProfile',
   ),
-  changePassword(
-    name: 'changePassword',
-    path: 'changePassword',
+  myAccessChangePassword(
+    name: 'myAccessChangePassword',
+    path: 'myAccessChangePassword',
+  ),
+  myAccessChangeUserName(
+    name: 'myAccessChangeUserName',
+    path: 'myAccessChangeUserName',
   );
 
   const AppRoute({

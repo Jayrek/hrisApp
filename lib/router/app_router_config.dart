@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/feature/authentication/auth/sign_in/sign_in_screen.dart';
 import 'package:rgs_hris/app/feature/authentication/auth/sign_up/sign_up_screen.dart';
-import 'package:rgs_hris/app/feature/change_password/change_password_screen.dart';
+import 'package:rgs_hris/app/feature/my_access/my_access_change_password/my_access_change_password_screen.dart';
 import 'package:rgs_hris/app/feature/employment/employment_screen.dart';
 import 'package:rgs_hris/app/feature/handbook/handbook_screen.dart';
 import 'package:rgs_hris/app/feature/leaves/leaves_detail_screen.dart';
 import 'package:rgs_hris/app/feature/leaves/leaves_request_screen.dart';
-import 'package:rgs_hris/app/feature/my_access/my_access_screen.dart';
+import 'package:rgs_hris/app/feature/my_access/my_access_change_username/my_access_change_user_name_screen.dart';
+import 'package:rgs_hris/app/feature/my_access/my_access_profile/my_access_profile_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
 import 'package:rgs_hris/app/feature/request_update/request_update_screen.dart';
@@ -167,21 +168,30 @@ class AppRouterConfig {
             ),
           ),
           GoRoute(
-            name: AppRoute.myAccess.name,
-            path: AppRoute.myAccess.path,
+            name: AppRoute.myAccessProfile.name,
+            path: AppRoute.myAccessProfile.path,
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const MyAccessScreen(),
+              child: const MyAccessProfileScreen(),
             ),
           ),
           GoRoute(
-            name: AppRoute.changePassword.name,
-            path: AppRoute.changePassword.path,
+            name: AppRoute.myAccessChangePassword.name,
+            path: AppRoute.myAccessChangePassword.path,
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const ChangePasswordScreen(),
+              child: const MyAccessChangePasswordScreen(),
+            ),
+          ),
+          GoRoute(
+            name: AppRoute.myAccessChangeUserName.name,
+            path: AppRoute.myAccessChangeUserName.path,
+            pageBuilder: (context, state) => pageBuilderAnimate(
+              context,
+              state,
+              child: const MyAccessChangeUserNameScreen(),
             ),
           ),
           //   ],

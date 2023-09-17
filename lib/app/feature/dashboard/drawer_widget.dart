@@ -108,11 +108,11 @@ class DrawerWidget extends StatelessWidget {
         }),
         _buildDrawerItem(Icons.account_circle, 'MY ACCESS', onTap: () {
           Navigator.of(context).pop();
-          context.pushReplacementNamed(AppRoute.myAccess.name);
+          context.pushReplacementNamed(AppRoute.myAccessProfile.name);
         }),
         _buildDrawerItem(Icons.key, 'CHANGE PASSWORD', onTap: () {
           Navigator.of(context).pop();
-          context.pushReplacementNamed(AppRoute.changePassword.name);
+          context.pushReplacementNamed(AppRoute.myAccessChangePassword.name);
         }),
         _buildDrawerItem(Icons.logout, 'LOGOUT', onTap: () {
           Navigator.of(context).pop();

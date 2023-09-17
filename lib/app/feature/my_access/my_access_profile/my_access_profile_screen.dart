@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
-import '../../bloc/my_access_bloc.dart';
+import '../../../bloc/my_access_bloc.dart';
 
-class MyAccessScreen extends StatelessWidget {
-  const MyAccessScreen({super.key});
+class MyAccessProfileScreen extends StatelessWidget {
+  const MyAccessProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,38 +58,55 @@ class MyAccessScreen extends StatelessWidget {
                           parseDate(myAccessData!.lastAccess.toString())),
                       _buildInfoItemWidget(
                           'STATUS', myAccessData.status.toString()),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(
+                      Column(
+                        children: [
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 2,
+                                ),
+                                child: SizedBox(
                                   height: 50,
                                   child: OutlinedButton(
                                     child: const Text(
-                                      'Change Password',
-                                      style: TextStyle(color: Colors.black),
+                                      'CHANGE PASSWORD',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
                                     ),
                                     onPressed: () => context.pushNamed(
-                                        AppRoute.changePassword.name),
+                                        AppRoute.myAccessChangePassword.name),
                                   ),
                                 ),
-                                SizedBox(
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 2,
+                                ),
+                                child: SizedBox(
                                   height: 50,
                                   child: OutlinedButton(
                                     child: const Text(
-                                      'Change Username',
-                                      style: TextStyle(color: Colors.black),
+                                      'CHANGE USERNAME',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () => context.pushNamed(
+                                      AppRoute.myAccessChangeUserName.name,
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ]),
               ),
