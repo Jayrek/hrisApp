@@ -88,7 +88,7 @@ class MyAccessChangeUserNameScreen extends StatelessWidget {
   Widget _buildInputItemWidget(
     String label,
     String key,
-    String? initialValue,
+    String? value,
     bool isReadOnly,
   ) {
     return Column(
@@ -104,7 +104,8 @@ class MyAccessChangeUserNameScreen extends StatelessWidget {
         const SizedBox(height: 10),
         TextFormFieldWidget(
           name: key,
-          initialValue: initialValue,
+          initialValue:
+              value != null && value.isNotEmpty ? value.toUpperCase() : ' -',
           isReadOnly: isReadOnly,
           textCapitalization: TextCapitalization.characters,
         ),

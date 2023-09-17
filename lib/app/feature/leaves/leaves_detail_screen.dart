@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:rgs_hris/core/data/model/response/leave_applications_response.dart';
 
+import '../../../core/ui/widget/text_form_field_widget.dart';
 import '../../bloc/auth/auth_bloc.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
 
@@ -32,118 +33,65 @@ class LeavesDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('EMPLOYEE NAME',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  'LEAVE APPLICATION DETAILS',
+                  style: TextStyle(
+                      color: Colors.teal, fontWeight: FontWeight.bold),
+                ),
+              ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
                 if (state is AuthSignInSuccess) {
                   final employeeData = state.loginWrapperResponse.loginResponse
                       ?.loginDataResponse?.employeeDetails;
-                  return Text(
-                    '${employeeData?.name.toString().toUpperCase()}',
-                  );
+                  return _buildInfoItemWidget(
+                      'EMPLOYEE NAME', '${employeeData?.name}');
                 }
                 return const SizedBox();
               }),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('DATE FILED',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Text(parseDate(leaveApplications.dateFiled.toString())),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('EFFECTIVE DATE',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Text(
-                      '${parseDate(leaveApplications.dateFrom.toString())} - ${parseDate(leaveApplications.dateTo.toString())}'),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('NO OF DAYS',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Text('${leaveApplications.noDays}'),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('REASON / DESCRIPTION',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Text(leaveApplications.description.toString().toUpperCase()),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('LEAVE TYPE',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
+              _buildInfoItemWidget('DATE FILED',
+                  parseDate(leaveApplications.dateFiled.toString())),
+              _buildInfoItemWidget('EFFECTIVE DATE',
+                  '${parseDate(leaveApplications.dateFrom.toString())} - ${parseDate(leaveApplications.dateTo.toString())}'),
+              _buildInfoItemWidget('NO OF DAYS', '${leaveApplications.noDays}'),
+              _buildInfoItemWidget('REASON / DESCRIPTION',
+                  leaveApplications.description.toString()),
               _buildLeaveTypeNameWidget(leaveApplications.type),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('STATUS',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Text('${leaveApplications.status?.toUpperCase()}'),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('APPROVED BY',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Text("${leaveApplications.approvedBy ?? '-'}"),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
-              const Text('REJECTED BY',
-                  style: TextStyle(fontSize: 12, color: Colors.teal)),
-              const SizedBox(height: 10),
-              Text("${leaveApplications.rejectedBy ?? '-'}"),
-              const SizedBox(height: 20),
-              Divider(
-                height: 1,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 20),
+              _buildInfoItemWidget('STATUS', '${leaveApplications.status}'),
+              _buildInfoItemWidget(
+                  'APPROVED BY', "${leaveApplications.approvedBy ?? '-'}"),
+              _buildInfoItemWidget(
+                  'REJECTED BY', "${leaveApplications.rejectedBy ?? '-'}"),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoItemWidget(
+    String label,
+    String? value,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 12, color: Colors.teal)),
+        const SizedBox(height: 10),
+        TextFormFieldWidget(
+          name: '',
+          initialValue:
+              value != null && value.isNotEmpty ? value.toUpperCase() : ' -',
+          isReadOnly: true,
+          textCapitalization: TextCapitalization.characters,
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 
@@ -168,7 +116,7 @@ class LeavesDetailScreen extends StatelessWidget {
             case 6:
               leaveType = typesResponse?.five?.toUpperCase();
           }
-          return Text('$leaveType LEAVE');
+          return _buildInfoItemWidget('LEAVE TYPE', '$leaveType LEAVE');
         }
         return const SizedBox();
       },

@@ -5,6 +5,7 @@ import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/core/data/model/response/personal_address_response.dart';
 import 'package:rgs_hris/core/data/model/response/personal_employee_response.dart';
 
+import '../../../core/ui/widget/text_form_field_widget.dart';
 import '../../bloc/user/user_bloc.dart';
 
 class PersonalScreen extends StatelessWidget {
@@ -39,7 +40,7 @@ class PersonalScreen extends StatelessWidget {
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -288,11 +289,11 @@ class PersonalScreen extends StatelessWidget {
       children: [
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.teal)),
         const SizedBox(height: 10),
-        Text((value ?? '-').toUpperCase()),
-        const SizedBox(height: 20),
-        Divider(
-          height: 1,
-          color: Colors.grey.shade400,
+        TextFormFieldWidget(
+          name: '',
+          initialValue: value != null ? value.toUpperCase() : ' -',
+          isReadOnly: true,
+          textCapitalization: TextCapitalization.characters,
         ),
         const SizedBox(height: 20),
       ],

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../../core/ui/widget/text_form_field_widget.dart';
 import '../../../bloc/my_access_bloc.dart';
 
 class MyAccessProfileScreen extends StatelessWidget {
@@ -36,7 +37,7 @@ class MyAccessProfileScreen extends StatelessWidget {
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -122,17 +123,21 @@ class MyAccessProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoItemWidget(String label, String? value) {
+  Widget _buildInfoItemWidget(
+    String label,
+    String? value,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.teal)),
         const SizedBox(height: 10),
-        Text((value ?? '-').toUpperCase()),
-        const SizedBox(height: 20),
-        Divider(
-          height: 1,
-          color: Colors.grey.shade400,
+        TextFormFieldWidget(
+          name: '',
+          initialValue:
+              value != null && value.isNotEmpty ? value.toUpperCase() : ' -',
+          isReadOnly: true,
+          textCapitalization: TextCapitalization.characters,
         ),
         const SizedBox(height: 20),
       ],

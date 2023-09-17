@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/data/model/response/attendance_list_response.dart';
+import '../../../core/ui/widget/text_form_field_widget.dart';
 
 class AttendanceDetailScreen extends StatelessWidget {
   const AttendanceDetailScreen({
@@ -13,9 +14,6 @@ class AttendanceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final entryLogs = attendanceListResponse..response
-    //     ?.data?.attendances?[index];
-
     final date = DateFormat.yMEd()
         .format(DateTime.parse(attendanceListResponse.amIn.toString()));
     final timeIn = attendanceListResponse.amIn != null
@@ -41,7 +39,7 @@ class AttendanceDetailScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -110,68 +108,36 @@ class AttendanceDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text('SHIFT',
-                style: TextStyle(fontSize: 12, color: Colors.teal)),
-            const SizedBox(height: 10),
-            Text('${attendanceListResponse.shift}'),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text('CAMPAIGN',
-                style: TextStyle(fontSize: 12, color: Colors.teal)),
-            const SizedBox(height: 10),
-            Text('${attendanceListResponse.campaign}'),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text('LATE',
-                style: TextStyle(fontSize: 12, color: Colors.teal)),
-            const SizedBox(height: 10),
-            Text('${attendanceListResponse.late}'),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text('OVERTIME',
-                style: TextStyle(fontSize: 12, color: Colors.teal)),
-            const SizedBox(height: 10),
-            Text('${attendanceListResponse.overtime}'),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text('UNDERTIME',
-                style: TextStyle(fontSize: 12, color: Colors.teal)),
-            const SizedBox(height: 10),
-            Text('${attendanceListResponse.undertime}'),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text('DEVICE',
-                style: TextStyle(fontSize: 12, color: Colors.teal)),
-            const SizedBox(height: 10),
-            Text('${attendanceListResponse.source}'),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
+            _buildInfoItemWidget('SHIFT', attendanceListResponse.shift),
+            _buildInfoItemWidget('CAMPAIGN', attendanceListResponse.campaign),
+            _buildInfoItemWidget('LATE', attendanceListResponse.late != '0' ? attendanceListResponse.late : '00:00'),
+            _buildInfoItemWidget('OVERTIME', attendanceListResponse.overtime != '0' ? attendanceListResponse.overtime : '00:00'),
+            _buildInfoItemWidget('UNDERTIME', attendanceListResponse.undertime != '0' ? attendanceListResponse.undertime : '00:00'),
+            _buildInfoItemWidget('DEVICE', attendanceListResponse.source),
           ],
         ),
       )),
+    );
+  }
+
+  Widget _buildInfoItemWidget(
+    String label,
+    String? value,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 12, color: Colors.teal)),
+        const SizedBox(height: 10),
+        TextFormFieldWidget(
+          name: '',
+          initialValue:
+              value != null && value.isNotEmpty ? value.toUpperCase() : ' -',
+          isReadOnly: true,
+          textCapitalization: TextCapitalization.characters,
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 }
