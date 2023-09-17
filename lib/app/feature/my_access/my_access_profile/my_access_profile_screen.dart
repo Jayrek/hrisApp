@@ -30,8 +30,8 @@ class MyAccessProfileScreen extends StatelessWidget {
       body: BlocConsumer<MyAccessBloc, MyAccessState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (state is MyAccessLoaded) {
-            final myAccessData = state.myAccessWrapperResponse.response?.data;
+          if (state.myAccessWrapperResponse != null) {
+            final myAccessData = state.myAccessWrapperResponse?.response?.data;
             print('myAccessData: $myAccessData');
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -111,7 +111,7 @@ class MyAccessProfileScreen extends StatelessWidget {
                     ]),
               ),
             );
-          } else if (state is MyAccessLoading) {
+          } else if (state.myAccessStatus == MyAccessStatus.loading) {
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );

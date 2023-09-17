@@ -46,7 +46,7 @@ class TextFormFieldWidget extends StatelessWidget {
       cursorColor: Colors.black,
       cursorWidth: 1,
       style: TextStyle(
-        color: Colors.black,
+        color: isReadOnly ? Colors.black54 : Colors.black,
         fontWeight: fontWeight,
         fontSize: 14,
       ),

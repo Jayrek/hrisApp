@@ -2,7 +2,7 @@ import 'my_access_response.dart';
 
 class MyAccessWrapperResponse {
   MyAccessWrapperResponse({
-    this.response,
+    required this.response,
   });
 
   MyAccessWrapperResponse.fromJson(dynamic json) {
@@ -10,6 +10,14 @@ class MyAccessWrapperResponse {
         ? MyAccessResponse.fromJson(json['response'])
         : null;
   }
+
+  static  MyAccessWrapperResponse defaultValue = MyAccessWrapperResponse(
+    response: MyAccessResponse(
+      status: '',
+      message: '',
+      data: null,
+    ),
+  );
 
   MyAccessResponse? response;
 

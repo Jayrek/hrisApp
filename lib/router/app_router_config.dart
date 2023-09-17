@@ -191,7 +191,7 @@ class AppRouterConfig {
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const MyAccessChangeUserNameScreen(),
+              child: MyAccessChangeUserNameScreen(),
             ),
           ),
           //   ],
