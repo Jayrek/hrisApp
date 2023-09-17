@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 import 'package:rgs_hris/core/data/model/response/login_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/manager/token_manager.dart';
 import 'package:rgs_hris/core/domain/repository/auth/auth_repository.dart';
 import 'package:rgs_hris/core/domain/repository/leaves/leaves_repository.dart';
 
@@ -33,22 +31,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
 
-      debugPrint('response: $response');
-
       final loginResponse = response.loginResponse;
-      String? token = '';
-      if (loginResponse != null) {
-        token = loginResponse.loginDataResponse?.token.toString();
-        SharedPrefsManager().setToken(token.toString());
-        // await TokenManager.setToken(token.toString());
-      }
 
-      print('response: $response');
-      final exception = response.loginResponse;
-      if (exception?.status?.toLowerCase() == 'error') {
-        emit(AuthSignInException(message: exception?.message ?? ''));
-      } else {
-        emit(AuthSignInSuccess(response));
+      if (loginResponse != null) {
+        if (loginResponse.loginDataResponse != null) {
+          String? token = loginResponse.loginDataResponse?.token.toString();
+          SharedPrefsManager().setToken(token.toString());
+          emit(AuthSignInSuccess(response));
+        } else {
+          emit(AuthSignInException(
+              message: loginResponse.message ?? 'Unknown error'));
+        }
       }
     } catch (e) {
       emit(AuthSignInException(message: e.toString()));

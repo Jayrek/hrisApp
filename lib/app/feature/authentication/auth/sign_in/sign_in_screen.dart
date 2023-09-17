@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/common/util/app_strings.dart';
 import 'package:rgs_hris/app/common/util/key_strings.dart';
@@ -10,6 +9,7 @@ import 'package:rgs_hris/core/ui/widget/wrap_text_button.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
 import '../../../../../core/ui/widget/text_form_field_widget.dart';
+import '../../../../../core/ui/widget/widget_util.dart';
 import '../../../../bloc/auth/auth_bloc.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -22,9 +22,6 @@ class SignInScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthSignInSuccess) {
           context.pushReplacementNamed(AppRoute.attendance.name);
-        }
-        if (state is AuthSignInException) {
-          debugPrint('print exception message here...');
         }
       },
       builder: (context, state) {
@@ -43,19 +40,15 @@ class SignInScreen extends StatelessWidget {
                           height: 100,
                           child: Image.asset('assets/images/rgs_logo.png'),
                         ),
-                        Divider(
-                          height: 1,
-                          color: Colors.grey.withOpacity(0.5),
-                        ),
+                        WidgetUtil.customDivider(),
                         _buildSignInHeaderWidget(),
                         _buildUnAuthorizeWidget(state),
                         _buildSignInFormWidget(context, state),
                         WrapTextButton(
                           leadingText: AppStrings.noAccountYet,
                           buttonText: AppStrings.signUp,
-                          onPressed: () {
-                            context.goNamed(AppRoute.signUp.name);
-                          },
+                          onPressed: () =>
+                              context.goNamed(AppRoute.signUp.name),
                         ),
                       ],
                     ),
@@ -85,9 +78,7 @@ class SignInScreen extends StatelessWidget {
               fontSize: 14,
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Text(
             AppStrings.employeePortal.toUpperCase(),
             style: const TextStyle(
@@ -112,47 +103,31 @@ class SignInScreen extends StatelessWidget {
         key: formKey,
         child: Column(
           children: [
-            TextFormFieldWidget(
+            // username input field
+            const TextFormFieldWidget(
               name: KeyStrings.usernameKey,
               initialValue: '',
               hint: AppStrings.username,
               textCapitalization: TextCapitalization.characters,
               fontWeight: FontWeight.bold,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(
-                    errorText: 'user name is required'),
-              ]),
-              errorFontSize: 12,
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormFieldWidget(
+            const SizedBox(height: 10),
+
+            // password input field
+            const TextFormFieldWidget(
               name: KeyStrings.passwordKey,
               initialValue: '',
               hint: AppStrings.password,
               isObscure: true,
               textInputType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(
-                    errorText: 'password is required'),
-              ]),
-              errorFontSize: 12,
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
+
+            // sign in button
             ElevatedButtonWidget(
               label: AppStrings.signIn.toUpperCase(),
-              onPressed: () {
-                // if (formKey.currentState!.saveAndValidate()) {
-                _signIn(context);
-
-                // }
-
-                // context.goNamed(AppRoute.dashboard.name);
-              },
+              onPressed: () => _signIn(context),
               backgroundColor: Colors.red.shade400,
               borderColor: Colors.red.shade400,
               fontColor: Colors.white,
@@ -172,9 +147,6 @@ class SignInScreen extends StatelessWidget {
     context
         .read<AuthBloc>()
         .add(AuthSignInSubmit(username: username, password: password));
-
-    // context.read<AuthBloc>().add(const AuthSignInSubmit(
-    //     username: 'CRUZ06061988', password: '06061988'));
   }
 
   Widget _buildUnAuthorizeWidget(AuthState authState) {
