@@ -82,7 +82,7 @@ class TextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
@@ -91,7 +91,7 @@ class TextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -100,7 +100,7 @@ class TextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
       ),

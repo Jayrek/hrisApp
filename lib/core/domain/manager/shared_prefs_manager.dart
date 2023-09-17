@@ -18,7 +18,7 @@ class SharedPrefsManager {
       instance.getString(key) ?? '';
 
   void clearPreference() {
-    instance.remove(KeyStrings.tokenKey);
-    instance.remove(KeyStrings.fullName);
+    instance.remove(KeyStrings.spTokenKey);
+    instance.remove(KeyStrings.spFullNameKey);
   }
 }

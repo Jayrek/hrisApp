@@ -25,7 +25,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   ) async {
     emit(UserLoading());
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final response =
         await userRepository.getPersonalInformation(token: tokenValue);
 

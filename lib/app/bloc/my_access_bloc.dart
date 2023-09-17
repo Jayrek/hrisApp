@@ -27,7 +27,7 @@ class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
     emit(state.copyWith(myAccessStatus: MyAccessStatus.loading));
     try {
       final tokenValue =
-          await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
       final response =
           await myAccessRepository.getMyAccessInformation(token: tokenValue);
 

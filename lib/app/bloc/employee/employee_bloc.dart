@@ -25,7 +25,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   ) async {
     emit(EmployeeLoading());
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final response =
         await employeeRepository.getEmployeeInformation(token: tokenValue);
 

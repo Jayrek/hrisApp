@@ -50,7 +50,7 @@ class CalendarTextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
@@ -59,7 +59,7 @@ class CalendarTextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -68,7 +68,7 @@ class CalendarTextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
       ),

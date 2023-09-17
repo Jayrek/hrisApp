@@ -25,7 +25,7 @@ class WorkBloc extends Bloc<WorkEvent, WorkState> {
   ) async {
     emit(WorkLoading());
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final response = await workRepository.getWorkInformation(token: tokenValue);
 
     print('_onWorkFetched: $response');

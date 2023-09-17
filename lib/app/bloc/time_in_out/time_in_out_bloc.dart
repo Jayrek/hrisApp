@@ -26,7 +26,7 @@ class TimeInOutBloc extends Bloc<TimeInOutEvent, TimeInOutState> {
   ) async {
     emit(TimeInOutLoading());
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final response = await attendanceRepository.setTimeInOut(
       type: event.type,
       token: tokenValue,

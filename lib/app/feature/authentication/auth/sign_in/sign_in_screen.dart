@@ -139,6 +139,7 @@ class SignInScreen extends StatelessWidget {
   }
 
   Future<void> _signIn(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     final username =
         formKey.currentState?.fields[KeyStrings.usernameKey]?.value ?? '';
     final password =

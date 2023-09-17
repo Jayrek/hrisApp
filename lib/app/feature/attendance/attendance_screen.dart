@@ -373,7 +373,7 @@ class AttendanceScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.teal),
                   elevation: MaterialStateProperty.all(0),
                 ),
-                child: const Text('Apply'),
+                child: Text('Apply'.toUpperCase()),
                 onPressed: () {
                   final dateFrom = formKey.currentState
                           ?.fields[KeyStrings.leaveDateFromKey]?.value ??

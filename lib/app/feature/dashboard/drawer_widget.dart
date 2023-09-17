@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
+import 'package:rgs_hris/app/common/util/key_strings.dart';
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
 import '../../../router/app_route.dart';
@@ -33,42 +32,48 @@ class DrawerWidget extends StatelessWidget {
   }
 
   Widget _buildDrawerHeader() {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is AuthSignInSuccess) {
-          final employeeData = state.loginWrapperResponse.loginResponse
-              ?.loginDataResponse?.employeeDetails;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.blue.shade100,
-                  radius: 40,
-                  child: CircleAvatar(
-                    radius: 37,
-                    backgroundColor: Colors.grey.shade300,
+    Future<String> getPreference() async {
+      final fullName =
+          await SharedPrefsManager().getStringPref(KeyStrings.spFullNameKey);
+      return fullName;
+    }
+
+    return FutureBuilder(
+        future: getPreference(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // While waiting for the data to arrive, show a loading indicator.
+            return const CircularProgressIndicator.adaptive();
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.blue.shade100,
+                    radius: 40,
+                    child: CircleAvatar(
+                      radius: 37,
+                      backgroundColor: Colors.grey.shade300,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    '${employeeData?.name.toString()}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800),
-                  ),
-                )
-              ],
-            ),
-          );
-        }
-        return const SizedBox();
-      },
-    );
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      snapshot.data.toString().toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+        });
   }
 
   Widget _buildDrawerList(BuildContext context) {

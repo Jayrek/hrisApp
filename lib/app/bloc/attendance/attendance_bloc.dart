@@ -28,7 +28,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
     emit(AttendanceLoading());
     try {
       final tokenValue =
-          await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
       final response = await attendanceRepository.getAttendanceInfo(
         dateFrom: event.dateFrom,
         dateTo: event.dateTo,

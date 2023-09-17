@@ -27,7 +27,7 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
   ) async {
     emit(LeavesLoading());
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final responseLeave = await leavesRepository.getLeavesInformation(
       dateFrom: event.dateFrom,
       dateTo: event.dateTo,
@@ -46,7 +46,7 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
   ) async {
     emit(LeavesLoading());
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final response = await leavesRepository.setLeavesApplication(
       dateFrom: event.dateFrom,
       dateTo: event.dateTo,

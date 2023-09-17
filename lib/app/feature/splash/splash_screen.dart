@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
 
   Future<void> _checkIsLoggedIn(GoRouter router) async {
     final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
 
     if (tokenValue.isNotEmpty) {
       router.pushReplacementNamed(AppRoute.attendance.name);

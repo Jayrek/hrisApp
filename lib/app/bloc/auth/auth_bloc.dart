@@ -37,8 +37,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (loginResponse != null) {
         if (loginResponse.loginDataResponse != null) {
           String? token = loginResponse.loginDataResponse?.token.toString();
+          String? fullName =
+              loginResponse.loginDataResponse?.employeeDetails?.name.toString();
           SharedPrefsManager()
-              .setStringPref(KeyStrings.tokenKey, token.toString());
+              .setStringPref(KeyStrings.spTokenKey, token.toString());
+          SharedPrefsManager()
+              .setStringPref(KeyStrings.spFullNameKey, fullName.toString());
           emit(AuthSignInSuccess(response));
         } else {
           emit(AuthSignInException(

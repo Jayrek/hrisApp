@@ -42,7 +42,7 @@ class DropDownTextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
@@ -51,7 +51,7 @@ class DropDownTextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -60,7 +60,7 @@ class DropDownTextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
       ),
