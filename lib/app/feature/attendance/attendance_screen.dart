@@ -15,6 +15,8 @@ import '../../../core/data/model/response/attendance_list_response.dart';
 import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
 import '../../common/util/key_strings.dart';
 
+import 'package:timezone/standalone.dart' as tz;
+
 class AttendanceScreen extends StatelessWidget {
   AttendanceScreen({super.key});
 
@@ -27,7 +29,11 @@ class AttendanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final timezone = tz.getLocation('Asia/Manila');
+    // final timezoneDateTime = tz.TZDateTime.from(DateTime.now(), timezone);
+
     final formatter = DateFormat('yyyy-MM-dd');
+    // final initialDate = formatter.format(timezoneDateTime);
     final initialDate = formatter.format(DateTime.now());
     context.read<AttendanceBloc>().add(
           AttendanceFetched(

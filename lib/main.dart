@@ -26,10 +26,12 @@ import 'core/domain/manager/shared_prefs_manager.dart';
 import 'core/data/data_source/employee/employee_remote_data_source_impl.dart';
 import 'core/data/repository/attendance/attendance_repository_impl.dart';
 import 'core/data/repository/employee/employee_repository_impl.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  tz.initializeTimeZones();
   await SharedPrefsManager.init();
   runApp(const RgsHrisApp());
 }
