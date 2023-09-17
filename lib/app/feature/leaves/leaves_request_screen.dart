@@ -5,6 +5,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:rgs_hris/core/data/model/response/leaves_data_response.dart';
 
+import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
+import '../../../core/ui/widget/drop_down_text_form _field_widget.dart';
+import '../../../core/ui/widget/text_form_field_widget.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
 import '../../common/util/key_strings.dart';
 
@@ -65,7 +68,7 @@ class LeavesRequestScreen extends StatelessWidget {
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -84,60 +87,44 @@ class LeavesRequestScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 _buildLeaveTypeWidget(),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 20),
                                 Text('Dates From & To',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.blue.shade900)),
+                                const SizedBox(height: 10),
                                 Row(
                                   children: [
                                     Flexible(
-                                      child: FormBuilderTextField(
+                                      child: CalendarTextFormFieldWidget(
                                         name: KeyStrings.leaveDateFromKey,
-                                        readOnly: true,
-                                        decoration: const InputDecoration(
-                                          suffixIcon: Icon(
-                                            Icons.calendar_month,
-                                            size: 20,
-                                          ),
-                                          hintText: 'yyyy-MM-dd',
-                                        ),
+                                        hint: 'yyyy-MM-dd',
                                         onTap: () => _selectLeaveDate(
                                             context, 'dateFrom'),
-                                        // onChanged: (value) {
-                                        //   print('dateFrom: $value');
-                                        // },
                                       ),
                                     ),
-                                    const SizedBox(width: 20),
+                                    const SizedBox(width: 10),
                                     Flexible(
-                                      child: FormBuilderTextField(
+                                      child: CalendarTextFormFieldWidget(
                                         name: KeyStrings.leaveDateToKey,
-                                        readOnly: true,
-                                        decoration: const InputDecoration(
-                                            suffixIcon: Icon(
-                                              Icons.calendar_month,
-                                              size: 20,
-                                            ),
-                                            hintText: 'yyyy-MM-dd'),
-                                        onTap: () {
-                                          _selectLeaveDate(context, 'dateTo');
-                                        },
+                                        hint: 'yyyy-MM-dd',
+                                        onTap: () =>
+                                            _selectLeaveDate(context, 'dateTo'),
                                       ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 20),
                                 Text('Leave Reason/Description',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.blue.shade900)),
-                                FormBuilderTextField(
+                                const SizedBox(height: 10),
+                                const TextFormFieldWidget(
                                   name: KeyStrings.leaveDescriptionKey,
+                                  isReadOnly: false,
+                                  hint: 'State your reason',
                                   maxLines: 3,
-                                  decoration: const InputDecoration(
-                                      hintText: 'State your reason',
-                                      hintStyle: TextStyle(fontSize: 12)),
                                 ),
                                 const SizedBox(height: 30),
                                 SizedBox(
@@ -184,7 +171,8 @@ class LeavesRequestScreen extends StatelessWidget {
                                             description: description,
                                           ));
                                     },
-                                    child: const Text('Submit Application'),
+                                    child: Text(
+                                        'Submit Application'.toUpperCase()),
                                   ),
                                 ),
                               ],
@@ -401,7 +389,8 @@ class LeavesRequestScreen extends StatelessWidget {
       children: [
         Text('Leave Type',
             style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
-        FormBuilderDropdown(
+        const SizedBox(height: 10),
+        DropDownTextFormFieldWidget(
           name: KeyStrings.leaveTypeKey,
           initialValue: types.first.toString(),
           items: types

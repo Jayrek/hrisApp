@@ -12,6 +12,7 @@ import 'package:rgs_hris/core/data/model/response/attendance_work_response.dart'
 import 'package:rgs_hris/router/app_route.dart';
 
 import '../../../core/data/model/response/attendance_list_response.dart';
+import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
 import '../../common/util/key_strings.dart';
 
 class AttendanceScreen extends StatelessWidget {
@@ -343,36 +344,22 @@ class AttendanceScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text('Date Range',
                 style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Flexible(
-                  child: FormBuilderTextField(
+                  child: CalendarTextFormFieldWidget(
                     name: KeyStrings.leaveDateFromKey,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.calendar_month,
-                        size: 20,
-                      ),
-                      hintText: 'yyyy-MM-dd',
-                    ),
+                    hint: 'yyyy-MM-dd',
                     onTap: () => _selectLeaveDate(context, 'dateFrom'),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 10),
                 Flexible(
-                  child: FormBuilderTextField(
+                  child: CalendarTextFormFieldWidget(
                     name: KeyStrings.leaveDateToKey,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.calendar_month,
-                          size: 20,
-                        ),
-                        hintText: 'yyyy-MM-dd'),
-                    onTap: () {
-                      _selectLeaveDate(context, 'dateTo');
-                    },
+                    hint: 'yyyy-MM-dd',
+                    onTap: () => _selectLeaveDate(context, 'dateTo'),
                   ),
                 ),
               ],

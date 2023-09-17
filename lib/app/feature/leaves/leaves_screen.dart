@@ -8,6 +8,8 @@ import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/core/data/model/response/types_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
+import '../../../core/ui/widget/drop_down_text_form _field_widget.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
 
 class LeavesScreen extends StatefulWidget {
@@ -389,39 +391,22 @@ class _LeavesScreenState extends State<LeavesScreen> {
                   Text('Date Range',
                       style:
                           TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       Flexible(
-                        child: FormBuilderTextField(
+                        child: CalendarTextFormFieldWidget(
                           name: KeyStrings.leaveDateFromKey,
-                          readOnly: true,
-                          decoration: const InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.calendar_month,
-                              size: 20,
-                            ),
-                            hintText: 'yyyy-MM-dd',
-                          ),
+                          hint: 'yyyy-MM-dd',
                           onTap: () => _selectLeaveDate(context, 'dateFrom'),
-                          // onChanged: (value) {
-                          //   print('dateFrom: $value');
-                          // },
                         ),
                       ),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 10),
                       Flexible(
-                        child: FormBuilderTextField(
+                        child: CalendarTextFormFieldWidget(
                           name: KeyStrings.leaveDateToKey,
-                          readOnly: true,
-                          decoration: const InputDecoration(
-                              suffixIcon: Icon(
-                                Icons.calendar_month,
-                                size: 20,
-                              ),
-                              hintText: 'yyyy-MM-dd'),
-                          onTap: () {
-                            _selectLeaveDate(context, 'dateTo');
-                          },
+                          hint: 'yyyy-MM-dd',
+                          onTap: () => _selectLeaveDate(context, 'dateTo'),
                         ),
                       ),
                     ],
@@ -430,7 +415,8 @@ class _LeavesScreenState extends State<LeavesScreen> {
                   Text('Leave Type',
                       style:
                           TextStyle(fontSize: 12, color: Colors.blue.shade900)),
-                  FormBuilderDropdown(
+                  const SizedBox(height: 10),
+                  DropDownTextFormFieldWidget(
                     name: KeyStrings.leaveTypeKey,
                     initialValue: types.first.toString(),
                     items: types
@@ -448,7 +434,8 @@ class _LeavesScreenState extends State<LeavesScreen> {
                   Text('Leave Status',
                       style:
                           TextStyle(fontSize: 12, color: Colors.blue.shade900)),
-                  FormBuilderDropdown(
+                  const SizedBox(height: 10),
+                  DropDownTextFormFieldWidget(
                     name: KeyStrings.leaveStatusKey,
                     initialValue: statuses.first.toString(),
                     items: statuses
@@ -471,7 +458,7 @@ class _LeavesScreenState extends State<LeavesScreen> {
                             MaterialStateProperty.all<Color>(Colors.teal),
                         elevation: MaterialStateProperty.all(0),
                       ),
-                      child: const Text('Apply'),
+                      child: Text('Apply'.toUpperCase()),
                       onPressed: () {
                         final dateFrom = formKey.currentState
                                 ?.fields[KeyStrings.leaveDateFromKey]?.value ??
@@ -558,7 +545,9 @@ class _LeavesScreenState extends State<LeavesScreen> {
                               extra: state.leavesWrapperResponse.leavesResponse
                                   ?.leavesDataResponse,
                             ),
-                            child: const Text('+ Apply for Leave'),
+                            child: Text(
+                              '+ Apply for Leave'.toUpperCase(),
+                            ),
                           ),
                         )
                       : const SizedBox()),

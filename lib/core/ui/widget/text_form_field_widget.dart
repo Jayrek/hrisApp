@@ -16,6 +16,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.errorFontSize = 0.01,
     this.isReadOnly = false,
     this.fontWeight = FontWeight.normal,
+    this.maxLines = 1,
   });
 
   final String name;
@@ -30,6 +31,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final double errorFontSize;
   final bool isReadOnly;
   final FontWeight fontWeight;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class TextFormFieldWidget extends StatelessWidget {
       readOnly: isReadOnly,
       cursorColor: Colors.black,
       cursorWidth: 1,
+      maxLines: maxLines,
       style: TextStyle(
         color: isReadOnly ? Colors.black54 : Colors.black,
         fontWeight: fontWeight,
