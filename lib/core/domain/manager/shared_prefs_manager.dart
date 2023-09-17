@@ -8,27 +8,14 @@ class SharedPrefsManager {
   static Future<SharedPreferences> init() async =>
       instance = await SharedPreferences.getInstance();
 
-  void setToken(String token) async => await instance.setString(
-        KeyStrings.tokenKey,
-        token,
+  void setStringPref(String key, String value) async =>
+      await instance.setString(
+        key,
+        value,
       );
 
-  Future<String> getToken() async =>
-      instance.getString(
-        KeyStrings.tokenKey,
-      ) ??
-      '';
-
-  void setFullName(String fullName) async => await instance.setString(
-        KeyStrings.fullName,
-        fullName,
-      );
-
-  Future<String> getFullName() async =>
-      instance.getString(
-        KeyStrings.fullName,
-      ) ??
-      '';
+  Future<String> getStringPref(String key) async =>
+      instance.getString(key) ?? '';
 
   void clearPreference() {
     instance.remove(KeyStrings.tokenKey);

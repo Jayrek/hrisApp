@@ -14,15 +14,9 @@ import 'package:rgs_hris/router/app_route.dart';
 import '../../../core/data/model/response/attendance_list_response.dart';
 import '../../common/util/key_strings.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
+class AttendanceScreen extends StatelessWidget {
+  AttendanceScreen({super.key});
 
-  @override
-  State<AttendanceScreen> createState() => _AttendanceScreenState();
-}
-
-class _AttendanceScreenState extends State<AttendanceScreen> {
-//
   final formKey = GlobalKey<FormBuilderState>();
 
   String getCurrentDate() {
@@ -31,8 +25,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     final formatter = DateFormat('yyyy-MM-dd');
     final initialDate = formatter.format(DateTime.now());
     context.read<AttendanceBloc>().add(
@@ -41,18 +34,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             dateTo: initialDate.toString(),
           ),
         );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // final formatter = DateFormat('yyyy-MM-dd');
-    // final initialDate = formatter.format(DateTime.now());
-    // context.read<AttendanceBloc>().add(
-    //       AttendanceFetched(
-    //         dateFrom: initialDate.toString(),
-    //         dateTo: initialDate.toString(),
-    //       ),
-    //     );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -110,57 +91,56 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         }
       },
       builder: (context, state) {
-        return BlocBuilder<AttendanceBloc, AttendanceState>(
-          builder: (context, state) {
-            if (state is AttendanceLoaded) {
-              final workShift = state.attendanceWrapperResponse.response?.data
-                  ?.attendanceWorkResponse;
-              final attendanceList =
-                  state.attendanceWrapperResponse.response?.data?.attendances;
-              return Stack(
+        if (state is AttendanceLoaded) {
+          final workShift = state
+              .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
+          final attendanceList =
+              state.attendanceWrapperResponse.response?.data?.attendances;
+          return Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 20),
-                      Divider(
-                        height: 1,
-                        color: Colors.grey.shade400,
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'SHIFT & SCHEDULE',
-                        style: TextStyle(
-                            color: Colors.teal, fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Text(
-                          getCurrentDate().toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      _buildShiftTable(workShift!),
-                      const SizedBox(height: 20),
-                      Divider(
-                        height: 1,
-                        color: Colors.grey.shade400,
-                      ),
-                      _buildEntryLogs(attendanceList!),
-                    ],
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
                   ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'SHIFT & SCHEDULE',
+                    style: TextStyle(
+                        color: Colors.teal, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      getCurrentDate().toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _buildShiftTable(workShift!),
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
+                  ),
+                  _buildEntryLogs(attendanceList!),
                 ],
-              );
-            }
-            if (state is AttendanceLoading) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            }
-            return const SizedBox();
-          },
-        );
+              ),
+            ],
+          );
+        }
+        if (state is AttendanceLoading) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 40),
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          );
+        }
+        return const SizedBox();
       },
     );
   }

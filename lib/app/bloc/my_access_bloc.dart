@@ -6,6 +6,7 @@ import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dar
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
 import '../../core/domain/repository/my_access/my_access_repository.dart';
+import '../common/util/key_strings.dart';
 
 part 'my_access_event.dart';
 
@@ -14,7 +15,8 @@ part 'my_access_state.dart';
 class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
   final MyAccessRepository myAccessRepository;
 
-  MyAccessBloc({required this.myAccessRepository}) : super(const MyAccessState()) {
+  MyAccessBloc({required this.myAccessRepository})
+      : super(const MyAccessState()) {
     on<MyAccessFetched>(_onMyAccessFetched);
   }
 
@@ -24,7 +26,8 @@ class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
   ) async {
     emit(state.copyWith(myAccessStatus: MyAccessStatus.loading));
     try {
-      final tokenValue = await SharedPrefsManager().getToken();
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
       final response =
           await myAccessRepository.getMyAccessInformation(token: tokenValue);
 

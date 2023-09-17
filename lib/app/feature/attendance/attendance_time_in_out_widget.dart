@@ -29,7 +29,6 @@ class _AttendanceTimeInOutWidgetState extends State<AttendanceTimeInOutWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<TimeInOutBloc, TimeInOutState>(
       listener: (context, state) {
         if (state is TimeInOutLoaded) {
@@ -44,11 +43,6 @@ class _AttendanceTimeInOutWidgetState extends State<AttendanceTimeInOutWidget> {
             if (value == OkCancelResult.ok) {
               final formatter = DateFormat('yyyy-MM-dd');
               final initialDate = formatter.format(DateTime.now());
-
-              // if (state.attendanceInOutWrapperResponse.response?.status
-              //         ?.toLowerCase() ==
-              //     'success') {
-              //   Navigator.of(context).pop();
               context.read<AttendanceBloc>().add(
                     AttendanceFetched(
                       dateFrom: initialDate.toString(),
@@ -164,10 +158,6 @@ class _AttendanceTimeInOutWidgetState extends State<AttendanceTimeInOutWidget> {
                 ),
               ],
             ),
-            // if (state is TimeInOutLoading)
-            //   const Center(
-            //     child: CircularProgressIndicator.adaptive(),
-            //   )
           ],
         );
       },

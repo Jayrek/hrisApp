@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rgs_hris/app/common/util/key_strings.dart';
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_in_out_wrapper_response.dart';
 import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
 
-import '../../../core/domain/manager/token_manager.dart';
 import '../../../core/domain/repository/attendance/attendance_repository.dart';
 
 part 'attendance_event.dart';
@@ -27,9 +26,9 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
     Emitter<AttendanceState> emit,
   ) async {
     emit(AttendanceLoading());
-    // final tokenValue = await TokenManager.getToken();
     try {
-      final tokenValue = await SharedPrefsManager().getToken();
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.tokenKey);
       final response = await attendanceRepository.getAttendanceInfo(
         dateFrom: event.dateFrom,
         dateTo: event.dateTo,
