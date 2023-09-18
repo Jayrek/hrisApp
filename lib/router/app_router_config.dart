@@ -9,6 +9,8 @@ import 'package:rgs_hris/app/feature/leaves/leaves_detail_screen.dart';
 import 'package:rgs_hris/app/feature/leaves/leaves_request_screen.dart';
 import 'package:rgs_hris/app/feature/my_access/my_access_change_username/my_access_change_user_name_screen.dart';
 import 'package:rgs_hris/app/feature/my_access/my_access_profile/my_access_profile_screen.dart';
+import 'package:rgs_hris/app/feature/performance/performance_goals_screen.dart';
+import 'package:rgs_hris/app/feature/performance/performance_profile_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
 import 'package:rgs_hris/app/feature/request_update/request_update_screen.dart';
@@ -132,14 +134,33 @@ class AppRouterConfig {
                     }),
               ]),
           GoRoute(
-            name: AppRoute.performance.name,
-            path: AppRoute.performance.path,
-            pageBuilder: (context, state) => pageBuilderAnimate(
-              context,
-              state,
-              child: const PerformanceScreen(),
-            ),
-          ),
+              name: AppRoute.performance.name,
+              path: AppRoute.performance.path,
+              pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: const PerformanceScreen(),
+                  ),
+              routes: [
+                GoRoute(
+                  name: AppRoute.performanceProfile.name,
+                  path: AppRoute.performanceProfile.path,
+                  pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: const PerformanceProfileScreen(),
+                  ),
+                ),
+                GoRoute(
+                  name: AppRoute.performanceGoals.name,
+                  path: AppRoute.performanceGoals.path,
+                  pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: const PerformanceGoalsScreen(),
+                  ),
+                ),
+              ]),
           GoRoute(
             name: AppRoute.documents.name,
             path: AppRoute.documents.path,

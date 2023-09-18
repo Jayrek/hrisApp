@@ -51,6 +51,14 @@ enum AppRoute {
     name: 'performance',
     path: 'performance',
   ),
+  performanceProfile(
+    name: 'performanceProfile',
+    path: 'performanceProfile',
+  ),
+  performanceGoals(
+    name: 'performanceGoals',
+    path: 'performanceGoals',
+  ),
   documents(
     name: 'documents',
     path: 'documents',
