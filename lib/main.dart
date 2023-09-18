@@ -11,6 +11,7 @@ import 'package:rgs_hris/app/bloc/work/work_bloc.dart';
 import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/auth/auth_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source_impl.dart';
+import 'package:rgs_hris/core/data/data_source/performance/performance_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/user/user_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/work/work_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/repository/auth/auth_repository_impl.dart';
@@ -19,9 +20,11 @@ import 'package:rgs_hris/core/data/repository/user/user_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/work/work_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
+import 'app/bloc/performance/performance_bloc.dart';
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
 import 'core/data/data_source/my_access/my_access_remote_data_source_impl.dart';
 import 'core/data/repository/my_access/my_access_repository_impl.dart';
+import 'core/data/repository/performance/performance_repository_impl.dart';
 import 'core/domain/manager/shared_prefs_manager.dart';
 import 'core/data/data_source/employee/employee_remote_data_source_impl.dart';
 import 'core/data/repository/attendance/attendance_repository_impl.dart';
@@ -105,6 +108,15 @@ class RgsHrisApp extends StatelessWidget {
                 myAccessRemoteDataSource: myAccessRemoteDataSource);
           },
         ),
+        RepositoryProvider(
+          create: (context) {
+            final performanceRemoteDataSource =
+                PerformanceRemoteDataSourceImpl(dioClient: Dio());
+
+            return PerformanceRepositoryImpl(
+                performanceRemoteDataSource: performanceRemoteDataSource);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -149,6 +161,11 @@ class RgsHrisApp extends StatelessWidget {
             create: (context) => MyAccessBloc(
                 myAccessRepository:
                     RepositoryProvider.of<MyAccessRepositoryImpl>(context)),
+          ),
+          BlocProvider(
+            create: (context) => PerformanceBloc(
+                performanceRepository:
+                    RepositoryProvider.of<PerformanceRepositoryImpl>(context)),
           ),
         ],
         child: MaterialApp.router(
