@@ -6,7 +6,7 @@ import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
 import '../../../../core/ui/widget/text_form_field_widget.dart';
-import '../../../bloc/my_access_bloc.dart';
+import '../../../bloc/my_access/my_access_bloc.dart';
 
 class MyAccessProfileScreen extends StatelessWidget {
   const MyAccessProfileScreen({super.key});

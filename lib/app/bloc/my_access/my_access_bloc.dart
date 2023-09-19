@@ -6,8 +6,8 @@ import 'package:rgs_hris/core/data/model/response/change_password_wrapper_respon
 import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
-import '../../core/domain/repository/my_access/my_access_repository.dart';
-import '../common/util/key_strings.dart';
+import '../../../core/domain/repository/my_access/my_access_repository.dart';
+import '../../common/util/key_strings.dart';
 
 part 'my_access_event.dart';
 

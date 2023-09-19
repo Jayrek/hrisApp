@@ -5,7 +5,7 @@ import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
 import 'package:rgs_hris/app/bloc/employee/employee_bloc.dart';
 import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
-import 'package:rgs_hris/app/bloc/my_access_bloc.dart';
+import 'package:rgs_hris/app/bloc/my_access/my_access_bloc.dart';
 import 'package:rgs_hris/app/bloc/user/user_bloc.dart';
 import 'package:rgs_hris/app/bloc/work/work_bloc.dart';
 import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source_impl.dart';

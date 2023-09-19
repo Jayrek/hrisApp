@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/ui/widget/text_form_field_widget.dart';
-import '../../../bloc/my_access_bloc.dart';
+import '../../../bloc/my_access/my_access_bloc.dart';
 import '../../../common/util/key_strings.dart';
 
 class MyAccessChangeUserNameScreen extends StatelessWidget {
