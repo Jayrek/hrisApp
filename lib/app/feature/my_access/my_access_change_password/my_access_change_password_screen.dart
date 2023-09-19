@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rgs_hris/app/bloc/change_password/change_password_bloc.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
@@ -32,54 +33,59 @@ class MyAccessChangePasswordScreen extends StatelessWidget {
         ),
       ),
       drawer: const DrawerWidget(),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: BlocConsumer<MyAccessBloc, MyAccessState>(
-            listener: (context, state) {
-              if (state.changePasswordWrapperResponse != null &&
-                  state.myAccessStatus == MyAccessStatus.success) {
-                final response = state.changePasswordWrapperResponse;
-                showOkAlertDialog(
-                    context: context,
-                    title: response?.response?.status,
-                    message: response?.response?.message);
-              }
-            },
-            builder: (context, state) {
-              if (state.myAccessWrapperResponse != null) {
-                return FormBuilder(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Text(
-                          'ACCOUNT DATA',
-                          style: TextStyle(
-                              color: Colors.teal, fontWeight: FontWeight.bold),
+      body: BlocConsumer<ChangePasswordBloc, ChangePasswordState>(
+        listener: (context, state) {
+          if (state is ChangePasswordLoaded) {
+            final response = state.wrapperDefaultResponse;
+            showOkAlertDialog(
+                context: context,
+                title: response.response?.status,
+                message: response.response?.message);
+          }
+        },
+        builder: (context, state) {
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: FormBuilder(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            'ACCOUNT DATA',
+                            style: TextStyle(
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      _buildInputItemWidget(
-                          'CURRENT PASSWORD', KeyStrings.updateCurrentPassword),
-                      _buildInputItemWidget(
-                          'NEW PASSWORD', KeyStrings.updateNewPassword),
-                      _buildInputItemWidget(
-                          'RE-TYPE PASSWORD', KeyStrings.updateConfirmPassword),
-                      const SizedBox(height: 10),
-                      _buildChangePasswordButton(context),
-                      const SizedBox(height: 10),
-                      _buildChangeUserNameButton(context),
-                    ],
+                        _buildInputItemWidget('CURRENT PASSWORD',
+                            KeyStrings.updateCurrentPassword),
+                        _buildInputItemWidget(
+                            'NEW PASSWORD', KeyStrings.updateNewPassword),
+                        _buildInputItemWidget('RE-TYPE PASSWORD',
+                            KeyStrings.updateConfirmPassword),
+                        const SizedBox(height: 10),
+                        _buildChangePasswordButton(context),
+                        const SizedBox(height: 10),
+                        _buildChangeUserNameButton(context),
+                      ],
+                    ),
                   ),
-                );
-              }
-              return const SizedBox();
-            },
-          ),
-        ),
+                ),
+              ),
+              if (state is ChangePasswordLoading)
+                const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                )
+            ],
+          );
+        },
       ),
     );
   }
@@ -129,22 +135,15 @@ class MyAccessChangePasswordScreen extends StatelessWidget {
           final confirmPassword = formKey.currentState
                   ?.fields[KeyStrings.updateConfirmPassword]?.value ??
               '';
-          context.read<MyAccessBloc>().add(MyAccessChangePasswordSubmit(
+          context.read<ChangePasswordBloc>().add(ChangePasswordSubmit(
                 currentPassword: currentPassword,
                 newPassword: newPassword,
                 confirmPassword: confirmPassword,
               ));
         },
-        child: BlocBuilder<MyAccessBloc, MyAccessState>(
-          builder: (context, state) {
-            if (state.myAccessStatus == MyAccessStatus.loading) {
-              return const CircularProgressIndicator.adaptive();
-            }
-            return const Text(
-              'SAVE CHANGES',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            );
-          },
+        child: const Text(
+          'SAVE CHANGES',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );

@@ -61,12 +61,13 @@ class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
       emit(state.copyWith(
         myAccessStatus: MyAccessStatus.success,
         changePasswordWrapperResponse: response,
+        isPasswordSuccess: true,
       ));
 
-      emit(state.copyWith(
-        myAccessStatus: MyAccessStatus.initial,
-        changePasswordWrapperResponse: null,
-      ));
+      // emit(state.copyWith(
+      //   myAccessStatus: MyAccessStatus.initial,
+      //   changePasswordWrapperResponse: null,
+      // ));
     } catch (e) {
       emit(state.copyWith(
         myAccessStatus: MyAccessStatus.failure,

@@ -21,6 +21,7 @@ import 'package:rgs_hris/core/data/repository/user/user_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/work/work_repository_impl.dart';
 import 'package:rgs_hris/router/app_router_config.dart';
 
+import 'app/bloc/change_password/change_password_bloc.dart';
 import 'app/bloc/performance/performance_bloc.dart';
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
 import 'core/data/data_source/change_request/change_request_remote_data_source_impl.dart';
@@ -184,6 +185,11 @@ class RgsHrisApp extends StatelessWidget {
                 changeRequestRepository:
                     RepositoryProvider.of<ChangeRequestRepositoryImpl>(
                         context)),
+          ),
+          BlocProvider(
+            create: (context) => ChangePasswordBloc(
+                myAccessRepository:
+                    RepositoryProvider.of<MyAccessRepositoryImpl>(context)),
           ),
         ],
         child: MaterialApp.router(

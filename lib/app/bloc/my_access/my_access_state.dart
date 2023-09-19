@@ -8,19 +8,22 @@ final class MyAccessState extends Equatable {
     this.myAccessWrapperResponse,
     this.changePasswordWrapperResponse,
     this.userName = '',
+    this.isPasswordSuccess = false,
   });
 
   final MyAccessStatus myAccessStatus;
   final MyAccessWrapperResponse? myAccessWrapperResponse;
-  final String userName;
   final WrapperDefaultResponse? changePasswordWrapperResponse;
+  final String userName;
+  final bool isPasswordSuccess;
 
   @override
   List<Object?> get props => [
         myAccessStatus,
         myAccessWrapperResponse,
-        userName,
         changePasswordWrapperResponse,
+        userName,
+        isPasswordSuccess,
       ];
 
   MyAccessState copyWith({
@@ -28,6 +31,7 @@ final class MyAccessState extends Equatable {
     MyAccessWrapperResponse? myAccessWrapperResponse,
     String? userName,
     WrapperDefaultResponse? changePasswordWrapperResponse,
+    bool? isPasswordSuccess,
   }) {
     return MyAccessState(
       myAccessStatus: myAccessStatus ?? this.myAccessStatus,
@@ -36,6 +40,7 @@ final class MyAccessState extends Equatable {
       userName: userName ?? this.userName,
       changePasswordWrapperResponse:
           changePasswordWrapperResponse ?? this.changePasswordWrapperResponse,
+      isPasswordSuccess: isPasswordSuccess ?? this.isPasswordSuccess,
     );
   }
 }
