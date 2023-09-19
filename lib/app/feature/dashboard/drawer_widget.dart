@@ -103,10 +103,10 @@ class DrawerWidget extends StatelessWidget {
           Navigator.of(context).pop();
           context.pushReplacementNamed(AppRoute.performance.name);
         }),
-        _buildDrawerItem(Icons.note_outlined, 'DOCUMENTS', onTap: () {
-          Navigator.of(context).pop();
-          context.pushReplacementNamed(AppRoute.documents.name);
-        }),
+        // _buildDrawerItem(Icons.note_outlined, 'DOCUMENTS', onTap: () {
+        //   Navigator.of(context).pop();
+        //   context.pushReplacementNamed(AppRoute.documents.name);
+        // }),
         _buildDrawerItem(Icons.note_alt_sharp, 'REQUEST UPDATE', onTap: () {
           Navigator.of(context).pop();
           context.pushReplacementNamed(AppRoute.changeRequestProfile.name);
