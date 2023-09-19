@@ -185,7 +185,7 @@ class AppRouterConfig {
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const RequestUpdateScreen(),
+              child: RequestUpdateScreen(),
             ),
           ),
           GoRoute(

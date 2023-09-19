@@ -102,7 +102,8 @@ class PerformanceGoalsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: WidgetUtil.customDivider(),
-                      )
+                      ),
+                      const SizedBox(height: 20),
                     ],
                   );
                 });

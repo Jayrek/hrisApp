@@ -161,24 +161,29 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            Text(
-                                                'Start Date: ${parseDate(leaveApplications.dateFrom.toString())}'),
+                                            _buildLeaveItemWidget(
+                                                'START DATE:',
+                                                leaveApplications.dateFrom
+                                                    .toString()),
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            Text(
-                                                'End Date: ${parseDate(leaveApplications.dateTo.toString())}'),
+                                            _buildLeaveItemWidget(
+                                                'END DATE:',
+                                                leaveApplications.dateTo
+                                                    .toString()),
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            Text(
-                                                'No. of Days: ${leaveApplications.noDays.toString()}'),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
+                                            _buildLeaveItemWidget(
+                                                'NO. OF DAYS:',
+                                                leaveApplications.noDays
+                                                    .toString()),
+                                            const SizedBox(height: 10),
                                             Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                const Text('Status: '),
+                                                const Text('STATUS: '),
                                                 Text(
                                                   leaveApplications.status
                                                       .toString()
@@ -555,6 +560,16 @@ class _LeavesScreenState extends State<LeavesScreen> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildLeaveItemWidget(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label),
+        Text(value),
+      ],
     );
   }
 

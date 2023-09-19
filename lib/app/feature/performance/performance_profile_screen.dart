@@ -99,7 +99,7 @@ class PerformanceProfileScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
                                       children: [
-                                        Text(
+                                        const Text(
                                           'COMMENT / NOTE:',
                                         ),
                                         Padding(
@@ -107,7 +107,7 @@ class PerformanceProfileScreen extends StatelessWidget {
                                               const EdgeInsets.only(left: 20),
                                           child: Text(
                                             '${performance.comments}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.black45),
                                           ),
                                         ),
@@ -121,7 +121,8 @@ class PerformanceProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: WidgetUtil.customDivider(),
-                      )
+                      ),
+                      const SizedBox(height: 20),
                     ],
                   );
                 });

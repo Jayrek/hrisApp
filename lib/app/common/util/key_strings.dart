@@ -16,6 +16,8 @@ class KeyStrings {
   static const updateNewPassword = 'newPassword';
   static const updateConfirmPassword = 'confirmPassword';
 
+  static const changeRequestStatus = 'changeRequestStatus';
+
   static const spTokenKey = 'spTokenKey';
   static const spFullNameKey = 'spFullNameKey';
   static const spPasswordKey = 'spPasswordKey';
