@@ -71,6 +71,10 @@ enum AppRoute {
     name: 'requestUpdate',
     path: 'requestUpdate',
   ),
+  requestUpdateAdd(
+    name: 'requestUpdateAdd',
+    path: 'requestUpdateAdd',
+  ),
   myAccessProfile(
     name: 'myAccessProfile',
     path: 'myAccessProfile',

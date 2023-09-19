@@ -20,6 +20,15 @@ class ChangeRequestLoaded extends ChangeRequestState {
   List<Object> get props => [changeRequestWrapperResponse];
 }
 
+class ChangeRequestSetLoaded extends ChangeRequestState {
+  final WrapperDefaultResponse wrapperDefaultResponse;
+
+  const ChangeRequestSetLoaded({required this.wrapperDefaultResponse});
+
+  @override
+  List<Object> get props => [wrapperDefaultResponse];
+}
+
 class ChangeRequestException extends ChangeRequestState {
   final String message;
 

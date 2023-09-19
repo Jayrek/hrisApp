@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/bloc/change_request/change_request_bloc.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
+import 'package:rgs_hris/router/app_route.dart';
 
 import '../../../core/ui/widget/drop_down_text_form _field_widget.dart';
 import '../../../core/ui/widget/widget_util.dart';
@@ -234,7 +236,9 @@ class RequestUpdateScreen extends StatelessWidget {
                                   MaterialStateProperty.all<Color>(Colors.teal),
                               elevation: MaterialStateProperty.all(0),
                             ),
-                            onPressed: () {},
+                            onPressed: () => context.pushNamed(
+                              AppRoute.requestUpdateAdd.name,
+                            ),
                             child: Text(
                               '+ Request Update'.toUpperCase(),
                             ),

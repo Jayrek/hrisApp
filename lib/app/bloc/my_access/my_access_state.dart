@@ -13,7 +13,7 @@ final class MyAccessState extends Equatable {
   final MyAccessStatus myAccessStatus;
   final MyAccessWrapperResponse? myAccessWrapperResponse;
   final String userName;
-  final ChangePasswordWrapperResponse? changePasswordWrapperResponse;
+  final WrapperDefaultResponse? changePasswordWrapperResponse;
 
   @override
   List<Object?> get props => [
@@ -27,7 +27,7 @@ final class MyAccessState extends Equatable {
     MyAccessStatus? myAccessStatus,
     MyAccessWrapperResponse? myAccessWrapperResponse,
     String? userName,
-    ChangePasswordWrapperResponse? changePasswordWrapperResponse,
+    WrapperDefaultResponse? changePasswordWrapperResponse,
   }) {
     return MyAccessState(
       myAccessStatus: myAccessStatus ?? this.myAccessStatus,

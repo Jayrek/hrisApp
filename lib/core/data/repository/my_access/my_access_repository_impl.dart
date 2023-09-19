@@ -2,7 +2,7 @@ import 'package:rgs_hris/core/data/data_source/my_access/my_access_remote_data_s
 import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/repository/my_access/my_access_repository.dart';
 
-import '../../model/response/change_password_wrapper_response.dart';
+import '../../model/response/wrapper_default_response.dart';
 
 class MyAccessRepositoryImpl implements MyAccessRepository {
   final MyAccessRemoteDataSource myAccessRemoteDataSource;
@@ -19,7 +19,7 @@ class MyAccessRepositoryImpl implements MyAccessRepository {
   }
 
   @override
-  Future<ChangePasswordWrapperResponse> changePassword(
+  Future<WrapperDefaultResponse> changePassword(
       {required String? currentPassword,
       required String? newPassword,
       required String? confirmPassword,

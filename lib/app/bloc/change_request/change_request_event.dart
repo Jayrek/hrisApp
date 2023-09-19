@@ -15,3 +15,22 @@ class ChangeRequestFetched extends ChangeRequestEvent {
   @override
   List<Object?> get props => [status];
 }
+
+class ChangeRequestSet extends ChangeRequestEvent {
+  final String category;
+  final String oldData;
+  final String newData;
+
+  const ChangeRequestSet({
+    required this.category,
+    required this.oldData,
+    required this.newData,
+  });
+
+  @override
+  List<Object?> get props => [
+        category,
+        oldData,
+        newData,
+      ];
+}

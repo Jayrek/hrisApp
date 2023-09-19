@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rgs_hris/core/data/model/response/change_password_wrapper_response.dart';
+import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
 import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 

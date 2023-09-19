@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/core/data/model/response/change_request_wrapper_response.dart';
+import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
 
 import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../../core/domain/repository/change_request/change_request_repository.dart';
@@ -18,6 +19,7 @@ class ChangeRequestBloc extends Bloc<ChangeRequestEvent, ChangeRequestState> {
   ChangeRequestBloc({required this.changeRequestRepository})
       : super(ChangeRequestInitial()) {
     on<ChangeRequestFetched>(_onChangeRequestFetched);
+    on<ChangeRequestSet>(_onChangeRequestSet);
   }
 
   FutureOr<void> _onChangeRequestFetched(
@@ -30,5 +32,20 @@ class ChangeRequestBloc extends Bloc<ChangeRequestEvent, ChangeRequestState> {
     final response = await changeRequestRepository.getChangeRequestInformation(
         status: event.status, token: tokenValue);
     emit(ChangeRequestLoaded(changeRequestWrapperResponse: response));
+  }
+
+  FutureOr<void> _onChangeRequestSet(
+    ChangeRequestSet event,
+    Emitter<ChangeRequestState> emit,
+  ) async {
+    emit(ChangeRequestLoading());
+    final tokenValue =
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+    final response = await changeRequestRepository.setChangeRequest(
+        category: event.category,
+        oldData: event.oldData,
+        newData: event.newData,
+        token: tokenValue);
+    emit(ChangeRequestSetLoaded(wrapperDefaultResponse: response));
   }
 }

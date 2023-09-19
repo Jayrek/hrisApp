@@ -1,10 +1,10 @@
-class ChangePasswordResponse {
-  ChangePasswordResponse({
+class WrapperResponse {
+  WrapperResponse({
     this.status,
     this.message,
   });
 
-  ChangePasswordResponse.fromJson(dynamic json) {
+  WrapperResponse.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
   }
