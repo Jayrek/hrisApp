@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
+import 'package:rgs_hris/app/bloc/change_request/change_request_bloc.dart';
 import 'package:rgs_hris/app/bloc/employee/employee_bloc.dart';
 import 'package:rgs_hris/app/bloc/leaves/leaves_bloc.dart';
 import 'package:rgs_hris/app/bloc/my_access/my_access_bloc.dart';
@@ -22,7 +23,9 @@ import 'package:rgs_hris/router/app_router_config.dart';
 
 import 'app/bloc/performance/performance_bloc.dart';
 import 'app/bloc/time_in_out/time_in_out_bloc.dart';
+import 'core/data/data_source/change_request/change_request_remote_data_source_impl.dart';
 import 'core/data/data_source/my_access/my_access_remote_data_source_impl.dart';
+import 'core/data/repository/change_request/change_request_repository_impl.dart';
 import 'core/data/repository/my_access/my_access_repository_impl.dart';
 import 'core/data/repository/performance/performance_repository_impl.dart';
 import 'core/domain/manager/shared_prefs_manager.dart';
@@ -117,6 +120,15 @@ class RgsHrisApp extends StatelessWidget {
                 performanceRemoteDataSource: performanceRemoteDataSource);
           },
         ),
+        RepositoryProvider(
+          create: (context) {
+            final changeRequestRemoteDataSource =
+                ChangeRequestRemoteDataSourceImpl(dioClient: Dio());
+
+            return ChangeRequestRepositoryImpl(
+                changeRequestRemoteDataSource: changeRequestRemoteDataSource);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -166,6 +178,12 @@ class RgsHrisApp extends StatelessWidget {
             create: (context) => PerformanceBloc(
                 performanceRepository:
                     RepositoryProvider.of<PerformanceRepositoryImpl>(context)),
+          ),
+          BlocProvider(
+            create: (context) => ChangeRequestBloc(
+                changeRequestRepository:
+                    RepositoryProvider.of<ChangeRequestRepositoryImpl>(
+                        context)),
           ),
         ],
         child: MaterialApp.router(
