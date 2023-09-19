@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:rgs_hris/core/ui/widget/widget_util.dart';
 
 import '../../bloc/performance/performance_bloc.dart';
 
@@ -33,7 +35,95 @@ class PerformanceProfileScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final performance =
                       performanceWrapper.response?.data?.performances?[index];
-                  return Text('${performance?.employeeId.toString()}');
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 30,
+                                width: double.infinity,
+                                color: Colors.grey.shade100,
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'REVIEW DATE',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(parseDate(performance!.reviewDate
+                                            .toString())),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                            Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    _buildPerformanceItemWidget(
+                                        'JOB KNOWLEDGE:',
+                                        '${performance.jobKnowledge}'),
+                                    const SizedBox(height: 10),
+                                    _buildPerformanceItemWidget('WORK QUALITY:',
+                                        '${performance.workquality}'),
+                                    const SizedBox(height: 10),
+                                    _buildPerformanceItemWidget('PUNCTUALITY:',
+                                        '${performance.punctuality}'),
+                                    const SizedBox(height: 10),
+                                    _buildPerformanceItemWidget(
+                                        'COMMUNICATION:',
+                                        '${performance.communication}'),
+                                    const SizedBox(height: 10),
+                                    _buildPerformanceItemWidget(
+                                        'DEPENDABILITY:',
+                                        '${performance.dependability}'),
+                                    const SizedBox(height: 10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          'COMMENT / NOTE:',
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20),
+                                          child: Text(
+                                            '${performance.comments}',
+                                            style: TextStyle(
+                                                color: Colors.black45),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: WidgetUtil.customDivider(),
+                      )
+                    ],
+                  );
                 });
           }
           if (state is PerformanceLoading) {
@@ -45,5 +135,19 @@ class PerformanceProfileScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _buildPerformanceItemWidget(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label),
+        Text(value),
+      ],
+    );
+  }
+
+  String parseDate(String date) {
+    return DateFormat.yMd().format(DateTime.parse(date));
   }
 }
