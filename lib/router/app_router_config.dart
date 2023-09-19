@@ -203,7 +203,7 @@ class AppRouterConfig {
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const MyAccessChangePasswordScreen(),
+              child: MyAccessChangePasswordScreen(),
             ),
           ),
           GoRoute(

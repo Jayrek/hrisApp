@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rgs_hris/core/data/model/response/change_password_wrapper_response.dart';
 import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
 import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
@@ -18,6 +19,7 @@ class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
   MyAccessBloc({required this.myAccessRepository})
       : super(const MyAccessState()) {
     on<MyAccessFetched>(_onMyAccessFetched);
+    on<MyAccessChangePasswordSubmit>(_onMyAccessChangePasswordSubmit);
   }
 
   FutureOr<void> _onMyAccessFetched(
@@ -32,8 +34,38 @@ class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
           await myAccessRepository.getMyAccessInformation(token: tokenValue);
 
       emit(state.copyWith(
+          myAccessStatus: MyAccessStatus.success,
+          myAccessWrapperResponse: response,
+          changePasswordWrapperResponse: null));
+    } catch (e) {
+      emit(state.copyWith(
+        myAccessStatus: MyAccessStatus.failure,
+      ));
+    }
+  }
+
+  FutureOr<void> _onMyAccessChangePasswordSubmit(
+    MyAccessChangePasswordSubmit event,
+    Emitter<MyAccessState> emit,
+  ) async {
+    emit(state.copyWith(myAccessStatus: MyAccessStatus.loading));
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await myAccessRepository.changePassword(
+          currentPassword: event.currentPassword,
+          newPassword: event.newPassword,
+          confirmPassword: event.confirmPassword,
+          token: tokenValue);
+
+      emit(state.copyWith(
         myAccessStatus: MyAccessStatus.success,
-        myAccessWrapperResponse: response,
+        changePasswordWrapperResponse: response,
+      ));
+
+      emit(state.copyWith(
+        myAccessStatus: MyAccessStatus.initial,
+        changePasswordWrapperResponse: null,
       ));
     } catch (e) {
       emit(state.copyWith(

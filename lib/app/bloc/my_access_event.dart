@@ -8,3 +8,22 @@ abstract class MyAccessEvent extends Equatable {
 }
 
 class MyAccessFetched extends MyAccessEvent {}
+
+class MyAccessChangePasswordSubmit extends MyAccessEvent {
+  final String currentPassword;
+  final String newPassword;
+  final String confirmPassword;
+
+  const MyAccessChangePasswordSubmit({
+    required this.currentPassword,
+    required this.newPassword,
+    required this.confirmPassword,
+  });
+
+  @override
+  List<Object?> get props => [
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      ];
+}

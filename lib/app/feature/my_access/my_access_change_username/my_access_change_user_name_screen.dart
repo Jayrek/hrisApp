@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import '../../../../core/ui/widget/text_form_field_widget.dart';
 import '../../../bloc/my_access_bloc.dart';
 import '../../../common/util/key_strings.dart';
-import '../../dashboard/drawer_widget.dart';
 
 class MyAccessChangeUserNameScreen extends StatelessWidget {
   MyAccessChangeUserNameScreen({super.key});
@@ -28,7 +27,6 @@ class MyAccessChangeUserNameScreen extends StatelessWidget {
           ),
         ),
       ),
-      drawer: const DrawerWidget(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

@@ -18,4 +18,5 @@ class KeyStrings {
 
   static const spTokenKey = 'spTokenKey';
   static const spFullNameKey = 'spFullNameKey';
+  static const spPasswordKey = 'spPasswordKey';
 }
