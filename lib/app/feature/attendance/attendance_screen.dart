@@ -163,62 +163,32 @@ class AttendanceScreen extends StatelessWidget {
           'SHIFT',
           'MORNING',
           'AFTERNOON',
-        ]),
+        ], true),
         _buildShiftRow([
-          // '${workShift?.shiftId.toString()}',
           '${workShift.shift?.name}',
           '${workShift.shift?.amIn}',
           '${workShift.shift?.pmOut}'
-        ]),
+        ], false),
       ],
     );
-    // return BlocBuilder<AttendanceBloc, AttendanceState>(
-    //   builder: (context, state) {
-    //     if (state is AttendanceLoaded) {
-    //       print('natawagTWO');
-    //       final workShift = state
-    //           .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
-    //       return Table(
-    //         border: TableBorder.all(
-    //           color: Colors.grey.shade200,
-    //         ),
-    //         children: [
-    //           _buildShiftRow([
-    //             // '#',
-    //             'SHIFT',
-    //             'MORNING',
-    //             'AFTERNOON',
-    //           ]),
-    //           _buildShiftRow([
-    //             // '${workShift?.shiftId.toString()}',
-    //             '${workShift?.shift?.name}',
-    //             '${workShift?.shift?.amIn}',
-    //             '${workShift?.shift?.pmOut}'
-    //           ]),
-    //         ],
-    //       );
-    //     }
-    //     return const SizedBox();
-    //     // else {
-    //     //   return const Center(child: CircularProgressIndicator.adaptive());
-    //     // }
-    //   },
-    // );
   }
 
-  TableRow _buildShiftRow(List<String> cells) {
+  TableRow _buildShiftRow(List<String> cells, bool isHeader) {
     return TableRow(
         children: cells.map((cell) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20,
+      return Container(
+        color: isHeader ? Colors.grey.shade100 : Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 20,
+          ),
+          child: Center(
+              child: Text(
+            cell,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 10),
+          )),
         ),
-        child: Center(
-            child: Text(
-          cell,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 10),
-        )),
       );
     }).toList());
   }
