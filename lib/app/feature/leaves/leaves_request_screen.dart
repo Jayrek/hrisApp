@@ -21,182 +21,183 @@ class LeavesRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        title: const Text(
-          'APPLY FOR LEAVE',
-          style: TextStyle(
-            color: Colors.black,
+        appBar: AppBar(
+          elevation: 0,
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          title: const Text(
+            'APPLY FOR LEAVE',
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      body: BlocConsumer<LeavesBloc, LeavesState>(
-        listener: (context, state) {
-          if (state is LeavesException) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
-          }
-          if (state is LeavesSetLoaded) {
-            showOkAlertDialog(
-                barrierDismissible: false,
-                context: context,
-                title:
-                state.leavesRequestResponseWrapper.response?.status,
-                message:
-                state.leavesRequestResponseWrapper.response?.message)
-                .then((value) {
-              if (value == OkCancelResult.ok) {
-                if (state.leavesRequestResponseWrapper.response?.status
-                    ?.toLowerCase() ==
-                    'success') {
-                  Navigator.of(context).pop();
-                  context.read<LeavesBloc>().add(const LeavesFetched(
-                      dateFrom: '', dateTo: '', type: '', status: 'Pending'));
+        body: BlocConsumer<LeavesBloc, LeavesState>(
+          listener: (context, state) {
+            if (state is LeavesException) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
+            }
+            if (state is LeavesSetLoaded) {
+              showOkAlertDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      title:
+                          state.leavesRequestResponseWrapper.response?.status,
+                      message:
+                          state.leavesRequestResponseWrapper.response?.message)
+                  .then((value) {
+                if (value == OkCancelResult.ok) {
+                  if (state.leavesRequestResponseWrapper.response?.status
+                          ?.toLowerCase() ==
+                      'success') {
+                    Navigator.of(context).pop();
+                    context.read<LeavesBloc>().add(const LeavesFetched(
+                        dateFrom: '', dateTo: '', type: '', status: 'Pending'));
+                  }
                 }
-              }
-            });
-          }
-        },
-        builder: (context, state) {
-          return Stack(
-            children: [
-              SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: FormBuilder(
-                          key: formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const Text(
-                                'LEAVE INFORMATION',
-                                style: TextStyle(
-                                    color: Colors.teal,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 20),
-                              _buildLeaveTypeWidget(),
-                              const SizedBox(height: 20),
-                              Text('Dates From & To',
+              });
+            }
+          },
+          builder: (context, state) {
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: FormBuilder(
+                            key: formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Text(
+                                  'LEAVE INFORMATION',
                                   style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue.shade900)),
-                              const SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: CalendarTextFormFieldWidget(
-                                      name: KeyStrings.leaveDateFromKey,
-                                      hint: 'yyyy-MM-dd',
-                                      onTap: () => _selectLeaveDate(
-                                          context, 'dateFrom'),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Flexible(
-                                    child: CalendarTextFormFieldWidget(
-                                      name: KeyStrings.leaveDateToKey,
-                                      hint: 'yyyy-MM-dd',
-                                      onTap: () =>
-                                          _selectLeaveDate(context, 'dateTo'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              Text('Leave Reason/Description',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue.shade900)),
-                              const SizedBox(height: 10),
-                              const TextFormFieldWidget(
-                                name: KeyStrings.leaveDescriptionKey,
-                                isReadOnly: false,
-                                hint: 'State your reason',
-                                maxLines: 3,
-                              ),
-                              const SizedBox(height: 30),
-                              SizedBox(
-                                height: 50,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.teal),
-                                    elevation: MaterialStateProperty.all(0),
-                                  ),
-                                  onPressed: () {
-                                    String type = formKey
-                                        .currentState
-                                        ?.fields[KeyStrings.leaveTypeKey]
-                                        ?.value;
-                                    String dateFrom = formKey
-                                        .currentState
-                                        ?.fields[
-                                    KeyStrings.leaveDateFromKey]
-                                        ?.value ??
-                                        '';
-                                    String dateTo = formKey
-                                        .currentState
-                                        ?.fields[
-                                    KeyStrings.leaveDateToKey]
-                                        ?.value ??
-                                        '';
-                                    String description = formKey
-                                        .currentState
-                                        ?.fields[KeyStrings
-                                        .leaveDescriptionKey]
-                                        ?.value ??
-                                        '';
-
-                                    final leaveType = getLeaveTypeId(type);
-
-                                    context
-                                        .read<LeavesBloc>()
-                                        .add(LeavesApplicationSet(
-                                      type: leaveType.toString(),
-                                      dateFrom: dateFrom,
-                                      dateTo: dateTo,
-                                      description: description,
-                                    ));
-                                  },
-                                  child: Text(
-                                      'Submit Application'.toUpperCase()),
+                                      color: Colors.teal,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                            ],
+                                const SizedBox(height: 20),
+                                _buildLeaveTypeWidget(),
+                                const SizedBox(height: 20),
+                                const Text(
+                                  'DATES FROM & TO',
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.teal),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: CalendarTextFormFieldWidget(
+                                        name: KeyStrings.leaveDateFromKey,
+                                        hint: 'yyyy-MM-dd',
+                                        onTap: () => _selectLeaveDate(
+                                            context, 'dateFrom'),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Flexible(
+                                      child: CalendarTextFormFieldWidget(
+                                        name: KeyStrings.leaveDateToKey,
+                                        hint: 'yyyy-MM-dd',
+                                        onTap: () =>
+                                            _selectLeaveDate(context, 'dateTo'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                const Text(
+                                  'LEAVE REASON/DESCRIPTION',
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.teal),
+                                ),
+                                const SizedBox(height: 10),
+                                const TextFormFieldWidget(
+                                  name: KeyStrings.leaveDescriptionKey,
+                                  isReadOnly: false,
+                                  hint: 'State your reason',
+                                  maxLines: 3,
+                                ),
+                                const SizedBox(height: 30),
+                                SizedBox(
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.teal),
+                                      elevation: MaterialStateProperty.all(0),
+                                    ),
+                                    onPressed: () {
+                                      String type = formKey
+                                          .currentState
+                                          ?.fields[KeyStrings.leaveTypeKey]
+                                          ?.value;
+                                      String dateFrom = formKey
+                                              .currentState
+                                              ?.fields[
+                                                  KeyStrings.leaveDateFromKey]
+                                              ?.value ??
+                                          '';
+                                      String dateTo = formKey
+                                              .currentState
+                                              ?.fields[
+                                                  KeyStrings.leaveDateToKey]
+                                              ?.value ??
+                                          '';
+                                      String description = formKey
+                                              .currentState
+                                              ?.fields[KeyStrings
+                                                  .leaveDescriptionKey]
+                                              ?.value ??
+                                          '';
+
+                                      final leaveType = getLeaveTypeId(type);
+
+                                      context
+                                          .read<LeavesBloc>()
+                                          .add(LeavesApplicationSet(
+                                            type: leaveType.toString(),
+                                            dateFrom: dateFrom,
+                                            dateTo: dateTo,
+                                            description: description,
+                                          ));
+                                    },
+                                    child: Text(
+                                        'Submit Application'.toUpperCase()),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Colors.grey.shade400,
-                      ),
-                      _buildLeaveCreditsSection(),
-                      _buildLeavePolicyWidget(),
-                    ],
+                        Divider(
+                          height: 1,
+                          color: Colors.grey.shade400,
+                        ),
+                        _buildLeaveCreditsSection(),
+                        _buildLeavePolicyWidget(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (state is LeavesLoading)
-                const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                )
-            ],
-          );
-          // }
-        },
-      )
-    );
+                if (state is LeavesLoading)
+                  const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  )
+              ],
+            );
+            // }
+          },
+        ));
   }
 
   Widget _buildLeaveCreditsSection() {
@@ -384,8 +385,10 @@ class LeavesRequestScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Leave Type',
-            style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+        const Text(
+          'LEAVE TYPE',
+          style: TextStyle(fontSize: 12, color: Colors.teal),
+        ),
         const SizedBox(height: 10),
         DropDownTextFormFieldWidget(
           name: KeyStrings.leaveTypeKey,

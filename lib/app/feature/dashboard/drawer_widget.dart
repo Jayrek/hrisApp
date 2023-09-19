@@ -109,7 +109,7 @@ class DrawerWidget extends StatelessWidget {
         }),
         _buildDrawerItem(Icons.note_alt_sharp, 'REQUEST UPDATE', onTap: () {
           Navigator.of(context).pop();
-          context.pushReplacementNamed(AppRoute.requestUpdate.name);
+          context.pushReplacementNamed(AppRoute.changeRequestProfile.name);
         }),
         _buildDrawerItem(Icons.account_circle, 'MY ACCESS', onTap: () {
           Navigator.of(context).pop();

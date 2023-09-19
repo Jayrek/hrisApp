@@ -348,8 +348,10 @@ class AttendanceScreen extends StatelessWidget {
               color: Colors.grey.shade400,
             ),
             const SizedBox(height: 20),
-            Text('Date Range',
-                style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+            const Text(
+              'DATE RANGE',
+              style: TextStyle(fontSize: 12, color: Colors.teal),
+            ),
             const SizedBox(height: 10),
             Row(
               children: [

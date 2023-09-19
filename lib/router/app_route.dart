@@ -67,13 +67,17 @@ enum AppRoute {
     name: 'handbook',
     path: 'handbook',
   ),
-  requestUpdate(
-    name: 'requestUpdate',
-    path: 'requestUpdate',
+  changeRequestProfile(
+    name: 'changeRequestProfile',
+    path: 'changeRequestProfile',
   ),
-  requestUpdateAdd(
-    name: 'requestUpdateAdd',
-    path: 'requestUpdateAdd',
+  changeRequestAdd(
+    name: 'changeRequestAdd',
+    path: 'changeRequestAdd',
+  ),
+  changeRequestDetail(
+    name: 'changeRequestDetail',
+    path: 'changeRequestDetail',
   ),
   myAccessProfile(
     name: 'myAccessProfile',

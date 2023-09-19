@@ -11,8 +11,8 @@ import '../../../core/ui/widget/drop_down_text_form _field_widget.dart';
 import '../../../core/ui/widget/widget_util.dart';
 import '../../common/util/key_strings.dart';
 
-class RequestUpdateScreen extends StatelessWidget {
-  RequestUpdateScreen({super.key});
+class ChangeRequestProfileScreen extends StatelessWidget {
+  ChangeRequestProfileScreen({super.key});
 
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -84,55 +84,57 @@ class RequestUpdateScreen extends StatelessWidget {
                                         changeRequest!.added.toString())),
                                   ),
                                 )),
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    const SizedBox(height: 10),
-                                    _buildChangeRequestItemWidget(
-                                        'CATEGORY:',
-                                        changeRequest.category
-                                            .toString()
-                                            .toUpperCase()),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text('STATUS: '),
-                                        Text(
-                                          changeRequest.status
+                            InkWell(
+                              onTap: () => context.pushNamed(
+                                  AppRoute.changeRequestDetail.name,
+                                  extra: changeRequest),
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      _buildChangeRequestItemWidget(
+                                          'CATEGORY:',
+                                          changeRequest.category
                                               .toString()
-                                              .toUpperCase(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: changeRequest.status
-                                                          .toString()
-                                                          .toUpperCase() ==
-                                                      'PENDING'
-                                                  ? Colors.blue.shade900
-                                                  : changeRequest.status
-                                                              .toString()
-                                                              .toUpperCase() ==
-                                                          'APPROVED'
-                                                      ? Colors.teal
-                                                      : Colors.red),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                  ],
-                                )),
+                                              .toUpperCase()),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text('STATUS: '),
+                                          Text(
+                                            changeRequest.status
+                                                .toString()
+                                                .toUpperCase(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: changeRequest.status
+                                                            .toString()
+                                                            .toUpperCase() ==
+                                                        'PENDING'
+                                                    ? Colors.blue.shade900
+                                                    : changeRequest.status
+                                                                .toString()
+                                                                .toUpperCase() ==
+                                                            'APPROVED'
+                                                        ? Colors.teal
+                                                        : Colors.red),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 20),
+                                      WidgetUtil.customDivider(),
+                                    ],
+                                  )),
+                            ),
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: WidgetUtil.customDivider(),
                       ),
                       const SizedBox(height: 20),
                     ],
@@ -171,8 +173,10 @@ class RequestUpdateScreen extends StatelessWidget {
               color: Colors.grey.shade400,
             ),
             const SizedBox(height: 20),
-            Text('Status',
-                style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+            const Text(
+              'STATUS',
+              style: TextStyle(fontSize: 12, color: Colors.teal),
+            ),
             const SizedBox(height: 10),
             DropDownTextFormFieldWidget(
               name: KeyStrings.changeRequestStatus,
@@ -237,7 +241,7 @@ class RequestUpdateScreen extends StatelessWidget {
                               elevation: MaterialStateProperty.all(0),
                             ),
                             onPressed: () => context.pushNamed(
-                              AppRoute.requestUpdateAdd.name,
+                              AppRoute.changeRequestAdd.name,
                             ),
                             child: Text(
                               '+ Request Update'.toUpperCase(),

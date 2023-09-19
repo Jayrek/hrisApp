@@ -393,9 +393,10 @@ class _LeavesScreenState extends State<LeavesScreen> {
                     color: Colors.grey.shade400,
                   ),
                   const SizedBox(height: 20),
-                  Text('Date Range',
-                      style:
-                          TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  const Text(
+                    'DATE RANGE',
+                    style: TextStyle(fontSize: 12, color: Colors.teal),
+                  ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -417,9 +418,10 @@ class _LeavesScreenState extends State<LeavesScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Text('Leave Type',
-                      style:
-                          TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  const Text(
+                    'LEAVE TYPE',
+                    style: TextStyle(fontSize: 12, color: Colors.teal),
+                  ),
                   const SizedBox(height: 10),
                   DropDownTextFormFieldWidget(
                     name: KeyStrings.leaveTypeKey,
@@ -436,9 +438,10 @@ class _LeavesScreenState extends State<LeavesScreen> {
                         .toList(),
                   ),
                   const SizedBox(height: 10),
-                  Text('Leave Status',
-                      style:
-                          TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+                  const Text(
+                    'LEAVE STATUS',
+                    style: TextStyle(fontSize: 12, color: Colors.teal),
+                  ),
                   const SizedBox(height: 10),
                   DropDownTextFormFieldWidget(
                     name: KeyStrings.leaveStatusKey,

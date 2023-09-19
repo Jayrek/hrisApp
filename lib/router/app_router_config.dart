@@ -13,7 +13,7 @@ import 'package:rgs_hris/app/feature/performance/performance_goals_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_profile_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
-import 'package:rgs_hris/app/feature/request_update/request_update_screen.dart';
+import 'package:rgs_hris/app/feature/request_update/change_request_profile_screen.dart';
 import 'package:rgs_hris/app/feature/splash/splash_screen.dart';
 import 'package:rgs_hris/app/feature/work/work_screen.dart';
 import 'package:rgs_hris/core/data/model/response/leaves_data_response.dart';
@@ -24,7 +24,9 @@ import '../app/feature/attendance/attendance_screen.dart';
 import '../app/feature/documents/documents_screen.dart';
 import '../app/feature/leaves/leaves_screen.dart';
 import '../app/feature/request_update/change_request_add_screen.dart';
+import '../app/feature/request_update/change_request_detail_screen.dart';
 import '../core/data/model/response/attendance_list_response.dart';
+import '../core/data/model/response/change_requests_response.dart';
 import '../core/data/model/response/leave_applications_response.dart';
 
 class AppRouterConfig {
@@ -181,23 +183,36 @@ class AppRouterConfig {
             ),
           ),
           GoRoute(
-              name: AppRoute.requestUpdate.name,
-              path: AppRoute.requestUpdate.path,
+              name: AppRoute.changeRequestProfile.name,
+              path: AppRoute.changeRequestProfile.path,
               pageBuilder: (context, state) => pageBuilderAnimate(
                     context,
                     state,
-                    child: RequestUpdateScreen(),
+                    child: ChangeRequestProfileScreen(),
                   ),
               routes: [
                 GoRoute(
-                  name: AppRoute.requestUpdateAdd.name,
-                  path: AppRoute.requestUpdateAdd.path,
+                  name: AppRoute.changeRequestAdd.name,
+                  path: AppRoute.changeRequestAdd.path,
                   pageBuilder: (context, state) => pageBuilderAnimate(
                     context,
                     state,
                     child: ChangeRequestAddScreen(),
                   ),
                 ),
+                GoRoute(
+                    name: AppRoute.changeRequestDetail.name,
+                    path: AppRoute.changeRequestDetail.path,
+                    pageBuilder: (context, state) {
+                      ChangeRequestResponse changeRequest =
+                          state.extra as ChangeRequestResponse;
+                      return pageBuilderAnimate(
+                        context,
+                        state,
+                        child: ChangeRequestDetailScreen(
+                            changeRequestResponse: changeRequest),
+                      );
+                    }),
               ]),
           GoRoute(
             name: AppRoute.myAccessProfile.name,
