@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rgs_hris/app/feature/authentication/auth/sign_in/sign_in_screen.dart';
 import 'package:rgs_hris/app/feature/authentication/auth/sign_up/sign_up_screen.dart';
-import 'package:rgs_hris/app/feature/change_password/change_password_screen.dart';
+import 'package:rgs_hris/app/feature/my_access/my_access_change_password/my_access_change_password_screen.dart';
 import 'package:rgs_hris/app/feature/employment/employment_screen.dart';
 import 'package:rgs_hris/app/feature/handbook/handbook_screen.dart';
 import 'package:rgs_hris/app/feature/leaves/leaves_detail_screen.dart';
 import 'package:rgs_hris/app/feature/leaves/leaves_request_screen.dart';
-import 'package:rgs_hris/app/feature/my_access/my_access_screen.dart';
+import 'package:rgs_hris/app/feature/my_access/my_access_change_username/my_access_change_user_name_screen.dart';
+import 'package:rgs_hris/app/feature/my_access/my_access_profile/my_access_profile_screen.dart';
+import 'package:rgs_hris/app/feature/performance/performance_goals_screen.dart';
+import 'package:rgs_hris/app/feature/performance/performance_profile_screen.dart';
 import 'package:rgs_hris/app/feature/performance/performance_screen.dart';
 import 'package:rgs_hris/app/feature/personal/personal_screen.dart';
-import 'package:rgs_hris/app/feature/request_update/request_update_screen.dart';
+import 'package:rgs_hris/app/feature/request_update/change_request_profile_screen.dart';
+import 'package:rgs_hris/app/feature/splash/splash_screen.dart';
 import 'package:rgs_hris/app/feature/work/work_screen.dart';
 import 'package:rgs_hris/core/data/model/response/leaves_data_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
@@ -19,7 +23,10 @@ import '../app/feature/attendance/attendance_detail_screen.dart';
 import '../app/feature/attendance/attendance_screen.dart';
 import '../app/feature/documents/documents_screen.dart';
 import '../app/feature/leaves/leaves_screen.dart';
+import '../app/feature/request_update/change_request_add_screen.dart';
+import '../app/feature/request_update/change_request_detail_screen.dart';
 import '../core/data/model/response/attendance_list_response.dart';
+import '../core/data/model/response/change_requests_response.dart';
 import '../core/data/model/response/leave_applications_response.dart';
 
 class AppRouterConfig {
@@ -32,15 +39,15 @@ class AppRouterConfig {
     //   builder: (_, __) => const DashboardScreen(),
     // )
     GoRoute(
-        name: AppRoute.signIn.name,
-        path: AppRoute.signIn.path,
-        builder: (_, __) => SignInScreen(),
-        routes: <RouteBase>[
-          // GoRoute(
-          //   name: AppRoute.dashboard.name,
-          //   path: AppRoute.dashboard.path,
-          //   builder: (_, __) => const DashboardScreen(),
-          //   routes: [
+        name: AppRoute.splash.name,
+        path: AppRoute.splash.path,
+        builder: (_, __) => const SplashScreen(),
+        routes: [
+          GoRoute(
+            name: AppRoute.signIn.name,
+            path: AppRoute.signIn.path,
+            builder: (_, __) => SignInScreen(),
+          ),
           GoRoute(
             name: AppRoute.personal.name,
             path: AppRoute.personal.path,
@@ -130,14 +137,33 @@ class AppRouterConfig {
                     }),
               ]),
           GoRoute(
-            name: AppRoute.performance.name,
-            path: AppRoute.performance.path,
-            pageBuilder: (context, state) => pageBuilderAnimate(
-              context,
-              state,
-              child: const PerformanceScreen(),
-            ),
-          ),
+              name: AppRoute.performance.name,
+              path: AppRoute.performance.path,
+              pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: const PerformanceScreen(),
+                  ),
+              routes: [
+                GoRoute(
+                  name: AppRoute.performanceProfile.name,
+                  path: AppRoute.performanceProfile.path,
+                  pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: const PerformanceProfileScreen(),
+                  ),
+                ),
+                GoRoute(
+                  name: AppRoute.performanceGoals.name,
+                  path: AppRoute.performanceGoals.path,
+                  pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: const PerformanceGoalsScreen(),
+                  ),
+                ),
+              ]),
           GoRoute(
             name: AppRoute.documents.name,
             path: AppRoute.documents.path,
@@ -157,30 +183,62 @@ class AppRouterConfig {
             ),
           ),
           GoRoute(
-            name: AppRoute.requestUpdate.name,
-            path: AppRoute.requestUpdate.path,
+              name: AppRoute.changeRequestProfile.name,
+              path: AppRoute.changeRequestProfile.path,
+              pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: ChangeRequestProfileScreen(),
+                  ),
+              routes: [
+                GoRoute(
+                  name: AppRoute.changeRequestAdd.name,
+                  path: AppRoute.changeRequestAdd.path,
+                  pageBuilder: (context, state) => pageBuilderAnimate(
+                    context,
+                    state,
+                    child: ChangeRequestAddScreen(),
+                  ),
+                ),
+                GoRoute(
+                    name: AppRoute.changeRequestDetail.name,
+                    path: AppRoute.changeRequestDetail.path,
+                    pageBuilder: (context, state) {
+                      ChangeRequestResponse changeRequest =
+                          state.extra as ChangeRequestResponse;
+                      return pageBuilderAnimate(
+                        context,
+                        state,
+                        child: ChangeRequestDetailScreen(
+                            changeRequestResponse: changeRequest),
+                      );
+                    }),
+              ]),
+          GoRoute(
+            name: AppRoute.myAccessProfile.name,
+            path: AppRoute.myAccessProfile.path,
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const RequestUpdateScreen(),
+              child: const MyAccessProfileScreen(),
             ),
           ),
           GoRoute(
-            name: AppRoute.myAccess.name,
-            path: AppRoute.myAccess.path,
+            name: AppRoute.myAccessChangePassword.name,
+            path: AppRoute.myAccessChangePassword.path,
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const MyAccessScreen(),
+              child: MyAccessChangePasswordScreen(),
             ),
           ),
           GoRoute(
-            name: AppRoute.changePassword.name,
-            path: AppRoute.changePassword.path,
+            name: AppRoute.myAccessChangeUserName.name,
+            path: AppRoute.myAccessChangeUserName.path,
             pageBuilder: (context, state) => pageBuilderAnimate(
               context,
               state,
-              child: const ChangePasswordScreen(),
+              child: MyAccessChangeUserNameScreen(),
             ),
           ),
           //   ],
@@ -194,7 +252,7 @@ class AppRouterConfig {
               child: SignUpScreen(),
             ),
           )
-        ])
+        ]),
   ]);
 
   static CustomTransitionPage pageBuilderAnimate(

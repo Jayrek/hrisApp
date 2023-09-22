@@ -5,6 +5,8 @@ import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 import 'package:rgs_hris/core/data/model/response/works_data_response.dart';
 import 'package:rgs_hris/core/data/model/response/works_working_days.dart';
 
+import '../../../core/ui/widget/text_form_field_widget.dart';
+
 class WorkScreen extends StatelessWidget {
   const WorkScreen({super.key});
 
@@ -32,7 +34,7 @@ class WorkScreen extends StatelessWidget {
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -216,11 +218,12 @@ class WorkScreen extends StatelessWidget {
       children: [
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.teal)),
         const SizedBox(height: 10),
-        Text((value ?? '-').toUpperCase()),
-        const SizedBox(height: 20),
-        Divider(
-          height: 1,
-          color: Colors.grey.shade400,
+        TextFormFieldWidget(
+          name: '',
+          initialValue:
+              value != null && value.isNotEmpty ? value.toUpperCase() : ' -',
+          isReadOnly: true,
+          textCapitalization: TextCapitalization.characters,
         ),
         const SizedBox(height: 20),
       ],

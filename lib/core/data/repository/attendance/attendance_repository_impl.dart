@@ -12,7 +12,7 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   Future<AttendanceWrapperResponse> getAttendanceInfo({
     required String dateFrom,
     required String dateTo,
-    required String? token,
+    required String token,
   }) async {
     return await attendanceRemoteDataSource.getAttendanceInfo(
       dateFrom: dateFrom,
@@ -24,7 +24,7 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   @override
   Future<AttendanceInOutWrapperResponse> setTimeInOut({
     required String type,
-    required String? token,
+    required String token,
   }) async {
     return await attendanceRemoteDataSource.setTimeInOut(
       type: type,

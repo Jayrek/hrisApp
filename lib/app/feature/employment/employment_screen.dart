@@ -4,6 +4,7 @@ import 'package:rgs_hris/app/bloc/employee/employee_bloc.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 
 import '../../../core/data/model/response/employee_response.dart';
+import '../../../core/ui/widget/text_form_field_widget.dart';
 
 class EmploymentScreen extends StatelessWidget {
   const EmploymentScreen({super.key});
@@ -35,7 +36,7 @@ class EmploymentScreen extends StatelessWidget {
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -87,10 +88,34 @@ class EmploymentScreen extends StatelessWidget {
             ),
           ],
         ),
-        _buildInfoItemWidget('BIOMETRIC ID', employeeResponse.biometricid),
-        _buildInfoItemWidget('TYPE', employeeResponse.type),
-        _buildInfoItemWidget('STATUS', employeeResponse.status),
-        _buildInfoItemWidget('DATE HIRED', employeeResponse.dateHired),
+        Row(
+          children: [
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'BIOMETRIC ID', employeeResponse.biometricid),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Flexible(
+              child: _buildInfoItemWidget('TYPE', employeeResponse.type),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              child: _buildInfoItemWidget('STATUS', employeeResponse.status),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'DATE HIRED', employeeResponse.dateHired),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -131,18 +156,51 @@ class EmploymentScreen extends StatelessWidget {
         ),
         _buildInfoItemWidget(
             'TOTAL LEAVE CREDITS', employeeResponse.leaveCredits.toString()),
-        _buildInfoItemWidget(
-            'SICK LEAVE', employeeResponse.leavecredits?[0].sl),
-        _buildInfoItemWidget(
-            'VACATION LEAVE', employeeResponse.leavecredits?[0].vl),
-        _buildInfoItemWidget(
-            'SOLO PARENT LEAVE', employeeResponse.leavecredits?[0].spl),
-        _buildInfoItemWidget(
-            'PATERNITY LEAVE', employeeResponse.leavecredits?[0].pl),
-        _buildInfoItemWidget(
-            'MATERNITY LEAVE', employeeResponse.leavecredits?[0].ml),
-        _buildInfoItemWidget(
-            'BEREAVEMENT LEAVE', employeeResponse.leavecredits?[0].bl),
+        Row(
+          children: [
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'SICK LEAVE', employeeResponse.leavecredits?[0].sl),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'VACATION LEAVE', employeeResponse.leavecredits?[0].vl),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'SOLO PARENT LEAVE', employeeResponse.leavecredits?[0].spl),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'PATERNITY LEAVE', employeeResponse.leavecredits?[0].pl),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'MATERNITY LEAVE', employeeResponse.leavecredits?[0].ml),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Flexible(
+              child: _buildInfoItemWidget(
+                  'BEREAVEMENT LEAVE', employeeResponse.leavecredits?[0].bl),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -153,11 +211,12 @@ class EmploymentScreen extends StatelessWidget {
       children: [
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.teal)),
         const SizedBox(height: 10),
-        Text((value ?? '-').toUpperCase()),
-        const SizedBox(height: 20),
-        Divider(
-          height: 1,
-          color: Colors.grey.shade400,
+        TextFormFieldWidget(
+          name: '',
+          initialValue:
+              value != null && value.isNotEmpty ? value.toUpperCase() : ' -',
+          isReadOnly: true,
+          textCapitalization: TextCapitalization.characters,
         ),
         const SizedBox(height: 20),
       ],

@@ -1,7 +1,11 @@
 enum AppRoute {
+  splash(
+    name: 'splash',
+    path: '/',
+  ),
   signIn(
     name: 'signIn',
-    path: '/',
+    path: 'signIn',
   ),
   signUp(
     name: 'signUp',
@@ -47,6 +51,14 @@ enum AppRoute {
     name: 'performance',
     path: 'performance',
   ),
+  performanceProfile(
+    name: 'performanceProfile',
+    path: 'performanceProfile',
+  ),
+  performanceGoals(
+    name: 'performanceGoals',
+    path: 'performanceGoals',
+  ),
   documents(
     name: 'documents',
     path: 'documents',
@@ -55,17 +67,29 @@ enum AppRoute {
     name: 'handbook',
     path: 'handbook',
   ),
-  requestUpdate(
-    name: 'requestUpdate',
-    path: 'requestUpdate',
+  changeRequestProfile(
+    name: 'changeRequestProfile',
+    path: 'changeRequestProfile',
   ),
-  myAccess(
-    name: 'myAccess',
-    path: 'myAccess',
+  changeRequestAdd(
+    name: 'changeRequestAdd',
+    path: 'changeRequestAdd',
   ),
-  changePassword(
-    name: 'changePassword',
-    path: 'changePassword',
+  changeRequestDetail(
+    name: 'changeRequestDetail',
+    path: 'changeRequestDetail',
+  ),
+  myAccessProfile(
+    name: 'myAccessProfile',
+    path: 'myAccessProfile',
+  ),
+  myAccessChangePassword(
+    name: 'myAccessChangePassword',
+    path: 'myAccessChangePassword',
+  ),
+  myAccessChangeUserName(
+    name: 'myAccessChangeUserName',
+    path: 'myAccessChangeUserName',
   );
 
   const AppRoute({

@@ -3,29 +3,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../bloc/attendance/attendance_bloc.dart';
 import '../../bloc/time_in_out/time_in_out_bloc.dart';
 
-class AttendanceTimeInOutWidget extends StatelessWidget {
+class AttendanceTimeInOutWidget extends StatefulWidget {
   const AttendanceTimeInOutWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // late Stream<DateTime> _timeStream;
-    DateTime _currentTime = DateTime.now();
+  State<AttendanceTimeInOutWidget> createState() =>
+      _AttendanceTimeInOutWidgetState();
+}
 
-    Stream<DateTime> _timeStream =
+class _AttendanceTimeInOutWidgetState extends State<AttendanceTimeInOutWidget> {
+  int typeTime = 0;
+
+  late Stream<DateTime> _timeStream;
+  DateTime _currentTime = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _timeStream =
         Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocConsumer<TimeInOutBloc, TimeInOutState>(
       listener: (context, state) {
         if (state is TimeInOutLoaded) {
+          setState(() => typeTime = 0);
           showOkAlertDialog(
             barrierDismissible: false,
             context: context,
             title: state.attendanceInOutWrapperResponse.response?.status,
             message:
                 state.attendanceInOutWrapperResponse.response?.message?.msg,
-          );
+          ).then((value) {
+            if (value == OkCancelResult.ok) {
+              final formatter = DateFormat('yyyy-MM-dd');
+              final initialDate = formatter.format(DateTime.now());
+              context.read<AttendanceBloc>().add(
+                    AttendanceFetched(
+                      dateFrom: initialDate.toString(),
+                      dateTo: initialDate.toString(),
+                    ),
+                  );
+              // }
+            }
+          });
         }
         if (state is TimeInOutException) {
           ScaffoldMessenger.of(context)
@@ -80,15 +106,21 @@ class AttendanceTimeInOutWidget extends StatelessWidget {
                             elevation: MaterialStateProperty.all(0),
                           ),
                           onPressed: () {
-                            print('triggered');
+                            setState(() => typeTime = 1);
                             context
                                 .read<TimeInOutBloc>()
                                 .add(const TimeInOutSet(type: 'am_in'));
                           },
-                          child: const Text(
-                            'AM IN',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          child: typeTime == 1
+                              ? const Center(
+                                  child: CircularProgressIndicator.adaptive(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                )
+                              : const Text(
+                                  'AM IN',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                         ),
                       ),
                     ),
@@ -103,13 +135,22 @@ class AttendanceTimeInOutWidget extends StatelessWidget {
                                 MaterialStateProperty.all<Color>(Colors.red),
                             elevation: MaterialStateProperty.all(0),
                           ),
-                          onPressed: () => context
-                              .read<TimeInOutBloc>()
-                              .add(const TimeInOutSet(type: 'pm_out')),
-                          child: const Text(
-                            'PM OUT',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          onPressed: () {
+                            setState(() => typeTime = 2);
+                            context
+                                .read<TimeInOutBloc>()
+                                .add(const TimeInOutSet(type: 'pm_out'));
+                          },
+                          child: typeTime == 2
+                              ? const Center(
+                                  child: CircularProgressIndicator.adaptive(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                )
+                              : const Text(
+                                  'PM OUT',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                         ),
                       ),
                     ),
@@ -117,10 +158,6 @@ class AttendanceTimeInOutWidget extends StatelessWidget {
                 ),
               ],
             ),
-            if (state is TimeInOutLoading)
-              const Center(
-                child: CircularProgressIndicator.adaptive(),
-              )
           ],
         );
       },

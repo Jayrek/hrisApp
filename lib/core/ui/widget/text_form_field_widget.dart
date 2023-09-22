@@ -16,6 +16,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.errorFontSize = 0.01,
     this.isReadOnly = false,
     this.fontWeight = FontWeight.normal,
+    this.maxLines = 1,
   });
 
   final String name;
@@ -30,6 +31,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final double errorFontSize;
   final bool isReadOnly;
   final FontWeight fontWeight;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +47,9 @@ class TextFormFieldWidget extends StatelessWidget {
       readOnly: isReadOnly,
       cursorColor: Colors.black,
       cursorWidth: 1,
+      maxLines: maxLines,
       style: TextStyle(
-        color: Colors.black,
+        color: isReadOnly ? Colors.black54 : Colors.black,
         fontWeight: fontWeight,
         fontSize: 14,
       ),
@@ -79,7 +82,7 @@ class TextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
@@ -88,7 +91,7 @@ class TextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -97,7 +100,7 @@ class TextFormFieldWidget extends StatelessWidget {
             width: 1,
           ),
           borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+            Radius.circular(20),
           ),
         ),
       ),

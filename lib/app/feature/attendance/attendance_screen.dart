@@ -8,38 +8,17 @@ import 'package:intl/intl.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
 import 'package:rgs_hris/app/feature/attendance/attendance_time_in_out_widget.dart';
 import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
+import 'package:rgs_hris/core/data/model/response/attendance_work_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../core/data/model/response/attendance_list_response.dart';
+import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
 import '../../common/util/key_strings.dart';
+
+import 'package:timezone/standalone.dart' as tz;
 
 class AttendanceScreen extends StatelessWidget {
   AttendanceScreen({super.key});
-
-//
-//   @override
-//   State<AttendanceScreen> createState() => _AttendanceScreenState();
-// }
-//
-// class _AttendanceScreenState extends State<AttendanceScreen> {
-//   late Stream<DateTime> _timeStream;
-//   DateTime _currentTimeTime = DateTime.now();
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     final formatter = DateFormat('yyyy-MM-dd');
-//     final initialDate = formatter.format(DateTime.now());
-//
-//     context.read<AttendanceBloc>().add(
-//           AttendanceFetched(
-//             dateFrom: initialDate.toString(),
-//             dateTo: initialDate.toString(),
-//           ),
-//         );
-//
-//     // _timeStream =
-//     //     Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
-//   }
 
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -50,7 +29,11 @@ class AttendanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final timezone = tz.getLocation('Asia/Manila');
+    // final timezoneDateTime = tz.TZDateTime.from(DateTime.now(), timezone);
+
     final formatter = DateFormat('yyyy-MM-dd');
+    // final initialDate = formatter.format(timezoneDateTime);
     final initialDate = formatter.format(DateTime.now());
     context.read<AttendanceBloc>().add(
           AttendanceFetched(
@@ -92,10 +75,11 @@ class AttendanceScreen extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const AttendanceTimeInOutWidget(),
               _buildAttendanceTimeInOutWidget(),
             ],
           ),
@@ -105,101 +89,111 @@ class AttendanceScreen extends StatelessWidget {
   }
 
   Widget _buildAttendanceTimeInOutWidget() {
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const AttendanceTimeInOutWidget(),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'SHIFT & SCHEDULE',
-              style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                getCurrentDate().toUpperCase(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            _buildShiftTable(),
-            const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              color: Colors.grey.shade400,
-            ),
-            _buildEntryLogs(),
-          ],
-        ),
-        // if (state is AttendanceSetLoading)
-        //   const Center(
-        //     child: Padding(
-        //       padding: EdgeInsets.symmetric(vertical: 20),
-        //       child: CircularProgressIndicator.adaptive(),
-        //     ),
-        //   ),
-      ],
-    );
-  }
-
-  Widget _buildShiftTable() {
-    print('build: _buildShiftTable');
-    return BlocBuilder<AttendanceBloc, AttendanceState>(
+    return BlocConsumer<AttendanceBloc, AttendanceState>(
+      listener: (context, state) {
+        if (state is AttendanceException) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
+          context.pushReplacementNamed(AppRoute.signIn.name);
+        }
+      },
       builder: (context, state) {
         if (state is AttendanceLoaded) {
           final workShift = state
               .attendanceWrapperResponse.response?.data?.attendanceWorkResponse;
-          return Table(
-            border: TableBorder.all(
-              color: Colors.grey.shade200,
-            ),
+          final attendanceList =
+              state.attendanceWrapperResponse.response?.data?.attendances;
+          return Stack(
             children: [
-              _buildShiftRow([
-                // '#',
-                'SHIFT',
-                'MORNING',
-                'AFTERNOON',
-              ]),
-              _buildShiftRow([
-                // '${workShift?.shiftId.toString()}',
-                '${workShift?.shift?.name}',
-                '${workShift?.shift?.amIn}',
-                '${workShift?.shift?.pmOut}'
-              ]),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'SHIFT & SCHEDULE',
+                    style: TextStyle(
+                        color: Colors.teal, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      getCurrentDate().toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _buildShiftTable(workShift!),
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey.shade400,
+                  ),
+                  _buildEntryLogs(attendanceList!),
+                ],
+              ),
             ],
           );
-        } else {
-          return const Center(child: CircularProgressIndicator.adaptive());
         }
+        if (state is AttendanceLoading) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 40),
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          );
+        }
+        return const SizedBox();
       },
     );
   }
 
-  TableRow _buildShiftRow(List<String> cells) {
+  Widget _buildShiftTable(AttendanceWorkResponse workShift) {
+    return Table(
+      border: TableBorder.all(
+        color: Colors.grey.shade200,
+      ),
+      children: [
+        _buildShiftRow([
+          // '#',
+          'SHIFT',
+          'MORNING',
+          'AFTERNOON',
+        ], true),
+        _buildShiftRow([
+          '${workShift.shift?.name}',
+          '${workShift.shift?.amIn}',
+          '${workShift.shift?.pmOut}'
+        ], false),
+      ],
+    );
+  }
+
+  TableRow _buildShiftRow(List<String> cells, bool isHeader) {
     return TableRow(
         children: cells.map((cell) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20,
+      return Container(
+        color: isHeader ? Colors.grey.shade100 : Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 20,
+          ),
+          child: Center(
+              child: Text(
+            cell,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 10),
+          )),
         ),
-        child: Center(
-            child: Text(
-          cell,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 10),
-        )),
       );
     }).toList());
   }
 
-  Widget _buildEntryLogs() {
+  Widget _buildEntryLogs(List<AttendanceListResponse> attendanceList) {
     print('build: _buildEntryLogs');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -213,104 +207,90 @@ class AttendanceScreen extends StatelessWidget {
             style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
           ),
         ),
-        BlocBuilder<AttendanceBloc, AttendanceState>(
-          builder: (context, state) {
-            if (state is AttendanceLoaded) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: state.attendanceWrapperResponse.response?.data
-                    ?.attendances?.length,
-                itemBuilder: (context, index) {
-                  final entryLogs = state.attendanceWrapperResponse.response
-                      ?.data?.attendances?[index];
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemCount: attendanceList.length,
+          itemBuilder: (context, index) {
+            final entryLogs = attendanceList[index];
 
-                  final date = DateFormat.yMEd()
-                      .format(DateTime.parse(entryLogs!.amIn.toString()));
-                  final timeIn = entryLogs.amIn != null
-                      ? DateFormat('hh:mm a')
-                          .format(DateTime.parse(entryLogs.amIn.toString()))
-                      : '--:--';
-                  final timeOut = entryLogs.pmOut != null
-                      ? DateFormat('hh:mm a')
-                          .format(DateTime.parse(entryLogs.pmOut.toString()))
-                      : '--:--';
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Colors.grey.shade200,
-                      )),
-                      child: InkWell(
-                        onTap: () => context.pushNamed(
-                            AppRoute.attendanceDetail.name,
-                            extra: entryLogs),
+            final date = DateFormat.yMEd()
+                .format(DateTime.parse(entryLogs.amIn.toString()));
+            final timeIn = entryLogs.amIn != null
+                ? DateFormat('hh:mm a')
+                    .format(DateTime.parse(entryLogs.amIn.toString()))
+                : '--:--';
+            final timeOut = entryLogs.pmOut != null
+                ? DateFormat('hh:mm a')
+                    .format(DateTime.parse(entryLogs.pmOut.toString()))
+                : '--:--';
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.grey.shade200,
+                )),
+                child: InkWell(
+                  onTap: () => context.pushNamed(AppRoute.attendanceDetail.name,
+                      extra: entryLogs),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                          height: 30,
+                          color: Colors.grey.shade100,
+                          child: Center(
+                              child: Text(
+                            date,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ))),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Container(
-                                height: 30,
-                                color: Colors.grey.shade100,
-                                child: Center(
-                                    child: Text(
-                                  date,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ))),
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          const Text('AM IN'),
-                                          Text(
-                                            timeIn,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.teal,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    const Text('AM IN'),
+                                    Text(
+                                      timeIn,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
                                       ),
-                                      Column(
-                                        children: [
-                                          const Text('PM OUT'),
-                                          Text(
-                                            timeOut,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const Text('PM OUT'),
+                                    Text(
+                                      timeOut,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            }
-            // return const SizedBox();
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         ),
@@ -338,38 +318,26 @@ class AttendanceScreen extends StatelessWidget {
               color: Colors.grey.shade400,
             ),
             const SizedBox(height: 20),
-            Text('Date Range',
-                style: TextStyle(fontSize: 12, color: Colors.blue.shade900)),
+            const Text(
+              'DATE RANGE',
+              style: TextStyle(fontSize: 12, color: Colors.teal),
+            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Flexible(
-                  child: FormBuilderTextField(
+                  child: CalendarTextFormFieldWidget(
                     name: KeyStrings.leaveDateFromKey,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.calendar_month,
-                        size: 20,
-                      ),
-                      hintText: 'yyyy-MM-dd',
-                    ),
+                    hint: 'yyyy-MM-dd',
                     onTap: () => _selectLeaveDate(context, 'dateFrom'),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 10),
                 Flexible(
-                  child: FormBuilderTextField(
+                  child: CalendarTextFormFieldWidget(
                     name: KeyStrings.leaveDateToKey,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.calendar_month,
-                          size: 20,
-                        ),
-                        hintText: 'yyyy-MM-dd'),
-                    onTap: () {
-                      _selectLeaveDate(context, 'dateTo');
-                    },
+                    hint: 'yyyy-MM-dd',
+                    onTap: () => _selectLeaveDate(context, 'dateTo'),
                   ),
                 ),
               ],
@@ -383,7 +351,7 @@ class AttendanceScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.teal),
                   elevation: MaterialStateProperty.all(0),
                 ),
-                child: const Text('Apply'),
+                child: Text('Apply'.toUpperCase()),
                 onPressed: () {
                   final dateFrom = formKey.currentState
                           ?.fields[KeyStrings.leaveDateFromKey]?.value ??

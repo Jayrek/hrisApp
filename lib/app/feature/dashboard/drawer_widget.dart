@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rgs_hris/app/bloc/auth/auth_bloc.dart';
+import 'package:rgs_hris/app/common/util/key_strings.dart';
+import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
 import '../../../router/app_route.dart';
 
@@ -32,42 +32,48 @@ class DrawerWidget extends StatelessWidget {
   }
 
   Widget _buildDrawerHeader() {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is AuthSignInSuccess) {
-          final employeeData = state.loginWrapperResponse.loginResponse
-              ?.loginDataResponse?.employeeDetails;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.blue.shade100,
-                  radius: 40,
-                  child: CircleAvatar(
-                    radius: 37,
-                    backgroundColor: Colors.grey.shade300,
+    Future<String> getPreference() async {
+      final fullName =
+          await SharedPrefsManager().getStringPref(KeyStrings.spFullNameKey);
+      return fullName;
+    }
+
+    return FutureBuilder(
+        future: getPreference(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // While waiting for the data to arrive, show a loading indicator.
+            return const CircularProgressIndicator.adaptive();
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.blue.shade100,
+                    radius: 40,
+                    child: CircleAvatar(
+                      radius: 37,
+                      backgroundColor: Colors.grey.shade300,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    '${employeeData?.name.toString()}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800),
-                  ),
-                )
-              ],
-            ),
-          );
-        }
-        return const SizedBox();
-      },
-    );
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      snapshot.data.toString().toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+        });
   }
 
   Widget _buildDrawerList(BuildContext context) {
@@ -75,51 +81,48 @@ class DrawerWidget extends StatelessWidget {
       children: [
         _buildDrawerItem(Icons.person, 'PERSONAL', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.personal.name);
+          context.pushReplacementNamed(AppRoute.personal.name);
         }),
         _buildDrawerItem(Icons.person_add_alt_sharp, 'EMPLOYMENT', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.employment.name);
+          context.pushReplacementNamed(AppRoute.employment.name);
         }),
         _buildDrawerItem(Icons.work, 'WORK', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.work.name);
+          context.pushReplacementNamed(AppRoute.work.name);
         }),
         _buildDrawerItem(Icons.note, 'LEAVE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.leaves.name);
+          context.pushReplacementNamed(AppRoute.leaves.name);
         }),
         _buildDrawerItem(Icons.access_time, 'ATTENDANCE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.attendance.name);
+          context.pushReplacementNamed(AppRoute.attendance.name);
         }),
         _buildDrawerItem(Icons.timeline_outlined, 'PERFORMANCE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.performance.name);
+          context.pushReplacementNamed(AppRoute.performance.name);
         }),
-        _buildDrawerItem(Icons.note_outlined, 'DOCUMENTS', onTap: () {
-          Navigator.of(context).pop();
-          context.pushNamed(AppRoute.documents.name);
-        }),
-        _buildDrawerItem(Icons.notes_rounded, 'RGS HANDBOOK', onTap: () {
-          Navigator.of(context).pop();
-          context.pushNamed(AppRoute.handbook.name);
-        }),
+        // _buildDrawerItem(Icons.note_outlined, 'DOCUMENTS', onTap: () {
+        //   Navigator.of(context).pop();
+        //   context.pushReplacementNamed(AppRoute.documents.name);
+        // }),
         _buildDrawerItem(Icons.note_alt_sharp, 'REQUEST UPDATE', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.requestUpdate.name);
+          context.pushReplacementNamed(AppRoute.changeRequestProfile.name);
         }),
         _buildDrawerItem(Icons.account_circle, 'MY ACCESS', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.myAccess.name);
+          context.pushReplacementNamed(AppRoute.myAccessProfile.name);
         }),
         _buildDrawerItem(Icons.key, 'CHANGE PASSWORD', onTap: () {
           Navigator.of(context).pop();
-          context.pushNamed(AppRoute.changePassword.name);
+          context.pushReplacementNamed(AppRoute.myAccessChangePassword.name);
         }),
         _buildDrawerItem(Icons.logout, 'LOGOUT', onTap: () {
           Navigator.of(context).pop();
-          context.goNamed(AppRoute.signIn.name);
+          SharedPrefsManager().clearPreference();
+          context.pushReplacementNamed(AppRoute.signIn.name);
         }),
       ],
     );

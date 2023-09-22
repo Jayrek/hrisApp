@@ -4,8 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/data/model/response/employees_wrapper_response.dart';
-import '../../../core/domain/manager/token_manager.dart';
 import '../../../core/domain/repository/employee/employee_repository.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
+import '../../common/util/key_strings.dart';
 
 part 'employee_event.dart';
 
@@ -23,7 +24,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     Emitter<EmployeeState> emit,
   ) async {
     emit(EmployeeLoading());
-    final tokenValue = await TokenManager.getToken();
+    final tokenValue =
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     final response =
         await employeeRepository.getEmployeeInformation(token: tokenValue);
 

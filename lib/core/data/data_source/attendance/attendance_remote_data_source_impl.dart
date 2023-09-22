@@ -14,7 +14,7 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   Future<AttendanceWrapperResponse> getAttendanceInfo({
     required String dateFrom,
     required String dateTo,
-    required String? token,
+    required String token,
   }) async {
     try {
       final response = await dioClient.post(
@@ -38,7 +38,7 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   @override
   Future<AttendanceInOutWrapperResponse> setTimeInOut({
     required String type,
-    required String? token,
+    required String token,
   }) async {
     try {
       final response = await dioClient.post(
