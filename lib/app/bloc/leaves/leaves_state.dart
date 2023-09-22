@@ -5,41 +5,6 @@ class LeavesState extends Equatable {
 
   @override
   List<Object?> get props => [];
-  // const LeavesState({
-  //   this.isLoading = false,
-  //   this.exceptionMessage = '',
-  //   this.leavesWrapperResponse =  LeavesWrapperResponse(leavesResponse: null),
-  //   this.leavesRequestResponseWrapper,
-  // });
-
-  // final bool isLoading;
-  // final String exceptionMessage;
-  // final LeavesWrapperResponse? leavesWrapperResponse;
-  // final LeavesRequestResponseWrapper leavesRequestResponseWrapper;
-  //
-  // @override
-  // List<Object?> get props => [
-  //       isLoading,
-  //       exceptionMessage,
-  //       leavesWrapperResponse,
-  //       leavesRequestResponseWrapper,
-  //     ];
-  //
-  // LeavesState copyWith({
-  //   bool? isLoading,
-  //   String? exceptionMessage,
-  //   LeavesWrapperResponse? leavesWrapperResponse,
-  //   LeavesRequestResponseWrapper? leavesRequestResponseWrapper,
-  // }) {
-  //   return LeavesState(
-  //     isLoading: isLoading ?? this.isLoading,
-  //     exceptionMessage: exceptionMessage ?? this.exceptionMessage,
-  //     leavesWrapperResponse:
-  //         leavesWrapperResponse ?? this.leavesWrapperResponse,
-  //     leavesRequestResponseWrapper:
-  //         leavesRequestResponseWrapper ?? this.leavesRequestResponseWrapper,
-  //   );
-  // }
 }
 
 class LeavesInitial extends LeavesState {}

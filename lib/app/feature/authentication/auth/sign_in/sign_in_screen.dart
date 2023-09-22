@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rgs_hris/app/common/util/app_strings.dart';
-import 'package:rgs_hris/app/common/util/key_strings.dart';
-import 'package:rgs_hris/core/ui/widget/elevated_button_widget.dart';
-import 'package:rgs_hris/core/ui/widget/wrap_text_button.dart';
-import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../../../core/ui/widget/elevated_button_widget.dart';
 import '../../../../../core/ui/widget/text_form_field_widget.dart';
 import '../../../../../core/ui/widget/widget_util.dart';
+import '../../../../../core/ui/widget/wrap_text_button.dart';
+import '../../../../../router/app_route.dart';
 import '../../../../bloc/auth/auth_bloc.dart';
+import '../../../../common/util/app_strings.dart';
+import '../../../../common/util/key_strings.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);

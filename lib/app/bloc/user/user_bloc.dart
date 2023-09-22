@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/core/data/model/response/personal_wrapper_response.dart';
 
+import '../../../core/remote/model/response/personal_wrapper_response.dart';
 import '../../../core/domain/repository/user/user_repository.dart';
 import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../common/util/key_strings.dart';
@@ -24,12 +24,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) async {
     emit(UserLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response =
-        await userRepository.getPersonalInformation(token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response =
+          await userRepository.getPersonalInformation(token: tokenValue);
 
-    print('personalResponse $response');
-    emit(UserLoaded(personalWrapperResponse: response));
+      emit(UserLoaded(personalWrapperResponse: response));
+    } catch (e) {
+      UserException(message: e.toString());
+    }
   }
 }

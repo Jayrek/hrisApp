@@ -1,7 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_in_out_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/repository/attendance/attendance_repository.dart';
+import '../../../domain/repository/attendance/attendance_repository.dart';
+import '../../../remote/data_source/attendance/attendance_remote_data_source.dart';
+import '../../../remote/model/response/attendance_in_out_wrapper_response.dart';
+import '../../../remote/model/response/attendance_wrapper_response.dart';
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
   final AttendanceRemoteDataSource attendanceRemoteDataSource;

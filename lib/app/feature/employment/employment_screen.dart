@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/app/bloc/employee/employee_bloc.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 
-import '../../../core/data/model/response/employee_response.dart';
+import '../../../core/remote/model/response/employee_response.dart';
 import '../../../core/ui/widget/text_form_field_widget.dart';
+import '../../bloc/employee/employee_bloc.dart';
+import '../dashboard/drawer_widget.dart';
 
 class EmploymentScreen extends StatelessWidget {
   const EmploymentScreen({super.key});

@@ -1,7 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/change_request/change_request_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/change_request_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
-import 'package:rgs_hris/core/domain/repository/change_request/change_request_repository.dart';
+import '../../../domain/repository/change_request/change_request_repository.dart';
+import '../../../remote/data_source/change_request/change_request_remote_data_source.dart';
+import '../../../remote/model/response/change_request_wrapper_response.dart';
+import '../../../remote/model/response/wrapper_default_response.dart';
 
 class ChangeRequestRepositoryImpl implements ChangeRequestRepository {
   final ChangeRequestRemoteDataSource changeRequestRemoteDataSource;

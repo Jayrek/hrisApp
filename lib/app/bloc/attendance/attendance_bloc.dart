@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/app/common/util/key_strings.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
 
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../../core/domain/repository/attendance/attendance_repository.dart';
+import '../../../core/remote/model/response/attendance_wrapper_response.dart';
+import '../../common/util/key_strings.dart';
 
 part 'attendance_event.dart';
 
@@ -18,7 +18,6 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   AttendanceBloc({required this.attendanceRepository})
       : super(AttendanceInitial()) {
     on<AttendanceFetched>(_onAttendanceFetched);
-    // on<AttendanceTimeInOutSet>(_onAttendanceTimeInOutSet);
   }
 
   FutureOr<void> _onAttendanceFetched(
@@ -34,27 +33,10 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         dateTo: event.dateTo,
         token: tokenValue,
       );
-      print('response: $response');
 
       emit(AttendanceLoaded(attendanceWrapperResponse: response));
     } catch (e) {
-      print('AttendanceException: ${e.toString()}');
       emit(AttendanceException(message: e.toString()));
     }
   }
-
-// FutureOr<void> _onAttendanceTimeInOutSet(
-//   AttendanceTimeInOutSet event,
-//   Emitter<AttendanceState> emit,
-// ) async {
-//   emit(AttendanceSetLoading());
-//   final tokenValue = await TokenManager.getToken();
-//   final response = await attendanceRepository.setTimeInOut(
-//     type: event.type,
-//     token: tokenValue,
-//   );
-//   print('_onAttendanceTimeInOutSet: $response');
-//
-//   emit(AttendanceTimeInOutLoaded(attendanceInOutWrapperResponse: response));
-// }
 }

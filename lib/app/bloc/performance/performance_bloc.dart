@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/core/data/model/response/goals_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/performance_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
+import '../../../core/remote/model/response/goals_wrapper_response.dart';
+import '../../../core/remote/model/response/performance_wrapper_response.dart';
 import '../../../core/data/repository/performance/performance_repository_impl.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../common/util/key_strings.dart';
 
 part 'performance_event.dart';
@@ -27,12 +27,16 @@ class PerformanceBloc extends Bloc<PerformanceEvent, PerformanceState> {
     Emitter<PerformanceState> emit,
   ) async {
     emit(PerformanceLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await performanceRepository.getPerformanceInformation(
-        token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await performanceRepository.getPerformanceInformation(
+          token: tokenValue);
 
-    emit(PerformanceProfileLoaded(performanceWrapperResponse: response));
+      emit(PerformanceProfileLoaded(performanceWrapperResponse: response));
+    } catch (e) {
+      emit(PerformanceException(message: e.toString()));
+    }
   }
 
   FutureOr<void> _onPerformanceGoalsFetched(
@@ -40,11 +44,15 @@ class PerformanceBloc extends Bloc<PerformanceEvent, PerformanceState> {
     Emitter<PerformanceState> emit,
   ) async {
     emit(PerformanceLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await performanceRepository.getPerformanceGoalsInformation(
-        token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await performanceRepository
+          .getPerformanceGoalsInformation(token: tokenValue);
 
-    emit(PerformanceGoalsLoaded(goalsWrapperResponse: response));
+      emit(PerformanceGoalsLoaded(goalsWrapperResponse: response));
+    } catch (e) {
+      emit(PerformanceException(message: e.toString()));
+    }
   }
 }

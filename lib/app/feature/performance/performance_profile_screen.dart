@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rgs_hris/core/ui/widget/widget_util.dart';
 
+import '../../../core/ui/widget/widget_util.dart';
 import '../../bloc/performance/performance_bloc.dart';
 
 class PerformanceProfileScreen extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/data/model/response/attendance_in_out_wrapper_response.dart';
+import '../../../core/remote/model/response/attendance_in_out_wrapper_response.dart';
 import '../../../core/domain/repository/attendance/attendance_repository.dart';
 import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../common/util/key_strings.dart';
@@ -25,14 +25,17 @@ class TimeInOutBloc extends Bloc<TimeInOutEvent, TimeInOutState> {
     Emitter<TimeInOutState> emit,
   ) async {
     emit(TimeInOutLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await attendanceRepository.setTimeInOut(
-      type: event.type,
-      token: tokenValue,
-    );
-    print('_onTimeInOutSet: $response');
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await attendanceRepository.setTimeInOut(
+        type: event.type,
+        token: tokenValue,
+      );
 
-    emit(TimeInOutLoaded(attendanceInOutWrapperResponse: response));
+      emit(TimeInOutLoaded(attendanceInOutWrapperResponse: response));
+    } catch (e) {
+      emit(TimeInOutException(message: e.toString()));
+    }
   }
 }

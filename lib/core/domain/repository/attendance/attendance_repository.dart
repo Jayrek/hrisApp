@@ -1,5 +1,5 @@
-import '../../../data/model/response/attendance_in_out_wrapper_response.dart';
-import '../../../data/model/response/attendance_wrapper_response.dart';
+import '../../../remote/model/response/attendance_in_out_wrapper_response.dart';
+import '../../../remote/model/response/attendance_wrapper_response.dart';
 
 abstract class AttendanceRepository {
   Future<AttendanceWrapperResponse> getAttendanceInfo({

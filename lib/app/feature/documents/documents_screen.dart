@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
+
+import '../dashboard/drawer_widget.dart';
 
 class DocumentsScreen extends StatelessWidget {
   const DocumentsScreen({super.key});
