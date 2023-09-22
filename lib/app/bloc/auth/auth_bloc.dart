@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/data/model/response/login_wrapper_response.dart';
+import '../../../core/remote/model/response/login_wrapper_response.dart';
 import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../../core/domain/repository/auth/auth_repository.dart';
 import '../../../core/domain/repository/leaves/leaves_repository.dart';

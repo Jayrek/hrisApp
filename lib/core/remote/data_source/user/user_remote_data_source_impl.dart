@@ -1,4 +1,4 @@
-import '../../../data/model/response/personal_wrapper_response.dart';
+import '../../../remote/model/response/personal_wrapper_response.dart';
 import '../../dio/dio_client.dart';
 import 'user_remote_data_source.dart';
 

@@ -6,8 +6,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/data/model/response/attendance_list_response.dart';
-import '../../../core/data/model/response/attendance_work_response.dart';
+import '../../../core/remote/model/response/attendance_list_response.dart';
+import '../../../core/remote/model/response/attendance_work_response.dart';
 import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
 import '../../../router/app_route.dart';
 import '../../bloc/attendance/attendance_bloc.dart';

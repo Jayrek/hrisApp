@@ -1,7 +1,7 @@
 import '../../../domain/repository/leaves/leaves_repository.dart';
 import '../../../remote/data_source/leaves/leaves_remote_data_source.dart';
-import '../../model/response/leaves_request_response_wrapper.dart';
-import '../../model/response/leaves_wrapper_response.dart';
+import '../../../remote/model/response/leaves_request_response_wrapper.dart';
+import '../../../remote/model/response/leaves_wrapper_response.dart';
 
 class LeavesRepositoryImpl implements LeavesRepository {
   final LeavesRemoteDataSource leavesRemoteDataSource;

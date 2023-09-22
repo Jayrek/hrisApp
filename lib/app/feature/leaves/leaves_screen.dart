@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/data/model/response/types_response.dart';
+import '../../../core/remote/model/response/types_response.dart';
 import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
 import '../../../core/ui/widget/drop_down_text_form_field_widget.dart';
 import '../../../router/app_route.dart';

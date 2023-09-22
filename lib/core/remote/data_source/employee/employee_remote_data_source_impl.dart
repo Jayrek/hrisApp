@@ -1,4 +1,4 @@
-import '../../../data/model/response/employees_wrapper_response.dart';
+import '../../../remote/model/response/employees_wrapper_response.dart';
 import '../../dio/dio_client.dart';
 import 'employee_remote_data_source.dart';
 

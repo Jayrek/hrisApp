@@ -1,4 +1,4 @@
-import '../../../data/model/response/personal_wrapper_response.dart';
+import '../../../remote/model/response/personal_wrapper_response.dart';
 
 abstract class UserRemoteDataSource {
   Future<PersonalWrapperResponse> getPersonalInformation({

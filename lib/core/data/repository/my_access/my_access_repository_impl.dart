@@ -1,7 +1,7 @@
 import '../../../domain/repository/my_access/my_access_repository.dart';
 import '../../../remote/data_source/my_access/my_access_remote_data_source.dart';
-import '../../model/response/my_access_wrapper_response.dart';
-import '../../model/response/wrapper_default_response.dart';
+import '../../../remote/model/response/my_access_wrapper_response.dart';
+import '../../../remote/model/response/wrapper_default_response.dart';
 
 class MyAccessRepositoryImpl implements MyAccessRepository {
   final MyAccessRemoteDataSource myAccessRemoteDataSource;

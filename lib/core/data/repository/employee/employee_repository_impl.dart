@@ -1,6 +1,6 @@
 import '../../../domain/repository/employee/employee_repository.dart';
 import '../../../remote/data_source/employee/employee_remote_data_source.dart';
-import '../../model/response/employees_wrapper_response.dart';
+import '../../../remote/model/response/employees_wrapper_response.dart';
 
 class EmployeeRepositoryImpl implements EmployeeRepository {
   final EmployeeRemoteDataSource employeeRemoteDataSource;

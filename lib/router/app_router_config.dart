@@ -16,7 +16,7 @@ import '../app/feature/personal/personal_screen.dart';
 import '../app/feature/request_update/change_request_profile_screen.dart';
 import '../app/feature/splash/splash_screen.dart';
 import '../app/feature/work/work_screen.dart';
-import '../core/data/model/response/leaves_data_response.dart';
+import '../core/remote/model/response/leaves_data_response.dart';
 import '../router/app_route.dart';
 
 import '../app/feature/attendance/attendance_detail_screen.dart';
@@ -25,9 +25,9 @@ import '../app/feature/documents/documents_screen.dart';
 import '../app/feature/leaves/leaves_screen.dart';
 import '../app/feature/request_update/change_request_add_screen.dart';
 import '../app/feature/request_update/change_request_detail_screen.dart';
-import '../core/data/model/response/attendance_list_response.dart';
-import '../core/data/model/response/change_requests_response.dart';
-import '../core/data/model/response/leave_applications_response.dart';
+import '../core/remote/model/response/attendance_list_response.dart';
+import '../core/remote/model/response/change_requests_response.dart';
+import '../core/remote/model/response/leave_applications_response.dart';
 
 class AppRouterConfig {
   static GoRouter get router => _router;

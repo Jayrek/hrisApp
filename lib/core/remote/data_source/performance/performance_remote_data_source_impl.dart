@@ -1,5 +1,5 @@
-import '../../../data/model/response/goals_wrapper_response.dart';
-import '../../../data/model/response/performance_wrapper_response.dart';
+import '../../../remote/model/response/goals_wrapper_response.dart';
+import '../../../remote/model/response/performance_wrapper_response.dart';
 import '../../dio/dio_client.dart';
 import 'performance_remote_data_source.dart';
 

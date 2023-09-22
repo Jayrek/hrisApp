@@ -1,4 +1,4 @@
-import '../../../data/model/response/login_wrapper_response.dart';
+import '../../../remote/model/response/login_wrapper_response.dart';
 import '../../dio/dio_client.dart';
 import 'auth_remote_data_source.dart';
 

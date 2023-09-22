@@ -1,7 +1,7 @@
 import '../../../domain/repository/performance/performance_repository.dart';
 import '../../../remote/data_source/performance/performance_remote_data_source.dart';
-import '../../model/response/goals_wrapper_response.dart';
-import '../../model/response/performance_wrapper_response.dart';
+import '../../../remote/model/response/goals_wrapper_response.dart';
+import '../../../remote/model/response/performance_wrapper_response.dart';
 
 class PerformanceRepositoryImpl implements PerformanceRepository {
   final PerformanceRemoteDataSource performanceRemoteDataSource;

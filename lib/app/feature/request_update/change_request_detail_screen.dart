@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/data/model/response/change_requests_response.dart';
+import '../../../core/remote/model/response/change_requests_response.dart';
 import '../../../core/ui/widget/text_form_field_widget.dart';
 
 class ChangeRequestDetailScreen extends StatelessWidget {

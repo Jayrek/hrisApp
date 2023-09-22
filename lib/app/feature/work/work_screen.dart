@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/data/model/response/works_data_response.dart';
-import '../../../core/data/model/response/works_working_days.dart';
+import '../../../core/remote/model/response/works_data_response.dart';
+import '../../../core/remote/model/response/works_working_days.dart';
 import '../../../core/ui/widget/text_form_field_widget.dart';
 import '../../bloc/work/work_bloc.dart';
 import '../dashboard/drawer_widget.dart';

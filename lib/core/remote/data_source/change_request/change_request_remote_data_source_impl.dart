@@ -1,5 +1,5 @@
-import '../../../data/model/response/change_request_wrapper_response.dart';
-import '../../../data/model/response/wrapper_default_response.dart';
+import '../../../remote/model/response/change_request_wrapper_response.dart';
+import '../../../remote/model/response/wrapper_default_response.dart';
 import '../../dio/dio_client.dart';
 import 'change_request_remote_data_source.dart';
 

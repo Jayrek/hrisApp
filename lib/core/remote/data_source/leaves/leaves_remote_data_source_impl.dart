@@ -1,5 +1,5 @@
-import '../../../data/model/response/leaves_request_response_wrapper.dart';
-import '../../../data/model/response/leaves_wrapper_response.dart';
+import '../../../remote/model/response/leaves_request_response_wrapper.dart';
+import '../../../remote/model/response/leaves_wrapper_response.dart';
 import '../../dio/dio_client.dart';
 import 'leaves_remote_data_source.dart';
 

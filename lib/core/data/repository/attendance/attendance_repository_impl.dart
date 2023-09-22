@@ -1,7 +1,7 @@
 import '../../../domain/repository/attendance/attendance_repository.dart';
 import '../../../remote/data_source/attendance/attendance_remote_data_source.dart';
-import '../../model/response/attendance_in_out_wrapper_response.dart';
-import '../../model/response/attendance_wrapper_response.dart';
+import '../../../remote/model/response/attendance_in_out_wrapper_response.dart';
+import '../../../remote/model/response/attendance_wrapper_response.dart';
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
   final AttendanceRemoteDataSource attendanceRemoteDataSource;
