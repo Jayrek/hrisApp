@@ -26,7 +26,7 @@ class DioClient {
     }
   }
 
-  Future<Response> postDio(String url, dynamic data) async {
+  Future<Response> postDio(String url, {required dynamic data}) async {
     try {
       final response = await baseApi.post(url, data: data);
       return response;
