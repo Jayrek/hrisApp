@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
@@ -15,6 +14,7 @@ import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source_
 import 'package:rgs_hris/core/data/data_source/performance/performance_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/user/user_remote_data_source_impl.dart';
 import 'package:rgs_hris/core/data/data_source/work/work_remote_data_source_impl.dart';
+import 'package:rgs_hris/core/data/dio/dio_client.dart';
 import 'package:rgs_hris/core/data/repository/auth/auth_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/leaves/leaves_repository_impl.dart';
 import 'package:rgs_hris/core/data/repository/user/user_repository_impl.dart';
@@ -53,7 +53,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final authRemoteDataSource =
-                AuthRemoteDataSourceImpl(dioClient: Dio());
+                AuthRemoteDataSourceImpl(dioClient: DioClient());
             return AuthRepositoryImpl(
                 authRemoteDataSource: authRemoteDataSource);
           },
@@ -61,7 +61,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final leavesRemoteDataSource =
-                LeavesRemoteDataSourceImpl(dioClient: Dio());
+                LeavesRemoteDataSourceImpl(dioClient: DioClient());
 
             return LeavesRepositoryImpl(
                 leavesRemoteDataSource: leavesRemoteDataSource);
@@ -70,7 +70,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final attendanceRemoteDataSource =
-                AttendanceRemoteDataSourceImpl(dioClient: Dio());
+                AttendanceRemoteDataSourceImpl(dioClient: DioClient());
 
             return AttendanceRepositoryImpl(
                 attendanceRemoteDataSource: attendanceRemoteDataSource);
@@ -79,7 +79,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final userRemoteDataSource =
-                UserRemoteDataSourceImpl(dioClient: Dio());
+                UserRemoteDataSourceImpl(dioClient: DioClient());
 
             return UserRepositoryImpl(
                 userRemoteDataSource: userRemoteDataSource);
@@ -88,7 +88,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final workRemoteDataSource =
-                WorkRemoteDataSourceImpl(dioClient: Dio());
+                WorkRemoteDataSourceImpl(dioClient: DioClient());
 
             return WorkRepositoryImpl(
                 workRemoteDataSource: workRemoteDataSource);
@@ -97,7 +97,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final employeeRemoteDataSource =
-                EmployeeRemoteDataSourceImpl(dioClient: Dio());
+                EmployeeRemoteDataSourceImpl(dioClient: DioClient());
 
             return EmployeeRepositoryImpl(
                 employeeRemoteDataSource: employeeRemoteDataSource);
@@ -106,7 +106,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final myAccessRemoteDataSource =
-                MyAccessRemoteDataSourceImpl(dioClient: Dio());
+                MyAccessRemoteDataSourceImpl(dioClient: DioClient());
 
             return MyAccessRepositoryImpl(
                 myAccessRemoteDataSource: myAccessRemoteDataSource);
@@ -115,7 +115,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final performanceRemoteDataSource =
-                PerformanceRemoteDataSourceImpl(dioClient: Dio());
+                PerformanceRemoteDataSourceImpl(dioClient: DioClient());
 
             return PerformanceRepositoryImpl(
                 performanceRemoteDataSource: performanceRemoteDataSource);
@@ -124,7 +124,7 @@ class RgsHrisApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) {
             final changeRequestRemoteDataSource =
-                ChangeRequestRemoteDataSourceImpl(dioClient: Dio());
+                ChangeRequestRemoteDataSourceImpl(dioClient: DioClient());
 
             return ChangeRequestRepositoryImpl(
                 changeRequestRemoteDataSource: changeRequestRemoteDataSource);

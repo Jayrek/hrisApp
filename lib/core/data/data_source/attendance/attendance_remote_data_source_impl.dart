@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source.dart';
+import 'package:rgs_hris/core/data/dio/dio_client.dart';
 import 'package:rgs_hris/core/data/model/response/attendance_in_out_wrapper_response.dart';
 import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
 
 class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
-  final Dio dioClient;
+  final DioClient dioClient;
 
   const AttendanceRemoteDataSourceImpl({required this.dioClient});
 
@@ -17,20 +15,16 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
     required String token,
   }) async {
     try {
-      final response = await dioClient.post(
-          'https://demo.calisg.com/hris/api/api/attendances/myprofile.json',
-          data: FormData.fromMap({
-            'from': dateFrom,
-            'to': dateTo,
-          }),
-          options: Options(headers: {
-            HttpHeaders.acceptHeader: 'application/json',
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer $token',
-          }));
+      final response = await dioClient.postDio(
+        '/api/attendances/myprofile.json',
+        data: {
+          'from': dateFrom,
+          'to': dateTo,
+        },
+      );
 
       return AttendanceWrapperResponse.fromJson(response.data);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(e);
     }
   }
@@ -41,19 +35,15 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
     required String token,
   }) async {
     try {
-      final response = await dioClient.post(
-          'https://demo.calisg.com/hris/api/api/attendances/timein.json',
-          data: FormData.fromMap({
-            'type': type,
-          }),
-          options: Options(headers: {
-            HttpHeaders.acceptHeader: 'application/json',
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer $token',
-          }));
+      final response = await dioClient.postDio(
+        '/api/attendances/timein.json',
+        data: {
+          'type': type,
+        },
+      );
 
       return AttendanceInOutWrapperResponse.fromJson(response.data);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(e);
     }
   }

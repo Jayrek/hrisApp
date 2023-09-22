@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:rgs_hris/core/data/data_source/my_access/my_access_remote_data_source.dart';
+import 'package:rgs_hris/core/data/dio/dio_client.dart';
 import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
 import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
 
 class MyAccessRemoteDataSourceImpl implements MyAccessRemoteDataSource {
-  final Dio dioClient;
+  final DioClient dioClient;
 
   const MyAccessRemoteDataSourceImpl({required this.dioClient});
 
@@ -15,16 +13,11 @@ class MyAccessRemoteDataSourceImpl implements MyAccessRemoteDataSource {
     required String token,
   }) async {
     try {
-      final response = await dioClient.post(
-          'https://demo.calisg.com/hris/api/api/accounts/myprofile.json',
-          options: Options(headers: {
-            HttpHeaders.acceptHeader: 'application/json',
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer $token',
-          }));
+      final response =
+          await dioClient.postDio('/api/accounts/myprofile.json', data: {});
 
       return MyAccessWrapperResponse.fromJson(response.data);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(e);
     }
   }
@@ -36,23 +29,17 @@ class MyAccessRemoteDataSourceImpl implements MyAccessRemoteDataSource {
       required String? confirmPassword,
       required String? token}) async {
     try {
-      final response = await dioClient.post(
-          'https://demo.calisg.com/hris/api/api/accounts/changepassword.json',
-          data: FormData.fromMap(
-            {
-              'c_pass': currentPassword,
-              'n_pass': newPassword,
-              'cn_pass': confirmPassword,
-            },
-          ),
-          options: Options(headers: {
-            HttpHeaders.acceptHeader: 'application/json',
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer $token',
-          }));
+      final response = await dioClient.postDio(
+        '/api/accounts/changepassword.json',
+        data: {
+          'c_pass': currentPassword,
+          'n_pass': newPassword,
+          'cn_pass': confirmPassword,
+        },
+      );
 
       return WrapperDefaultResponse.fromJson(response.data);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(e);
     }
   }

@@ -1,11 +1,9 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:rgs_hris/core/data/data_source/work/work_remote_data_source.dart';
+import 'package:rgs_hris/core/data/dio/dio_client.dart';
 import 'package:rgs_hris/core/data/model/response/works_wrapper_response.dart';
 
 class WorkRemoteDataSourceImpl implements WorkRemoteDataSource {
-  final Dio dioClient;
+  final DioClient dioClient;
 
   const WorkRemoteDataSourceImpl({required this.dioClient});
 
@@ -14,16 +12,11 @@ class WorkRemoteDataSourceImpl implements WorkRemoteDataSource {
     required String? token,
   }) async {
     try {
-      final response = await dioClient.post(
-          'https://demo.calisg.com/hris/api/api/works/myprofile.json',
-          options: Options(headers: {
-            HttpHeaders.acceptHeader: 'application/json',
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer $token',
-          }));
+      final response =
+          await dioClient.postDio('/api/works/myprofile.json', data: {});
 
       return WorksWrapperResponse.fromJson(response.data);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(e);
     }
   }
