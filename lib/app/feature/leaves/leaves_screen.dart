@@ -9,7 +9,7 @@ import 'package:rgs_hris/core/data/model/response/types_response.dart';
 import 'package:rgs_hris/router/app_route.dart';
 
 import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
-import '../../../core/ui/widget/drop_down_text_form _field_widget.dart';
+import '../../../core/ui/widget/drop_down_text_form_field_widget.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
 
 class LeavesScreen extends StatefulWidget {

@@ -31,7 +31,6 @@ class TimeInOutBloc extends Bloc<TimeInOutEvent, TimeInOutState> {
       type: event.type,
       token: tokenValue,
     );
-    print('_onTimeInOutSet: $response');
 
     emit(TimeInOutLoaded(attendanceInOutWrapperResponse: response));
   }

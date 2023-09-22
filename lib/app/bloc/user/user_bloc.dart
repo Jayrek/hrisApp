@@ -29,7 +29,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final response =
         await userRepository.getPersonalInformation(token: tokenValue);
 
-    print('personalResponse $response');
     emit(UserLoaded(personalWrapperResponse: response));
   }
 }

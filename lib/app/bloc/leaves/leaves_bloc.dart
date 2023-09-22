@@ -35,7 +35,6 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
       leaveStatus: event.status,
       token: tokenValue,
     );
-    print('responseLeave: $responseLeave');
 
     emit(LeavesLoaded(leavesWrapperResponse: responseLeave));
   }
@@ -54,8 +53,6 @@ class LeavesBloc extends Bloc<LeavesEvent, LeavesState> {
       description: event.description,
       token: tokenValue,
     );
-
-    print('response: $response');
 
     emit(LeavesSetLoaded(leavesRequestResponseWrapper: response));
   }

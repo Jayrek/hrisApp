@@ -29,7 +29,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     final response =
         await employeeRepository.getEmployeeInformation(token: tokenValue);
 
-    print('_onEmployeeFetched: $response');
     emit(EmployeeLoaded(worksWrapperResponse: response));
   }
 }

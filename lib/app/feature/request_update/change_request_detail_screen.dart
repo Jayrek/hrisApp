@@ -14,7 +14,6 @@ class ChangeRequestDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('changeRequestsDataResponse: $changeRequestResponse');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
