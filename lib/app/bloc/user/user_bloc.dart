@@ -24,11 +24,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) async {
     emit(UserLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response =
-        await userRepository.getPersonalInformation(token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response =
+          await userRepository.getPersonalInformation(token: tokenValue);
 
-    emit(UserLoaded(personalWrapperResponse: response));
+      emit(UserLoaded(personalWrapperResponse: response));
+    } catch (e) {
+      UserException(message: e.toString());
+    }
   }
 }

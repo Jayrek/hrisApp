@@ -25,13 +25,17 @@ class TimeInOutBloc extends Bloc<TimeInOutEvent, TimeInOutState> {
     Emitter<TimeInOutState> emit,
   ) async {
     emit(TimeInOutLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await attendanceRepository.setTimeInOut(
-      type: event.type,
-      token: tokenValue,
-    );
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await attendanceRepository.setTimeInOut(
+        type: event.type,
+        token: tokenValue,
+      );
 
-    emit(TimeInOutLoaded(attendanceInOutWrapperResponse: response));
+      emit(TimeInOutLoaded(attendanceInOutWrapperResponse: response));
+    } catch (e) {
+      emit(TimeInOutException(message: e.toString()));
+    }
   }
 }

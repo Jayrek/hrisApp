@@ -27,11 +27,15 @@ class ChangeRequestBloc extends Bloc<ChangeRequestEvent, ChangeRequestState> {
     Emitter<ChangeRequestState> emit,
   ) async {
     emit(ChangeRequestLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await changeRequestRepository.getChangeRequestInformation(
-        status: event.status, token: tokenValue);
-    emit(ChangeRequestLoaded(changeRequestWrapperResponse: response));
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await changeRequestRepository
+          .getChangeRequestInformation(status: event.status, token: tokenValue);
+      emit(ChangeRequestLoaded(changeRequestWrapperResponse: response));
+    } catch (e) {
+      emit(ChangeRequestException(message: e.toString()));
+    }
   }
 
   FutureOr<void> _onChangeRequestSet(
@@ -39,13 +43,17 @@ class ChangeRequestBloc extends Bloc<ChangeRequestEvent, ChangeRequestState> {
     Emitter<ChangeRequestState> emit,
   ) async {
     emit(ChangeRequestLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await changeRequestRepository.setChangeRequest(
-        category: event.category,
-        oldData: event.oldData,
-        newData: event.newData,
-        token: tokenValue);
-    emit(ChangeRequestSetLoaded(wrapperDefaultResponse: response));
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await changeRequestRepository.setChangeRequest(
+          category: event.category,
+          oldData: event.oldData,
+          newData: event.newData,
+          token: tokenValue);
+      emit(ChangeRequestSetLoaded(wrapperDefaultResponse: response));
+    } catch (e) {
+      emit(ChangeRequestException(message: e.toString()));
+    }
   }
 }

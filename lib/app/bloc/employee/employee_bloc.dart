@@ -24,11 +24,15 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     Emitter<EmployeeState> emit,
   ) async {
     emit(EmployeeLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response =
-        await employeeRepository.getEmployeeInformation(token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response =
+          await employeeRepository.getEmployeeInformation(token: tokenValue);
 
-    emit(EmployeeLoaded(worksWrapperResponse: response));
+      emit(EmployeeLoaded(worksWrapperResponse: response));
+    } catch (e) {
+      emit(EmployeeException(message: e.toString()));
+    }
   }
 }

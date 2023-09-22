@@ -27,12 +27,16 @@ class PerformanceBloc extends Bloc<PerformanceEvent, PerformanceState> {
     Emitter<PerformanceState> emit,
   ) async {
     emit(PerformanceLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await performanceRepository.getPerformanceInformation(
-        token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await performanceRepository.getPerformanceInformation(
+          token: tokenValue);
 
-    emit(PerformanceProfileLoaded(performanceWrapperResponse: response));
+      emit(PerformanceProfileLoaded(performanceWrapperResponse: response));
+    } catch (e) {
+      emit(PerformanceException(message: e.toString()));
+    }
   }
 
   FutureOr<void> _onPerformanceGoalsFetched(
@@ -40,11 +44,15 @@ class PerformanceBloc extends Bloc<PerformanceEvent, PerformanceState> {
     Emitter<PerformanceState> emit,
   ) async {
     emit(PerformanceLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await performanceRepository.getPerformanceGoalsInformation(
-        token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response = await performanceRepository
+          .getPerformanceGoalsInformation(token: tokenValue);
 
-    emit(PerformanceGoalsLoaded(goalsWrapperResponse: response));
+      emit(PerformanceGoalsLoaded(goalsWrapperResponse: response));
+    } catch (e) {
+      emit(PerformanceException(message: e.toString()));
+    }
   }
 }

@@ -24,10 +24,15 @@ class WorkBloc extends Bloc<WorkEvent, WorkState> {
     Emitter<WorkState> emit,
   ) async {
     emit(WorkLoading());
-    final tokenValue =
-        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
-    final response = await workRepository.getWorkInformation(token: tokenValue);
+    try {
+      final tokenValue =
+          await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+      final response =
+          await workRepository.getWorkInformation(token: tokenValue);
 
-    emit(WorkLoaded(worksWrapperResponse: response));
+      emit(WorkLoaded(worksWrapperResponse: response));
+    } catch (e) {
+      emit(WorkException(message: e.toString()));
+    }
   }
 }
