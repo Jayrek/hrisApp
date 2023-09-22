@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/ui/widget/widget_util.dart';
-import '../../../router/app_route.dart';
+import '../../router/app_route.dart';
 import '../dashboard/drawer_widget.dart';
 
 class PerformanceScreen extends StatelessWidget {

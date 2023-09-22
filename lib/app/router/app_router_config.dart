@@ -1,43 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../app/feature/authentication/auth/sign_in/sign_in_screen.dart';
-import '../app/feature/authentication/auth/sign_up/sign_up_screen.dart';
-import '../app/feature/my_access/my_access_change_password/my_access_change_password_screen.dart';
-import '../app/feature/employment/employment_screen.dart';
-import '../app/feature/handbook/handbook_screen.dart';
-import '../app/feature/leaves/leaves_detail_screen.dart';
-import '../app/feature/leaves/leaves_request_screen.dart';
-import '../app/feature/my_access/my_access_change_username/my_access_change_user_name_screen.dart';
-import '../app/feature/my_access/my_access_profile/my_access_profile_screen.dart';
-import '../app/feature/performance/performance_goals_screen.dart';
-import '../app/feature/performance/performance_profile_screen.dart';
-import '../app/feature/performance/performance_screen.dart';
-import '../app/feature/personal/personal_screen.dart';
-import '../app/feature/request_update/change_request_profile_screen.dart';
-import '../app/feature/splash/splash_screen.dart';
-import '../app/feature/work/work_screen.dart';
-import '../core/remote/model/response/leaves_data_response.dart';
+import '../feature/authentication/auth/sign_in/sign_in_screen.dart';
+import '../feature/authentication/auth/sign_up/sign_up_screen.dart';
+import '../feature/my_access/my_access_change_password/my_access_change_password_screen.dart';
+import '../feature/employment/employment_screen.dart';
+import '../feature/handbook/handbook_screen.dart';
+import '../feature/leaves/leaves_detail_screen.dart';
+import '../feature/leaves/leaves_request_screen.dart';
+import '../feature/my_access/my_access_change_username/my_access_change_user_name_screen.dart';
+import '../feature/my_access/my_access_profile/my_access_profile_screen.dart';
+import '../feature/performance/performance_goals_screen.dart';
+import '../feature/performance/performance_profile_screen.dart';
+import '../feature/performance/performance_screen.dart';
+import '../feature/personal/personal_screen.dart';
+import '../feature/request_update/change_request_profile_screen.dart';
+import '../feature/splash/splash_screen.dart';
+import '../feature/work/work_screen.dart';
+import '../../core/remote/model/response/leaves_data_response.dart';
 import '../router/app_route.dart';
 
-import '../app/feature/attendance/attendance_detail_screen.dart';
-import '../app/feature/attendance/attendance_screen.dart';
-import '../app/feature/documents/documents_screen.dart';
-import '../app/feature/leaves/leaves_screen.dart';
-import '../app/feature/request_update/change_request_add_screen.dart';
-import '../app/feature/request_update/change_request_detail_screen.dart';
-import '../core/remote/model/response/attendance_list_response.dart';
-import '../core/remote/model/response/change_requests_response.dart';
-import '../core/remote/model/response/leave_applications_response.dart';
+import '../feature/attendance/attendance_detail_screen.dart';
+import '../feature/attendance/attendance_screen.dart';
+import '../feature/documents/documents_screen.dart';
+import '../feature/leaves/leaves_screen.dart';
+import '../feature/request_update/change_request_add_screen.dart';
+import '../feature/request_update/change_request_detail_screen.dart';
+import '../../core/remote/model/response/attendance_list_response.dart';
+import '../../core/remote/model/response/change_requests_response.dart';
+import '../../core/remote/model/response/leave_applications_response.dart';
 
 class AppRouterConfig {
   static GoRouter get router => _router;
 
   static final GoRouter _router = GoRouter(routes: <RouteBase>[
-    // GoRoute(
-    //   name: 'dashboard',
-    //   path: '/',
-    //   builder: (_, __) => const DashboardScreen(),
-    // )
     GoRoute(
         name: AppRoute.splash.name,
         path: AppRoute.splash.path,

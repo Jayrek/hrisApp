@@ -20,7 +20,7 @@ import 'core/data/repository/auth/auth_repository_impl.dart';
 import 'core/data/repository/leaves/leaves_repository_impl.dart';
 import 'core/data/repository/user/user_repository_impl.dart';
 import 'core/data/repository/work/work_repository_impl.dart';
-import 'router/app_router_config.dart';
+import 'app/router/app_router_config.dart';
 
 import 'app/bloc/change_password/change_password_bloc.dart';
 import 'app/bloc/performance/performance_bloc.dart';
