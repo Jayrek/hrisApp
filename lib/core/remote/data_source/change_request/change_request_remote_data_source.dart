@@ -1,6 +1,5 @@
-import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
-
-import '../../model/response/change_request_wrapper_response.dart';
+import '../../../data/model/response/change_request_wrapper_response.dart';
+import '../../../data/model/response/wrapper_default_response.dart';
 
 abstract class ChangeRequestRemoteDataSource {
   Future<ChangeRequestWrapperResponse> getChangeRequestInformation({

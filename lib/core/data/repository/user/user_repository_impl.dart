@@ -1,6 +1,6 @@
-import 'package:rgs_hris/core/data/data_source/user/user_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/personal_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/repository/user/user_repository.dart';
+import '../../../domain/repository/user/user_repository.dart';
+import '../../../remote/data_source/user/user_remote_data_source.dart';
+import '../../model/response/personal_wrapper_response.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource userRemoteDataSource;

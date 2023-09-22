@@ -3,13 +3,16 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:rgs_hris/app/common/util/key_strings.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
+
+import '../../../app/common/util/key_strings.dart';
+import '../../domain/manager/shared_prefs_manager.dart';
 
 class DioInterceptor extends Interceptor {
   @override
-  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    final token = await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    final token =
+        await SharedPrefsManager().getStringPref(KeyStrings.spTokenKey);
     options.headers.addAll({
       HttpHeaders.acceptHeader: 'application/json',
       HttpHeaders.contentTypeHeader: 'application/json',

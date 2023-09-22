@@ -1,8 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/leaves_request_response_wrapper.dart';
-
+import '../../../data/model/response/leaves_request_response_wrapper.dart';
+import '../../../data/model/response/leaves_wrapper_response.dart';
 import '../../dio/dio_client.dart';
-import '../../model/response/leaves_wrapper_response.dart';
+import 'leaves_remote_data_source.dart';
 
 class LeavesRemoteDataSourceImpl implements LeavesRemoteDataSource {
   final DioClient dioClient;

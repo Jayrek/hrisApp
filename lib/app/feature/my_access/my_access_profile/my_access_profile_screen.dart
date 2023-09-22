@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 
 import '../../../../core/ui/widget/text_form_field_widget.dart';
 import '../../../bloc/my_access/my_access_bloc.dart';
+import '../../dashboard/drawer_widget.dart';
 
 class MyAccessProfileScreen extends StatelessWidget {
   const MyAccessProfileScreen({super.key});
@@ -56,57 +56,6 @@ class MyAccessProfileScreen extends StatelessWidget {
                           parseDate(myAccessData!.lastAccess.toString())),
                       _buildInfoItemWidget(
                           'STATUS', myAccessData.status.toString()),
-
-                      // Column(
-                      //   children: [
-                      //     Wrap(
-                      //       alignment: WrapAlignment.center,
-                      //       children: [
-                      //         Padding(
-                      //           padding: const EdgeInsets.symmetric(
-                      //             vertical: 8,
-                      //             horizontal: 2,
-                      //           ),
-                      //           child: SizedBox(
-                      //             height: 50,
-                      //             child: OutlinedButton(
-                      //               child: const Text(
-                      //                 'CHANGE PASSWORD',
-                      //                 style: TextStyle(
-                      //                   color: Colors.black,
-                      //                   fontSize: 12,
-                      //                 ),
-                      //               ),
-                      //               onPressed: () => context.pushNamed(
-                      //                   AppRoute.myAccessChangePassword.name),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         Padding(
-                      //           padding: const EdgeInsets.symmetric(
-                      //             vertical: 8,
-                      //             horizontal: 2,
-                      //           ),
-                      //           child: SizedBox(
-                      //             height: 50,
-                      //             child: OutlinedButton(
-                      //               child: const Text(
-                      //                 'CHANGE USERNAME',
-                      //                 style: TextStyle(
-                      //                   color: Colors.black,
-                      //                   fontSize: 12,
-                      //                 ),
-                      //               ),
-                      //               onPressed: () => context.pushNamed(
-                      //                 AppRoute.myAccessChangeUserName.name,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
                     ]),
               ),
             );

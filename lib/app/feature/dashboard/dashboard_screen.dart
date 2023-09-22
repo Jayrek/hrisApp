@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
+
+import 'drawer_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);

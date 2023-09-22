@@ -2,12 +2,12 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:rgs_hris/app/bloc/change_password/change_password_bloc.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
 
 import '../../../../core/ui/widget/text_form_field_widget.dart';
+import '../../../bloc/change_password/change_password_bloc.dart';
 import '../../../bloc/my_access/my_access_bloc.dart';
 import '../../../common/util/key_strings.dart';
+import '../../dashboard/drawer_widget.dart';
 
 class MyAccessChangePasswordScreen extends StatelessWidget {
   MyAccessChangePasswordScreen({super.key});

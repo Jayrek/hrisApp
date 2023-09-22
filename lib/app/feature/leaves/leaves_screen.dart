@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:rgs_hris/app/common/util/key_strings.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
-import 'package:rgs_hris/core/data/model/response/types_response.dart';
-import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../core/data/model/response/types_response.dart';
 import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
 import '../../../core/ui/widget/drop_down_text_form_field_widget.dart';
+import '../../../router/app_route.dart';
 import '../../bloc/leaves/leaves_bloc.dart';
+import '../../common/util/key_strings.dart';
+import '../dashboard/drawer_widget.dart';
 
 class LeavesScreen extends StatefulWidget {
   const LeavesScreen({super.key});
@@ -135,17 +135,6 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                             ),
                                           ),
                                         )),
-                                    // Row(
-                                    //   children: [
-                                    //     const Text('Leave Type: '),
-                                    //     Text(
-                                    //       '${getLeaveTypeName(leaveTypes, leaveApplications?.type)}',
-                                    //       style: const TextStyle(
-                                    //           fontWeight: FontWeight.bold),
-                                    //     ),
-                                    //   ],
-                                    // ),
-
                                     InkWell(
                                       onTap: () => context.pushNamed(
                                         AppRoute.leaveDetail.name,
@@ -181,7 +170,9 @@ class _LeavesScreenState extends State<LeavesScreen> {
                                                     .toString()),
                                             const SizedBox(height: 10),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 const Text('STATUS: '),
                                                 Text(

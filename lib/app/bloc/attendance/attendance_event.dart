@@ -19,12 +19,3 @@ class AttendanceFetched extends AttendanceEvent {
         dateTo,
       ];
 }
-
-// class AttendanceTimeInOutSet extends AttendanceEvent {
-//   final String type;
-//
-//   const AttendanceTimeInOutSet({required this.type});
-//
-//   @override
-//   List<Object?> get props => [type];
-// }

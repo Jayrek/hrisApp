@@ -1,5 +1,5 @@
+import '../../../data/model/response/login_wrapper_response.dart';
 import '../../dio/dio_client.dart';
-import '../../model/response/login_wrapper_response.dart';
 import 'auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -13,7 +13,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       final response = await dioClient.postDio(
         '/api/accounts/login.json',
-        data:  {
+        data: {
           'username': username,
           'password': password,
         },

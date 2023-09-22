@@ -1,7 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/performance/performance_remote_data_source.dart';
-import 'package:rgs_hris/core/data/dio/dio_client.dart';
-import 'package:rgs_hris/core/data/model/response/goals_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/performance_wrapper_response.dart';
+import '../../../data/model/response/goals_wrapper_response.dart';
+import '../../../data/model/response/performance_wrapper_response.dart';
+import '../../dio/dio_client.dart';
+import 'performance_remote_data_source.dart';
 
 class PerformanceRemoteDataSourceImpl implements PerformanceRemoteDataSource {
   final DioClient dioClient;

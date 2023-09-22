@@ -1,7 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/leaves/leaves_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/leaves_request_response_wrapper.dart';
-import 'package:rgs_hris/core/data/model/response/leaves_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/repository/leaves/leaves_repository.dart';
+import '../../../domain/repository/leaves/leaves_repository.dart';
+import '../../../remote/data_source/leaves/leaves_remote_data_source.dart';
+import '../../model/response/leaves_request_response_wrapper.dart';
+import '../../model/response/leaves_wrapper_response.dart';
 
 class LeavesRepositoryImpl implements LeavesRepository {
   final LeavesRemoteDataSource leavesRemoteDataSource;

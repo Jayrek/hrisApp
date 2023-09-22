@@ -1,7 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/attendance/attendance_remote_data_source.dart';
-import 'package:rgs_hris/core/data/dio/dio_client.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_in_out_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
+import '../../../data/model/response/attendance_in_out_wrapper_response.dart';
+import '../../../data/model/response/attendance_wrapper_response.dart';
+import '../../dio/dio_client.dart';
+import 'attendance_remote_data_source.dart';
 
 class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   final DioClient dioClient;

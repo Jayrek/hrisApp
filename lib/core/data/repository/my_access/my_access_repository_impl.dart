@@ -1,7 +1,6 @@
-import 'package:rgs_hris/core/data/data_source/my_access/my_access_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/repository/my_access/my_access_repository.dart';
-
+import '../../../domain/repository/my_access/my_access_repository.dart';
+import '../../../remote/data_source/my_access/my_access_remote_data_source.dart';
+import '../../model/response/my_access_wrapper_response.dart';
 import '../../model/response/wrapper_default_response.dart';
 
 class MyAccessRepositoryImpl implements MyAccessRepository {

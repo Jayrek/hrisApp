@@ -1,7 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/my_access/my_access_remote_data_source.dart';
-import 'package:rgs_hris/core/data/dio/dio_client.dart';
-import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
-import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
+import '../../../data/model/response/my_access_wrapper_response.dart';
+import '../../../data/model/response/wrapper_default_response.dart';
+import '../../dio/dio_client.dart';
+import 'my_access_remote_data_source.dart';
 
 class MyAccessRemoteDataSourceImpl implements MyAccessRemoteDataSource {
   final DioClient dioClient;

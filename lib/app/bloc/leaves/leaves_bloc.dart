@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/core/data/model/response/leaves_request_response_wrapper.dart';
-import 'package:rgs_hris/core/data/model/response/leaves_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/repository/leaves/leaves_repository.dart';
 
+import '../../../core/data/model/response/leaves_request_response_wrapper.dart';
+import '../../../core/data/model/response/leaves_wrapper_response.dart';
 import '../../../core/domain/manager/shared_prefs_manager.dart';
+import '../../../core/domain/repository/leaves/leaves_repository.dart';
 import '../../common/util/key_strings.dart';
 
 part 'leaves_event.dart';

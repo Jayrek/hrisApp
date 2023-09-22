@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/core/data/model/response/goals_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/performance_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
 
+import '../../../core/data/model/response/goals_wrapper_response.dart';
+import '../../../core/data/model/response/performance_wrapper_response.dart';
 import '../../../core/data/repository/performance/performance_repository_impl.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../common/util/key_strings.dart';
 
 part 'performance_event.dart';

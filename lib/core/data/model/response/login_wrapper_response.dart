@@ -1,4 +1,4 @@
-import 'package:rgs_hris/core/data/model/response/login_response.dart';
+import 'login_response.dart';
 
 class LoginWrapperResponse {
   LoginWrapperResponse({

@@ -1,4 +1,4 @@
-import 'package:rgs_hris/core/data/model/response/login_data_response.dart';
+import 'login_data_response.dart';
 
 class LoginResponse {
   LoginResponse({

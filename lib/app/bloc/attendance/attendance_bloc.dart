@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/app/common/util/key_strings.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_wrapper_response.dart';
 
+import '../../../core/data/model/response/attendance_wrapper_response.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../../core/domain/repository/attendance/attendance_repository.dart';
+import '../../common/util/key_strings.dart';
 
 part 'attendance_event.dart';
 

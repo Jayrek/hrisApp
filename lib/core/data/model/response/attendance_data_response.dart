@@ -1,7 +1,6 @@
-import 'package:rgs_hris/core/data/model/response/attendance_work_response.dart';
-
 import 'attendance_params_response.dart';
 import 'attendance_list_response.dart';
+import 'attendance_work_response.dart';
 
 class AttendanceDataResponse {
   AttendanceDataResponse({
