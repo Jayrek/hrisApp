@@ -42,7 +42,8 @@ class EmploymentScreen extends StatelessWidget {
                   children: [
                     _buildEmployeeDataSectionWidget(employeeData!),
                     _buildOtherDataSectionWidget(employeeData),
-                    _buildLeaveCreditsSectionWidget(employeeData),
+                    if (employeeData.leavecredits!.isNotEmpty)
+                      _buildLeaveCreditsSectionWidget(employeeData)
                   ],
                 ),
               ),

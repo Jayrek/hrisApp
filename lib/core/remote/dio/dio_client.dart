@@ -4,7 +4,7 @@ import 'dio_interceptor.dart';
 class DioClient {
   static final baseOptions = BaseOptions(
     // baseUrl: 'https://demo.calisg.com/hris/api',
-    baseUrl: 'https://hrisdemo.rtdigital.net/api',
+    baseUrl: 'https://rtdigiti.myhris.info/api',
     responseType: ResponseType.json,
     connectTimeout: const Duration(seconds: 60),
     receiveTimeout: const Duration(seconds: 60),
