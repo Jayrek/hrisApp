@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rgs_hris/core/data/model/response/wrapper_default_response.dart';
-import 'package:rgs_hris/core/data/model/response/my_access_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/remote/model/response/my_access_wrapper_response.dart';
+import '../../../core/remote/model/response/wrapper_default_response.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
 import '../../../core/domain/repository/my_access/my_access_repository.dart';
 import '../../common/util/key_strings.dart';
 
@@ -63,11 +63,6 @@ class MyAccessBloc extends Bloc<MyAccessEvent, MyAccessState> {
         changePasswordWrapperResponse: response,
         isPasswordSuccess: true,
       ));
-
-      // emit(state.copyWith(
-      //   myAccessStatus: MyAccessStatus.initial,
-      //   changePasswordWrapperResponse: null,
-      // ));
     } catch (e) {
       emit(state.copyWith(
         myAccessStatus: MyAccessStatus.failure,

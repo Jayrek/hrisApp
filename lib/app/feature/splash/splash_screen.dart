@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
-import 'package:rgs_hris/router/app_route.dart';
 
+import '../../../core/domain/manager/shared_prefs_manager.dart';
+import '../../router/app_route.dart';
 import '../../common/util/key_strings.dart';
 
 class SplashScreen extends StatelessWidget {

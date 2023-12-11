@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rgs_hris/app/common/util/key_strings.dart';
-import 'package:rgs_hris/core/domain/manager/shared_prefs_manager.dart';
-import 'package:rgs_hris/core/data/model/response/login_wrapper_response.dart';
-import 'package:rgs_hris/core/domain/repository/auth/auth_repository.dart';
-import 'package:rgs_hris/core/domain/repository/leaves/leaves_repository.dart';
+
+import '../../../core/remote/model/response/login_wrapper_response.dart';
+import '../../../core/domain/manager/shared_prefs_manager.dart';
+import '../../../core/domain/repository/auth/auth_repository.dart';
+import '../../../core/domain/repository/leaves/leaves_repository.dart';
+import '../../common/util/key_strings.dart';
 
 part 'auth_event.dart';
 

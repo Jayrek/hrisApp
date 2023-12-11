@@ -1,8 +1,7 @@
-import 'package:rgs_hris/core/data/data_source/performance/performance_remote_data_source.dart';
-import 'package:rgs_hris/core/data/model/response/goals_wrapper_response.dart';
-import 'package:rgs_hris/core/data/model/response/performance_wrapper_response.dart';
-
 import '../../../domain/repository/performance/performance_repository.dart';
+import '../../../remote/data_source/performance/performance_remote_data_source.dart';
+import '../../../remote/model/response/goals_wrapper_response.dart';
+import '../../../remote/model/response/performance_wrapper_response.dart';
 
 class PerformanceRepositoryImpl implements PerformanceRepository {
   final PerformanceRemoteDataSource performanceRemoteDataSource;

@@ -5,17 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:rgs_hris/app/bloc/attendance/attendance_bloc.dart';
-import 'package:rgs_hris/app/feature/attendance/attendance_time_in_out_widget.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
-import 'package:rgs_hris/core/data/model/response/attendance_work_response.dart';
-import 'package:rgs_hris/router/app_route.dart';
 
-import '../../../core/data/model/response/attendance_list_response.dart';
+import '../../../core/remote/model/response/attendance_list_response.dart';
+import '../../../core/remote/model/response/attendance_work_response.dart';
 import '../../../core/ui/widget/calendar_text_form_field_widget.dart';
+import '../../router/app_route.dart';
+import '../../bloc/attendance/attendance_bloc.dart';
 import '../../common/util/key_strings.dart';
-
-import 'package:timezone/standalone.dart' as tz;
+import '../dashboard/drawer_widget.dart';
+import 'attendance_time_in_out_widget.dart';
 
 class AttendanceScreen extends StatelessWidget {
   AttendanceScreen({super.key});
@@ -29,11 +27,7 @@ class AttendanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final timezone = tz.getLocation('Asia/Manila');
-    // final timezoneDateTime = tz.TZDateTime.from(DateTime.now(), timezone);
-
     final formatter = DateFormat('yyyy-MM-dd');
-    // final initialDate = formatter.format(timezoneDateTime);
     final initialDate = formatter.format(DateTime.now());
     context.read<AttendanceBloc>().add(
           AttendanceFetched(
@@ -194,7 +188,6 @@ class AttendanceScreen extends StatelessWidget {
   }
 
   Widget _buildEntryLogs(List<AttendanceListResponse> attendanceList) {
-    print('build: _buildEntryLogs');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

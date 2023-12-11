@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rgs_hris/app/feature/dashboard/drawer_widget.dart';
-import 'package:rgs_hris/core/data/model/response/personal_address_response.dart';
-import 'package:rgs_hris/core/data/model/response/personal_employee_response.dart';
 
+import '../../../core/remote/model/response/personal_address_response.dart';
+import '../../../core/remote/model/response/personal_employee_response.dart';
 import '../../../core/ui/widget/text_form_field_widget.dart';
 import '../../bloc/user/user_bloc.dart';
+import '../dashboard/drawer_widget.dart';
 
 class PersonalScreen extends StatelessWidget {
   const PersonalScreen({super.key});

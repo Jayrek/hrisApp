@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/data/model/response/attendance_list_response.dart';
+import '../../../core/remote/model/response/attendance_list_response.dart';
 import '../../../core/ui/widget/text_form_field_widget.dart';
 
 class AttendanceDetailScreen extends StatelessWidget {
@@ -110,9 +110,21 @@ class AttendanceDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             _buildInfoItemWidget('SHIFT', attendanceListResponse.shift),
             _buildInfoItemWidget('CAMPAIGN', attendanceListResponse.campaign),
-            _buildInfoItemWidget('LATE', attendanceListResponse.late != '0' ? attendanceListResponse.late : '00:00'),
-            _buildInfoItemWidget('OVERTIME', attendanceListResponse.overtime != '0' ? attendanceListResponse.overtime : '00:00'),
-            _buildInfoItemWidget('UNDERTIME', attendanceListResponse.undertime != '0' ? attendanceListResponse.undertime : '00:00'),
+            _buildInfoItemWidget(
+                'LATE',
+                attendanceListResponse.late != '0'
+                    ? attendanceListResponse.late
+                    : '00:00'),
+            _buildInfoItemWidget(
+                'OVERTIME',
+                attendanceListResponse.overtime != '0'
+                    ? attendanceListResponse.overtime
+                    : '00:00'),
+            _buildInfoItemWidget(
+                'UNDERTIME',
+                attendanceListResponse.undertime != '0'
+                    ? attendanceListResponse.undertime
+                    : '00:00'),
             _buildInfoItemWidget('DEVICE', attendanceListResponse.source),
           ],
         ),
